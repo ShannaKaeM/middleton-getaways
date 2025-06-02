@@ -1,0 +1,15 @@
+deployment:
+  webroot: app/public
+  
+hooks:
+  post_deploy:
+    - "cd app && composer install --no-dev --optimize-autoloader"
+    - "cd app/public && wp theme activate miGV --allow-root"
+    
+excludes:
+  - .git
+  - .gitignore
+  - node_modules
+  - .env
+  - logs
+  - conf

@@ -1,0 +1,4 @@
+{
+  "build_command": "composer install --no-dev --optimize-autoloader",
+  "php_version": "8.2"
+}

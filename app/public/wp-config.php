@@ -21,16 +21,16 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'local' );
+define( 'DB_NAME', getenv('DB_NAME') ?: 'local' );
 
 /** Database username */
-define( 'DB_USER', 'root' );
+define( 'DB_USER', getenv('DB_USER') ?: 'root' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'root' );
+define( 'DB_PASSWORD', getenv('DB_PASSWORD') ?: 'root' );
 
 /** Database hostname */
-define( 'DB_HOST', 'localhost' );
+define( 'DB_HOST', getenv('DB_HOST') ?: 'localhost' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -76,6 +76,12 @@ $table_prefix = 'wp_';
 // Load Composer autoloader
 if ( file_exists( dirname( __DIR__, 2 ) . '/vendor/autoload.php' ) ) {
     require_once dirname( __DIR__, 2 ) . '/vendor/autoload.php';
+}
+
+// Set URLs for production
+if ( getenv('WP_HOME') ) {
+    define( 'WP_HOME', getenv('WP_HOME') );
+    define( 'WP_SITEURL', getenv('WP_SITEURL') ?: getenv('WP_HOME') );
 }
 
 

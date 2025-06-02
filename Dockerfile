@@ -25,7 +25,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html/
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --optimize-autoloader --no-interaction
 
 # Set up Apache document root
 RUN sed -i 's|/var/www/html|/var/www/html/app/public|g' /etc/apache2/sites-available/000-default.conf

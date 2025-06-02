@@ -60,7 +60,7 @@ Thumbs.db
 /dist/
 
 # Composer
-composer.lock
+# composer.lock - keeping this for consistent deployments
 
 # Local by Flywheel
 /app/sql/

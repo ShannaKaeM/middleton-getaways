@@ -1,0 +1,77 @@
+{#
+  Spacing Primitive Book - Pure Design Tokens
+  
+  This primitive provides pure spacing design tokens from theme.json.
+  It should ONLY contain foundational spacing properties, no semantic styling.
+  
+  Usage:
+  {% include 'primitive-books/spacing-book.twig' with {
+    padding: 'lg',
+    margin: 'md',
+    gap: 'sm'
+  } %}
+#}
+
+{% set spacing_tokens = {
+  spacing: {
+    xs: 'var(--wp--custom--layout--spacing--xs)',
+    sm: 'var(--wp--custom--layout--spacing--sm)',
+    md: 'var(--wp--custom--layout--spacing--md)',
+    lg: 'var(--wp--custom--layout--spacing--lg)',
+    xl: 'var(--wp--custom--layout--spacing--xl)',
+    '2xl': 'var(--wp--custom--layout--spacing--2xl)',
+    '3xl': 'var(--wp--custom--layout--spacing--3xl)',
+    '4xl': 'var(--wp--custom--layout--spacing--4xl)',
+    '5xl': 'var(--wp--custom--layout--spacing--5xl)',
+    '6xl': 'var(--wp--custom--layout--spacing--6xl)',
+    '7xl': 'var(--wp--custom--layout--spacing--7xl)',
+    '8xl': 'var(--wp--custom--layout--spacing--8xl)',
+    '9xl': 'var(--wp--custom--layout--spacing--9xl)',
+    '10xl': 'var(--wp--custom--layout--spacing--10xl)'
+  }
+} %}
+
+{# Apply spacing styles based on parameters #}
+{% if padding %}
+  padding: {{ spacing_tokens.spacing[padding] ?? padding }};
+{% endif %}
+
+{% if padding_top %}
+  padding-top: {{ spacing_tokens.spacing[padding_top] ?? padding_top }};
+{% endif %}
+
+{% if padding_bottom %}
+  padding-bottom: {{ spacing_tokens.spacing[padding_bottom] ?? padding_bottom }};
+{% endif %}
+
+{% if padding_left %}
+  padding-left: {{ spacing_tokens.spacing[padding_left] ?? padding_left }};
+{% endif %}
+
+{% if padding_right %}
+  padding-right: {{ spacing_tokens.spacing[padding_right] ?? padding_right }};
+{% endif %}
+
+{% if margin %}
+  margin: {{ spacing_tokens.spacing[margin] ?? margin }};
+{% endif %}
+
+{% if margin_top %}
+  margin-top: {{ spacing_tokens.spacing[margin_top] ?? margin_top }};
+{% endif %}
+
+{% if margin_bottom %}
+  margin-bottom: {{ spacing_tokens.spacing[margin_bottom] ?? margin_bottom }};
+{% endif %}
+
+{% if margin_left %}
+  margin-left: {{ spacing_tokens.spacing[margin_left] ?? margin_left }};
+{% endif %}
+
+{% if margin_right %}
+  margin-right: {{ spacing_tokens.spacing[margin_right] ?? margin_right }};
+{% endif %}
+
+{% if gap %}
+  gap: {{ spacing_tokens.spacing[gap] ?? gap }};
+{% endif %}

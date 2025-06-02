@@ -1,0 +1,72 @@
+{#
+  Typography Primitive Book - Pure Design Tokens
+  
+  This primitive provides pure typography design tokens from theme.json.
+  It should ONLY contain foundational typography properties, no semantic styling.
+  
+  Usage:
+  {% include 'primitive-books/typography-book.twig' with {
+    font_family: 'inter',
+    font_size: 'large',
+    font_weight: 'semiBold',
+    line_height: 'tight',
+    letter_spacing: 'normal'
+  } %}
+#}
+
+{% set typography_tokens = {
+  font_families: {
+    inter: 'var(--wp--preset--font-family--inter)',
+    'playfair-display': 'var(--wp--preset--font-family--playfair-display)',
+    roboto: 'var(--wp--preset--font-family--roboto)'
+  },
+  font_sizes: {
+    small: 'var(--wp--preset--font-size--small)',
+    medium: 'var(--wp--preset--font-size--medium)',
+    large: 'var(--wp--preset--font-size--large)',
+    'x-large': 'var(--wp--preset--font-size--x-large)',
+    'xx-large': 'var(--wp--preset--font-size--xx-large)',
+    huge: 'var(--wp--preset--font-size--huge)'
+  },
+  font_weights: {
+    regular: 'var(--wp--custom--typography--base-styles--font-weights--regular)',
+    medium: 'var(--wp--custom--typography--base-styles--font-weights--medium)',
+    semiBold: 'var(--wp--custom--typography--base-styles--font-weights--semi-bold)',
+    bold: 'var(--wp--custom--typography--base-styles--font-weights--bold)',
+    extraBold: 'var(--wp--custom--typography--base-styles--font-weights--extra-bold)'
+  },
+  line_heights: {
+    tight: 'var(--wp--custom--typography--base-styles--line-heights--tight)',
+    normal: 'var(--wp--custom--typography--base-styles--line-heights--normal)',
+    relaxed: 'var(--wp--custom--typography--base-styles--line-heights--relaxed)',
+    loose: 'var(--wp--custom--typography--base-styles--line-heights--loose)'
+  },
+  letter_spacings: {
+    tight: 'var(--wp--custom--typography--base-styles--letter-spacing--tight)',
+    normal: 'var(--wp--custom--typography--base-styles--letter-spacing--normal)',
+    wide: 'var(--wp--custom--typography--base-styles--letter-spacing--wide)',
+    wider: 'var(--wp--custom--typography--base-styles--letter-spacing--wider)',
+    widest: 'var(--wp--custom--typography--base-styles--letter-spacing--widest)'
+  }
+} %}
+
+{# Apply typography styles based on parameters #}
+{% if font_family %}
+  font-family: {{ typography_tokens.font_families[font_family] ?? font_family }};
+{% endif %}
+
+{% if font_size %}
+  font-size: {{ typography_tokens.font_sizes[font_size] ?? font_size }};
+{% endif %}
+
+{% if font_weight %}
+  font-weight: {{ typography_tokens.font_weights[font_weight] ?? font_weight }};
+{% endif %}
+
+{% if line_height %}
+  line-height: {{ typography_tokens.line_heights[line_height] ?? line_height }};
+{% endif %}
+
+{% if letter_spacing %}
+  letter-spacing: {{ typography_tokens.letter_spacings[letter_spacing] ?? letter_spacing }};
+{% endif %}

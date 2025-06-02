@@ -1,0 +1,767 @@
+/* Mi Design Book Styles */
+.mi-design-book {
+    padding: 2rem 0;
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+.design-book-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+}
+
+.design-book-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.design-book-header p {
+    font-size: 1.125rem;
+    color: #666;
+}
+
+.design-book-container {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Controls Panel */
+.controls-panel {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.controls-panel h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.control-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.control-section h3 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.control-group {
+    margin-bottom: 1rem;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--wp--preset--color--primary);
+    box-shadow: 0 0 0 2px rgba(90, 123, 124, 0.1);
+}
+
+.form-control-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+textarea.form-control {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Image Upload */
+.image-upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.image-preview {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.image-preview .placeholder {
+    color: #999;
+    font-size: 0.875rem;
+}
+
+/* Badges and Actions */
+.badge-input-group,
+.action-input-group {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.action-input-group {
+    grid-template-columns: 1fr auto auto auto;
+}
+
+.badges-list,
+.actions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.badge-item,
+.action-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    background: #f0f0f0;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.badge-item .remove,
+.action-item .remove {
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s;
+}
+
+.badge-item .remove:hover,
+.action-item .remove:hover {
+    color: #f44336;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.btn-primary:hover {
+    background: var(--wp--preset--color--primary-dark);
+}
+
+.btn-secondary {
+    background: var(--wp--preset--color--secondary);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.btn-secondary:hover {
+    background: var(--wp--preset--color--secondary-dark);
+}
+
+.btn-outline {
+    background: white;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-outline:hover {
+    background: #f5f5f5;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Preview Panel */
+.preview-panel {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.preview-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #333;
+}
+
+.preview-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.preview-container {
+    min-height: 400px;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.preview-container.bg-gray {
+    background: #f5f5f5;
+}
+
+.preview-container.bg-dark {
+    background: #333;
+}
+
+.preview-container.bg-pattern {
+    background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,.05) 10px, rgba(0,0,0,.05) 20px);
+}
+
+.card-preview {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Code Output */
+.code-output {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.code-output h3 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.code-output pre {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.code-output code {
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 0.875rem;
+    color: #333;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-content h3 {
+    margin-bottom: 1.5rem;
+}
+
+.sample-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.sample-image-item {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.sample-image-item:hover {
+    border-color: var(--wp--preset--color--primary);
+}
+
+.sample-image-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .design-book-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .controls-panel {
+        max-height: none;
+    }
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* Scrollbar styling */
+.controls-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.controls-panel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.controls-panel::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.controls-panel::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Card Preview Styles */
+.villa-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.villa-card.has-shadow {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.villa-card.has-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Corner styles */
+.villa-card.sharp {
+    border-radius: 0;
+}
+
+.villa-card.rounded {
+    border-radius: 8px;
+}
+
+.villa-card.extra-rounded {
+    border-radius: 16px;
+}
+
+.villa-card.pill {
+    border-radius: 24px;
+}
+
+/* Card variants */
+.villa-card--horizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.villa-card--horizontal .villa-card__image {
+    width: 40%;
+    flex-shrink: 0;
+}
+
+.villa-card--horizontal .villa-card__content {
+    width: 60%;
+}
+
+.villa-card--compact .villa-card__content {
+    padding: 1rem;
+}
+
+.villa-card--featured {
+    border: 2px solid var(--wp--preset--color--primary);
+}
+
+/* Card image */
+.villa-card__image {
+    position: relative;
+    padding-bottom: 66.67%; /* 3:2 aspect ratio */
+    overflow: hidden;
+}
+
+.villa-card__image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.villa-card--horizontal .villa-card__image {
+    padding-bottom: 0;
+    height: 100%;
+}
+
+/* Card content */
+.villa-card__content {
+    padding: 1.5rem;
+}
+
+.villa-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.villa-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+.villa-badge--primary {
+    background: var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-badge--primary-light {
+    background: var(--wp--preset--color--primary-light);
+    color: var(--wp--preset--color--base-darkest);
+}
+
+.villa-badge--primary-dark {
+    background: var(--wp--preset--color--primary-dark);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-badge--secondary {
+    background: var(--wp--preset--color--secondary);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-badge--secondary-light {
+    background: var(--wp--preset--color--secondary-light);
+    color: var(--wp--preset--color--base-darkest);
+}
+
+.villa-badge--secondary-dark {
+    background: var(--wp--preset--color--secondary-dark);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-badge--neutral {
+    background: var(--wp--preset--color--neutral);
+    color: var(--wp--preset--color--base-darkest);
+}
+
+.villa-badge--neutral-light {
+    background: var(--wp--preset--color--neutral-light);
+    color: var(--wp--preset--color--base-darkest);
+}
+
+.villa-badge--neutral-dark {
+    background: var(--wp--preset--color--neutral-dark);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-badge--base {
+    background: var(--wp--preset--color--base);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-badge--base-light {
+    background: var(--wp--preset--color--base-light);
+    color: var(--wp--preset--color--base-darkest);
+}
+
+.villa-badge--base-dark {
+    background: var(--wp--preset--color--base-dark);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+/* Text elements */
+.villa-card__pretitle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.villa-card__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: #333;
+}
+
+.villa-card__subtitle {
+    font-size: 1.125rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+}
+
+.villa-card__description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+/* Meta info */
+.villa-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.villa-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.villa-meta-item i {
+    font-size: 1rem;
+}
+
+/* Actions */
+.villa-card__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.villa-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+/* Button variants */
+/* Primary variants */
+.villa-btn--primary {
+    background: var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--extreme-light);
+    border: 2px solid var(--wp--preset--color--primary);
+}
+
+.villa-btn--primary:hover {
+    background: var(--wp--preset--color--primary-dark);
+    border-color: var(--wp--preset--color--primary-dark);
+}
+
+.villa-btn--primary-light {
+    background: var(--wp--preset--color--primary-light);
+    color: var(--wp--preset--color--base-darkest);
+    border: 2px solid var(--wp--preset--color--primary-light);
+}
+
+.villa-btn--primary-light:hover {
+    background: var(--wp--preset--color--primary);
+    border-color: var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-btn--primary-dark {
+    background: var(--wp--preset--color--primary-dark);
+    color: var(--wp--preset--color--extreme-light);
+    border: 2px solid var(--wp--preset--color--primary-dark);
+}
+
+.villa-btn--primary-dark:hover {
+    background: var(--wp--preset--color--primary);
+    border-color: var(--wp--preset--color--primary);
+}
+
+/* Secondary variants */
+.villa-btn--secondary {
+    background: var(--wp--preset--color--secondary);
+    color: var(--wp--preset--color--extreme-light);
+    border: 2px solid var(--wp--preset--color--secondary);
+}
+
+.villa-btn--secondary:hover {
+    background: var(--wp--preset--color--secondary-dark);
+    border-color: var(--wp--preset--color--secondary-dark);
+}
+
+.villa-btn--secondary-light {
+    background: var(--wp--preset--color--secondary-light);
+    color: var(--wp--preset--color--base-darkest);
+    border: 2px solid var(--wp--preset--color--secondary-light);
+}
+
+.villa-btn--secondary-light:hover {
+    background: var(--wp--preset--color--secondary);
+    border-color: var(--wp--preset--color--secondary);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-btn--secondary-dark {
+    background: var(--wp--preset--color--secondary-dark);
+    color: var(--wp--preset--color--extreme-light);
+    border: 2px solid var(--wp--preset--color--secondary-dark);
+}
+
+.villa-btn--secondary-dark:hover {
+    background: var(--wp--preset--color--secondary);
+    border-color: var(--wp--preset--color--secondary);
+}
+
+/* Neutral variants */
+.villa-btn--neutral {
+    background: var(--wp--preset--color--neutral);
+    color: var(--wp--preset--color--base-darkest);
+    border: 2px solid var(--wp--preset--color--neutral);
+}
+
+.villa-btn--neutral:hover {
+    background: var(--wp--preset--color--neutral-dark);
+    border-color: var(--wp--preset--color--neutral-dark);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-btn--neutral-light {
+    background: var(--wp--preset--color--neutral-light);
+    color: var(--wp--preset--color--base-darkest);
+    border: 2px solid var(--wp--preset--color--neutral-light);
+}
+
+.villa-btn--neutral-light:hover {
+    background: var(--wp--preset--color--neutral);
+    border-color: var(--wp--preset--color--neutral);
+}
+
+.villa-btn--neutral-dark {
+    background: var(--wp--preset--color--neutral-dark);
+    color: var(--wp--preset--color--extreme-light);
+    border: 2px solid var(--wp--preset--color--neutral-dark);
+}
+
+.villa-btn--neutral-dark:hover {
+    background: var(--wp--preset--color--neutral);
+    border-color: var(--wp--preset--color--neutral);
+    color: var(--wp--preset--color--base-darkest);
+}
+
+/* Base variants */
+.villa-btn--base {
+    background: var(--wp--preset--color--base);
+    color: var(--wp--preset--color--extreme-light);
+    border: 2px solid var(--wp--preset--color--base);
+}
+
+.villa-btn--base:hover {
+    background: var(--wp--preset--color--base-dark);
+    border-color: var(--wp--preset--color--base-dark);
+}
+
+.villa-btn--base-light {
+    background: var(--wp--preset--color--base-light);
+    color: var(--wp--preset--color--base-darkest);
+    border: 2px solid var(--wp--preset--color--base-light);
+}
+
+.villa-btn--base-light:hover {
+    background: var(--wp--preset--color--base);
+    border-color: var(--wp--preset--color--base);
+    color: var(--wp--preset--color--extreme-light);
+}
+
+.villa-btn--base-dark {
+    background: var(--wp--preset--color--base-dark);
+    color: var(--wp--preset--color--extreme-light);
+    border: 2px solid var(--wp--preset--color--base-dark);
+}
+
+.villa-btn--base-dark:hover {
+    background: var(--wp--preset--color--base-darkest);
+    border-color: var(--wp--preset--color--base-darkest);
+}
+
+/* Button sizes */
+.villa-btn--sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.villa-btn--lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+}

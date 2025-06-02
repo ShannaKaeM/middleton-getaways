@@ -1,0 +1,44 @@
+{#
+  Shadow Primitive Book - Pure Design Tokens
+  
+  This primitive provides pure shadow design tokens from theme.json.
+  It should ONLY contain foundational shadow properties, no semantic styling.
+  
+  Usage:
+  {% include 'primitive-books/shadow-book.twig' with {
+    box_shadow: 'md',
+    text_shadow: 'sm'
+  } %}
+#}
+
+{% set shadow_tokens = {
+  box_shadows: {
+    none: 'var(--wp--custom--layout--shadows--none)',
+    sm: 'var(--wp--custom--layout--shadows--sm)',
+    md: 'var(--wp--custom--layout--shadows--md)',
+    lg: 'var(--wp--custom--layout--shadows--lg)',
+    xl: 'var(--wp--custom--layout--shadows--xl)',
+    '2xl': 'var(--wp--custom--layout--shadows--2xl)',
+    inner: 'var(--wp--custom--layout--shadows--inner)'
+  },
+  text_shadows: {
+    none: 'none',
+    sm: '0 1px 2px rgba(0, 0, 0, 0.25)',
+    md: '0 2px 4px rgba(0, 0, 0, 0.3)',
+    lg: '0 3px 6px rgba(0, 0, 0, 0.35)',
+    xl: '0 4px 8px rgba(0, 0, 0, 0.4)'
+  }
+} %}
+
+{# Apply shadow styles based on parameters #}
+{% if box_shadow %}
+  box-shadow: {{ shadow_tokens.box_shadows[box_shadow] ?? box_shadow }};
+{% endif %}
+
+{% if text_shadow %}
+  text-shadow: {{ shadow_tokens.text_shadows[text_shadow] ?? text_shadow }};
+{% endif %}
+
+{% if filter_drop_shadow %}
+  filter: drop-shadow({{ filter_drop_shadow }});
+{% endif %}

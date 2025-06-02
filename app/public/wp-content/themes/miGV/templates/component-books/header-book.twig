@@ -1,0 +1,247 @@
+{#
+    Header Component
+    
+    Props:
+    - logo (object): {url, alt, width, height}
+    - menu_items (array): Navigation menu items
+    - user (object): Current user data
+    - variant (string): Header variant (default, transparent, sticky)
+#}
+
+{% set header_class = 'villa-header villa-header--' ~ (variant|default('default')) %}
+
+<header class="{{ header_class }}" style="
+    width: 100%;
+    background: var(--wp--preset--color--white);
+    border-bottom: 1px solid var(--wp--preset--color--gray-200);
+    position: {{ variant == 'sticky' ? 'sticky' : 'relative' }};
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+">
+    <div class="villa-header__container" style="
+        max-width: var(--wp--custom--layout--container--xl);
+        margin: 0 auto;
+        padding: 0 var(--wp--preset--spacing--medium);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 80px;
+    ">
+        {# Logo Section #}
+        <div class="villa-header__logo" style="
+            flex-shrink: 0;
+        ">
+            {% if logo %}
+                <a href="{{ site.url|default('/') }}" style="
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                ">
+                    {% if logo.url %}
+                        <img src="{{ logo.url }}" 
+                             alt="{{ logo.alt|default('Villa Community') }}" 
+                             style="
+                                height: 50px;
+                                width: auto;
+                                max-width: 200px;
+                             ">
+                    {% else %}
+                        <span style="
+                            font-family: var(--wp--preset--font-family--playfair-display);
+                            font-size: 1.5rem;
+                            font-weight: 700;
+                            color: var(--wp--preset--color--primary);
+                        ">Villa Community</span>
+                    {% endif %}
+                </a>
+            {% endif %}
+        </div>
+        
+        {# Navigation Menu #}
+        <nav class="villa-header__nav" style="
+            display: flex;
+            align-items: center;
+            gap: var(--wp--preset--spacing--large);
+            flex-grow: 1;
+            justify-content: center;
+        ">
+            {% if menu_items %}
+                <ul style="
+                    display: flex;
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    gap: var(--wp--preset--spacing--medium);
+                ">
+                    {% for item in menu_items %}
+                        <li>
+                            <a href="{{ item.url }}" 
+                               class="villa-header__link {{ item.active ? 'villa-header__link--active' : '' }}"
+                               style="
+                                text-decoration: none;
+                                color: var(--wp--preset--color--gray-700);
+                                font-family: var(--wp--preset--font-family--inter);
+                                font-size: 1rem;
+                                font-weight: 500;
+                                padding: 0.5rem 1rem;
+                                border-radius: 6px;
+                                transition: all 0.2s ease;
+                                position: relative;
+                                {{ item.active ? 'color: var(--wp--preset--color--primary); background: var(--wp--preset--color--primary-lightest);' : '' }}
+                               "
+                               onmouseover="this.style.color='var(--wp--preset--color--primary)'; this.style.background='var(--wp--preset--color--gray-50)';"
+                               onmouseout="this.style.color='{{ item.active ? 'var(--wp--preset--color--primary)' : 'var(--wp--preset--color--gray-700)' }}'; this.style.background='{{ item.active ? 'var(--wp--preset--color--primary-lightest)' : 'transparent' }}';">
+                                {{ item.label }}
+                            </a>
+                            
+                            {% if item.children %}
+                                <ul class="villa-header__submenu" style="
+                                    position: absolute;
+                                    top: 100%;
+                                    left: 0;
+                                    background: white;
+                                    min-width: 200px;
+                                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                    border-radius: 8px;
+                                    padding: 0.5rem 0;
+                                    display: none;
+                                ">
+                                    {% for child in item.children %}
+                                        <li style="list-style: none;">
+                                            <a href="{{ child.url }}" style="
+                                                display: block;
+                                                padding: 0.5rem 1rem;
+                                                color: var(--wp--preset--color--gray-700);
+                                                text-decoration: none;
+                                                transition: background 0.2s;
+                                            "
+                                            onmouseover="this.style.background='var(--wp--preset--color--gray-50)';"
+                                            onmouseout="this.style.background='transparent';">
+                                                {{ child.label }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </nav>
+        
+        {# User Section #}
+        <div class="villa-header__user" style="
+            display: flex;
+            align-items: center;
+            gap: var(--wp--preset--spacing--small);
+            flex-shrink: 0;
+        ">
+            {% if user and user.ID %}
+                {# Logged in user #}
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="
+                        color: var(--wp--preset--color--gray-600);
+                        font-size: 0.875rem;
+                    ">Hello, {{ user.display_name }}</span>
+                    
+                    <a href="{{ dashboard_url|default('/dashboard') }}" 
+                       style="
+                        background: var(--wp--preset--color--primary);
+                        color: white;
+                        padding: 0.5rem 1.25rem;
+                        border-radius: 6px;
+                        text-decoration: none;
+                        font-weight: 500;
+                        transition: all 0.2s ease;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                       "
+                       onmouseover="this.style.background='var(--wp--preset--color--primary-dark)';"
+                       onmouseout="this.style.background='var(--wp--preset--color--primary)';">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Dashboard
+                    </a>
+                    
+                    <a href="{{ logout_url|default(wp_logout_url()) }}" 
+                       style="
+                        color: var(--wp--preset--color--gray-600);
+                        text-decoration: none;
+                        font-size: 0.875rem;
+                        padding: 0.5rem;
+                       "
+                       onmouseover="this.style.color='var(--wp--preset--color--primary)';"
+                       onmouseout="this.style.color='var(--wp--preset--color--gray-600)';">
+                        Logout
+                    </a>
+                </div>
+            {% else %}
+                {# Guest user #}
+                <a href="{{ login_url|default('/wp-login.php') }}" 
+                   style="
+                    background: transparent;
+                    color: var(--wp--preset--color--primary);
+                    border: 2px solid var(--wp--preset--color--primary);
+                    padding: 0.5rem 1.5rem;
+                    border-radius: 6px;
+                    text-decoration: none;
+                    font-weight: 500;
+                    transition: all 0.2s ease;
+                   "
+                   onmouseover="this.style.background='var(--wp--preset--color--primary)'; this.style.color='white';"
+                   onmouseout="this.style.background='transparent'; this.style.color='var(--wp--preset--color--primary)';">
+                    Login
+                </a>
+            {% endif %}
+        </div>
+        
+        {# Mobile Menu Toggle #}
+        <button class="villa-header__mobile-toggle" style="
+            display: none;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+        " onclick="document.querySelector('.villa-header__nav').classList.toggle('villa-header__nav--open');">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+</header>
+
+<style>
+/* Responsive styles */
+@media (max-width: 768px) {
+    .villa-header__mobile-toggle {
+        display: block !important;
+    }
+    
+    .villa-header__nav {
+        display: none !important;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+    }
+    
+    .villa-header__nav--open {
+        display: block !important;
+    }
+    
+    .villa-header__nav ul {
+        flex-direction: column !important;
+    }
+}
+</style>

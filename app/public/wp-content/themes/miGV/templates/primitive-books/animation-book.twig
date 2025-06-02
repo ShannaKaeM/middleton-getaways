@@ -1,0 +1,95 @@
+{#
+  Animation Primitive Book - Pure Design Tokens
+  
+  This primitive provides pure animation design tokens from theme.json.
+  It should ONLY contain foundational animation properties, no semantic styling.
+  
+  Usage:
+  {% include 'primitive-books/animation-book.twig' with {
+    transition_duration: 'base',
+    transition_timing: 'ease',
+    transition_property: 'all'
+  } %}
+#}
+
+{% set animation_tokens = {
+  durations: {
+    fast: 'var(--wp--custom--animation--duration--fast)',
+    base: 'var(--wp--custom--animation--duration--base)',
+    slow: 'var(--wp--custom--animation--duration--slow)',
+    slower: 'var(--wp--custom--animation--duration--slower)'
+  },
+  timings: {
+    linear: 'var(--wp--custom--animation--timing--linear)',
+    ease: 'var(--wp--custom--animation--timing--ease)',
+    'ease-in': 'var(--wp--custom--animation--timing--ease-in)',
+    'ease-out': 'var(--wp--custom--animation--timing--ease-out)',
+    'ease-in-out': 'var(--wp--custom--animation--timing--ease-in-out)',
+    bounce: 'var(--wp--custom--animation--timing--bounce)'
+  }
+} %}
+
+{# Apply animation styles based on parameters #}
+{% if transition %}
+  transition: {{ transition }};
+{% endif %}
+
+{% if transition_property %}
+  transition-property: {{ transition_property }};
+{% endif %}
+
+{% if transition_duration %}
+  transition-duration: {{ animation_tokens.durations[transition_duration] ?? transition_duration }};
+{% endif %}
+
+{% if transition_timing %}
+  transition-timing-function: {{ animation_tokens.timings[transition_timing] ?? transition_timing }};
+{% endif %}
+
+{% if transition_delay %}
+  transition-delay: {{ transition_delay }};
+{% endif %}
+
+{% if animation %}
+  animation: {{ animation }};
+{% endif %}
+
+{% if animation_name %}
+  animation-name: {{ animation_name }};
+{% endif %}
+
+{% if animation_duration %}
+  animation-duration: {{ animation_tokens.durations[animation_duration] ?? animation_duration }};
+{% endif %}
+
+{% if animation_timing %}
+  animation-timing-function: {{ animation_tokens.timings[animation_timing] ?? animation_timing }};
+{% endif %}
+
+{% if animation_delay %}
+  animation-delay: {{ animation_delay }};
+{% endif %}
+
+{% if animation_iteration_count %}
+  animation-iteration-count: {{ animation_iteration_count }};
+{% endif %}
+
+{% if animation_direction %}
+  animation-direction: {{ animation_direction }};
+{% endif %}
+
+{% if animation_fill_mode %}
+  animation-fill-mode: {{ animation_fill_mode }};
+{% endif %}
+
+{% if animation_play_state %}
+  animation-play-state: {{ animation_play_state }};
+{% endif %}
+
+{% if transform %}
+  transform: {{ transform }};
+{% endif %}
+
+{% if transform_origin %}
+  transform-origin: {{ transform_origin }};
+{% endif %}

@@ -1,0 +1,203 @@
+{#
+  Badge Book Element - Semantic Badge/Tag Component
+  
+  This element composes color, typography, and spacing primitives into semantic badge styles.
+  Used for status indicators, tags, counts, and labels throughout the dashboard.
+  
+  Usage:
+  {% include 'element-books/badge-book.twig' with {
+    variant: 'primary',
+    size: 'md',
+    content: 'Available',
+    icon: 'check',
+    count: 5,
+    class: 'additional-classes'
+  } %}
+  
+  Available variants:
+  - primary, primary-light, primary-dark
+  - secondary, secondary-light, secondary-dark
+  - neutral, neutral-light, neutral-dark
+  - base, base-light, base-dark
+  
+  Available sizes:
+  - sm: Small badges
+  - md: Medium badges (default)
+  - lg: Large badges
+#}
+
+{% set badge_styles = {
+  'primary': {
+    color: 'extreme-light',
+    background_color: 'primary',
+    border_color: 'primary',
+    class: 'badge-primary'
+  },
+  'primary-light': {
+    color: 'base-darkest',
+    background_color: 'primary-light',
+    border_color: 'primary-light',
+    class: 'badge-primary-light'
+  },
+  'primary-dark': {
+    color: 'extreme-light',
+    background_color: 'primary-dark',
+    border_color: 'primary-dark',
+    class: 'badge-primary-dark'
+  },
+  'secondary': {
+    color: 'extreme-light',
+    background_color: 'secondary',
+    border_color: 'secondary',
+    class: 'badge-secondary'
+  },
+  'secondary-light': {
+    color: 'base-darkest',
+    background_color: 'secondary-light',
+    border_color: 'secondary-light',
+    class: 'badge-secondary-light'
+  },
+  'secondary-dark': {
+    color: 'extreme-light',
+    background_color: 'secondary-dark',
+    border_color: 'secondary-dark',
+    class: 'badge-secondary-dark'
+  },
+  'neutral': {
+    color: 'base-darkest',
+    background_color: 'neutral',
+    border_color: 'neutral',
+    class: 'badge-neutral'
+  },
+  'neutral-light': {
+    color: 'base-darkest',
+    background_color: 'neutral-light',
+    border_color: 'neutral-light',
+    class: 'badge-neutral-light'
+  },
+  'neutral-dark': {
+    color: 'extreme-light',
+    background_color: 'neutral-dark',
+    border_color: 'neutral-dark',
+    class: 'badge-neutral-dark'
+  },
+  'base': {
+    color: 'extreme-light',
+    background_color: 'base',
+    border_color: 'base',
+    class: 'badge-base'
+  },
+  'base-light': {
+    color: 'base-darkest',
+    background_color: 'base-light',
+    border_color: 'base-light',
+    class: 'badge-base-light'
+  },
+  'base-dark': {
+    color: 'extreme-light',
+    background_color: 'base-dark',
+    border_color: 'base-dark',
+    class: 'badge-base-dark'
+  }
+} %}
+
+{% set badge_sizes = {
+  sm: {
+    font_size: 'small',
+    padding_x: 'sm',
+    padding_y: 'xs',
+    class: 'badge-sm'
+  },
+  md: {
+    font_size: 'small',
+    padding_x: 'md',
+    padding_y: 'sm',
+    class: 'badge-md'
+  },
+  lg: {
+    font_size: 'medium',
+    padding_x: 'lg',
+    padding_y: 'md',
+    class: 'badge-lg'
+  }
+} %}
+
+{# Special badge types based on content #}
+{% set special_badges = {
+  'NEW': 'secondary',
+  'PINNED': 'primary',
+  'Available': 'primary',
+  'Occupied': 'neutral',
+  'Maintenance': 'secondary-light',
+  'For Sale': 'primary-dark',
+  'For Rent': 'primary-light',
+  'High': 'secondary-dark',
+  'Medium': 'neutral',
+  'Low': 'base-light'
+} %}
+
+{# Get the style and size configurations #}
+{% set auto_variant = special_badges[content] ?? variant %}
+{% set style = badge_styles[auto_variant] ?? badge_styles.neutral %}
+{% set size_config = badge_sizes[size] ?? badge_sizes.md %}
+{% set element_class = [style.class, size_config.class, class]|join(' ')|trim %}
+
+{# Render the badge element with composed primitives #}
+<span class="{{ element_class }}" style="
+  {%- include 'primitive-books/typography-book.twig' with {
+    font_family: 'inter',
+    font_size: size_config.font_size,
+    font_weight: 'medium',
+    line_height: 'tight',
+    letter_spacing: 'normal'
+  } -%}
+  {%- include 'primitive-books/color-book.twig' with {
+    color: style.color,
+    background_color: style.background_color,
+    border_color: style.border_color
+  } -%}
+  {%- include 'primitive-books/spacing-book.twig' with {
+    padding_left: size_config.padding_x,
+    padding_right: size_config.padding_x,
+    padding_top: size_config.padding_y,
+    padding_bottom: size_config.padding_y
+  } -%}
+  {%- include 'primitive-books/border-book.twig' with {
+    border_width: 'thin',
+    border_style: 'solid',
+    border_radius: 'full'
+  } -%}
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  white-space: nowrap;
+  text-transform: uppercase;
+">
+  {% if icon %}
+    <span class="badge-icon" style="width: 1em; height: 1em;">
+      {# Icon would be rendered here #}
+      {{ icon }}
+    </span>
+  {% endif %}
+  
+  {{- content|default('Badge') -}}
+  
+  {% if count is defined %}
+    <span class="badge-count" style="
+      {%- include 'primitive-books/color-book.twig' with {
+        background_color: style.color,
+        color: style.background_color
+      } -%}
+      {%- include 'primitive-books/spacing-book.twig' with {
+        padding_left: 'xs',
+        padding_right: 'xs'
+      } -%}
+      {%- include 'primitive-books/border-book.twig' with {
+        border_radius: 'full'
+      } -%}
+      min-width: 1.25em;
+      text-align: center;
+      margin-left: 0.25rem;
+    ">{{ count }}</span>
+  {% endif %}
+</span>

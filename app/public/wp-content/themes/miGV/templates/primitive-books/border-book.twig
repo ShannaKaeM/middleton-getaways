@@ -1,0 +1,154 @@
+{#
+  Border Primitive Book - Pure Design Tokens
+  
+  This primitive provides pure border design tokens from theme.json.
+  It should ONLY contain foundational border properties, no semantic styling.
+  
+  Usage:
+  {% include 'primitive-books/border-book.twig' with {
+    border_width: 'thin',
+    border_style: 'solid',
+    border_color: 'neutral-light',
+    border_radius: 'md'
+  } %}
+#}
+
+{% set border_tokens = {
+  widths: {
+    none: 'var(--wp--custom--layout--border-width--none)',
+    thin: 'var(--wp--custom--layout--border-width--thin)',
+    medium: 'var(--wp--custom--layout--border-width--medium)',
+    thick: 'var(--wp--custom--layout--border-width--thick)',
+    heavy: 'var(--wp--custom--layout--border-width--heavy)'
+  },
+  radius: {
+    none: 'var(--wp--custom--layout--border-radius--none)',
+    sm: 'var(--wp--custom--layout--border-radius--sm)',
+    md: 'var(--wp--custom--layout--border-radius--md)',
+    lg: 'var(--wp--custom--layout--border-radius--lg)',
+    xl: 'var(--wp--custom--layout--border-radius--xl)',
+    '2xl': 'var(--wp--custom--layout--border-radius--2xl)',
+    '3xl': 'var(--wp--custom--layout--border-radius--3xl)',
+    full: 'var(--wp--custom--layout--border-radius--full)'
+  },
+  styles: {
+    none: 'none',
+    solid: 'solid',
+    dashed: 'dashed',
+    dotted: 'dotted',
+    double: 'double',
+    groove: 'groove',
+    ridge: 'ridge',
+    inset: 'inset',
+    outset: 'outset'
+  }
+} %}
+
+{# Import color tokens for border colors #}
+{% set color_tokens = {
+  colors: {
+    'primary-light': 'var(--wp--preset--color--primary-light)',
+    'primary': 'var(--wp--preset--color--primary)',
+    'primary-dark': 'var(--wp--preset--color--primary-dark)',
+    'secondary-light': 'var(--wp--preset--color--secondary-light)',
+    'secondary': 'var(--wp--preset--color--secondary)',
+    'secondary-dark': 'var(--wp--preset--color--secondary-dark)',
+    'neutral-light': 'var(--wp--preset--color--neutral-light)',
+    'neutral': 'var(--wp--preset--color--neutral)',
+    'neutral-dark': 'var(--wp--preset--color--neutral-dark)',
+    'base-lightest': 'var(--wp--preset--color--base-lightest)',
+    'base-light': 'var(--wp--preset--color--base-light)',
+    'base': 'var(--wp--preset--color--base)',
+    'base-dark': 'var(--wp--preset--color--base-dark)',
+    'base-darkest': 'var(--wp--preset--color--base-darkest)',
+    'extreme-light': 'var(--wp--preset--color--extreme-light)',
+    'extreme-dark': 'var(--wp--preset--color--extreme-dark)'
+  }
+} %}
+
+{# Apply border styles based on parameters #}
+{% if border %}
+  border: {{ border }};
+{% endif %}
+
+{% if border_width %}
+  border-width: {{ border_tokens.widths[border_width] ?? border_width }};
+{% endif %}
+
+{% if border_style %}
+  border-style: {{ border_tokens.styles[border_style] ?? border_style }};
+{% endif %}
+
+{% if border_color %}
+  border-color: {{ color_tokens.colors[border_color] ?? border_color }};
+{% endif %}
+
+{% if border_radius %}
+  border-radius: {{ border_tokens.radius[border_radius] ?? border_radius }};
+{% endif %}
+
+{# Individual side properties #}
+{% if border_top_width %}
+  border-top-width: {{ border_tokens.widths[border_top_width] ?? border_top_width }};
+{% endif %}
+
+{% if border_top_style %}
+  border-top-style: {{ border_tokens.styles[border_top_style] ?? border_top_style }};
+{% endif %}
+
+{% if border_top_color %}
+  border-top-color: {{ color_tokens.colors[border_top_color] ?? border_top_color }};
+{% endif %}
+
+{% if border_right_width %}
+  border-right-width: {{ border_tokens.widths[border_right_width] ?? border_right_width }};
+{% endif %}
+
+{% if border_right_style %}
+  border-right-style: {{ border_tokens.styles[border_right_style] ?? border_right_style }};
+{% endif %}
+
+{% if border_right_color %}
+  border-right-color: {{ color_tokens.colors[border_right_color] ?? border_right_color }};
+{% endif %}
+
+{% if border_bottom_width %}
+  border-bottom-width: {{ border_tokens.widths[border_bottom_width] ?? border_bottom_width }};
+{% endif %}
+
+{% if border_bottom_style %}
+  border-bottom-style: {{ border_tokens.styles[border_bottom_style] ?? border_bottom_style }};
+{% endif %}
+
+{% if border_bottom_color %}
+  border-bottom-color: {{ color_tokens.colors[border_bottom_color] ?? border_bottom_color }};
+{% endif %}
+
+{% if border_left_width %}
+  border-left-width: {{ border_tokens.widths[border_left_width] ?? border_left_width }};
+{% endif %}
+
+{% if border_left_style %}
+  border-left-style: {{ border_tokens.styles[border_left_style] ?? border_left_style }};
+{% endif %}
+
+{% if border_left_color %}
+  border-left-color: {{ color_tokens.colors[border_left_color] ?? border_left_color }};
+{% endif %}
+
+{# Individual corner radius #}
+{% if border_top_left_radius %}
+  border-top-left-radius: {{ border_tokens.radius[border_top_left_radius] ?? border_top_left_radius }};
+{% endif %}
+
+{% if border_top_right_radius %}
+  border-top-right-radius: {{ border_tokens.radius[border_top_right_radius] ?? border_top_right_radius }};
+{% endif %}
+
+{% if border_bottom_right_radius %}
+  border-bottom-right-radius: {{ border_tokens.radius[border_bottom_right_radius] ?? border_bottom_right_radius }};
+{% endif %}
+
+{% if border_bottom_left_radius %}
+  border-bottom-left-radius: {{ border_tokens.radius[border_bottom_left_radius] ?? border_bottom_left_radius }};
+{% endif %}

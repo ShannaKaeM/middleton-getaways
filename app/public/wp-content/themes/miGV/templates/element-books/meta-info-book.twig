@@ -1,0 +1,112 @@
+{#
+  Meta Info Book Element - Metadata Display Component
+  
+  This element displays metadata information like dates, authors, categories, etc.
+  Used in cards, headers, and detail views throughout the dashboard.
+  
+  Usage:
+  {% include 'element-books/meta-info-book.twig' with {
+    items: [
+      {icon: 'calendar', label: 'Date', value: 'Jan 15, 2024'},
+      {icon: 'user', label: 'Author', value: 'John Doe'},
+      {icon: 'folder', label: 'Category', value: 'Maintenance'}
+    ],
+    separator: '•',
+    size: 'sm',
+    class: 'additional-classes'
+  } %}
+  
+  Available sizes:
+  - sm: Small meta info
+  - md: Medium meta info (default)
+  - lg: Large meta info
+#}
+
+{% set meta_sizes = {
+  sm: {
+    font_size: 'small',
+    gap: 'sm',
+    class: 'meta-sm'
+  },
+  md: {
+    font_size: 'medium',
+    gap: 'md',
+    class: 'meta-md'
+  },
+  lg: {
+    font_size: 'large',
+    gap: 'lg',
+    class: 'meta-lg'
+  }
+} %}
+
+{# Get configuration #}
+{% set size_config = meta_sizes[size] ?? meta_sizes.md %}
+{% set element_class = ['meta-info', size_config.class, class]|join(' ')|trim %}
+{% set separator_char = separator|default('•') %}
+
+{# Render the meta info #}
+<div class="{{ element_class }}" style="
+  {%- include 'primitive-books/layout-book.twig' with {
+    display: 'flex',
+    flex_wrap: 'wrap',
+    align_items: 'center',
+    gap: size_config.gap
+  } -%}
+  {%- include 'primitive-books/typography-book.twig' with {
+    font_family: 'inter',
+    font_size: size_config.font_size,
+    line_height: 'normal'
+  } -%}
+  {%- include 'primitive-books/color-book.twig' with {
+    color: 'base'
+  } -%}
+">
+  {% for item in items %}
+    {% if loop.index > 1 and separator_char %}
+      <span class="meta-separator" style="
+        {%- include 'primitive-books/color-book.twig' with {
+          color: 'base-light'
+        } -%}
+      ">{{ separator_char }}</span>
+    {% endif %}
+    
+    <span class="meta-item" style="
+      {%- include 'primitive-books/layout-book.twig' with {
+        display: 'flex',
+        align_items: 'center',
+        gap: 'xs'
+      } -%}
+    ">
+      {% if item.icon %}
+        <span class="meta-icon" style="
+          width: 1em;
+          height: 1em;
+          {%- include 'primitive-books/color-book.twig' with {
+            color: 'base'
+          } -%}
+        ">
+          {# Icon would be rendered here #}
+          {{ item.icon }}
+        </span>
+      {% endif %}
+      
+      {% if item.label %}
+        <span class="meta-label" style="
+          {%- include 'primitive-books/color-book.twig' with {
+            color: 'base'
+          } -%}
+        ">{{ item.label }}:</span>
+      {% endif %}
+      
+      <span class="meta-value" style="
+        {%- include 'primitive-books/color-book.twig' with {
+          color: 'base-darkest'
+        } -%}
+        {%- include 'primitive-books/typography-book.twig' with {
+          font_weight: item.highlight ? 'medium' : 'regular'
+        } -%}
+      ">{{ item.value }}</span>
+    </span>
+  {% endfor %}
+</div>

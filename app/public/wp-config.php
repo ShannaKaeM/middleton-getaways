@@ -78,11 +78,9 @@ if ( file_exists( dirname( __DIR__, 2 ) . '/vendor/autoload.php' ) ) {
     require_once dirname( __DIR__, 2 ) . '/vendor/autoload.php';
 }
 
-// Set URLs for production
-if ( getenv('WP_HOME') ) {
-    define( 'WP_HOME', getenv('WP_HOME') );
-    define( 'WP_SITEURL', getenv('WP_SITEURL') ?: getenv('WP_HOME') );
-}
+// Set URLs for local development
+define( 'WP_HOME', 'http://localhost:10033' );
+define( 'WP_SITEURL', 'http://localhost:10033' );
 
 
 

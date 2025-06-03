@@ -47,7 +47,7 @@
    ================================== */
 
 .color-book-content {
-    max-width: var(--wp--custom--layout--container--xl);
+    max-width: 1200px;
     margin: 0 auto;
     padding: var(--wp--custom--layout--spacing--5xl);
 }
@@ -94,6 +94,8 @@
     border: 1px solid var(--wp--preset--color--neutral-light);
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 200px;
+    height: 250px;
 }
 
 .color-card:hover {
@@ -103,7 +105,7 @@
 
 /* Color Swatch */
 .color-swatch {
-    height: 120px;
+    height: 200px;
     position: relative;
     display: flex;
     align-items: flex-end;
@@ -122,19 +124,18 @@
 
 /* Color Controls */
 .color-controls {
-    padding: var(--wp--custom--layout--spacing--2xl);
+    padding: var(--wp--custom--layout--spacing--lg);
 }
 
 .color-name {
-    font-size: var(--wp--preset--font-size--medium);
+    font-size: var(--wp--preset--font-size--small);
     font-weight: var(--wp--custom--typography--base-styles--font-weights--medium);
     color: var(--wp--preset--color--base-darkest);
-    margin-bottom: var(--wp--custom--layout--spacing--xl);
+    margin-bottom: var(--wp--custom--layout--spacing--md);
 }
 
-/* Control Groups */
 .control-group {
-    margin-bottom: var(--wp--custom--layout--spacing--xl);
+    margin-bottom: var(--wp--custom--layout--spacing--md);
 }
 
 .control-group label {
@@ -284,7 +285,7 @@
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .color-grid {
         grid-template-columns: repeat(2, 1fr);
     }

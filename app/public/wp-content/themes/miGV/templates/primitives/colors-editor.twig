@@ -43,7 +43,6 @@
                             
                             <div class="color-info">
                                 <h3 class="color-name">{{ color.name }}</h3>
-                                <p class="color-slug">{{ color.slug }}</p>
                                 
                                 <div class="color-controls">
                                     <div class="control-group">
@@ -69,48 +68,91 @@
                                     </div>
                                     
                                     <div class="color-adjustments">
-                                        <button class="adjustment-toggle">Fine tune</button>
-                                        <div class="adjustment-panel">
-                                            <div class="control-group">
-                                                <label>Hue</label>
-                                                <input type="range" 
-                                                       class="hue-slider" 
-                                                       min="-180" 
-                                                       max="180" 
-                                                       value="0"
-                                                       data-slug="{{ color.slug }}">
+                                        <div class="adjustment-panel active">
+                                            <div class="adjustment-tabs">
+                                                <button class="tab-btn active" data-tab="hsl">HSL</button>
+                                                <button class="tab-btn" data-tab="cmyk">CMYK</button>
                                             </div>
-                                            <div class="control-group">
-                                                <label>Saturation</label>
-                                                <input type="range" 
-                                                       class="saturation-slider" 
-                                                       min="-100" 
-                                                       max="100" 
-                                                       value="0"
-                                                       data-slug="{{ color.slug }}">
+                                            
+                                            <div class="tab-content active" data-tab="hsl">
+                                                <div class="control-group">
+                                                    <label>Hue</label>
+                                                    <input type="range" 
+                                                           class="hue-slider" 
+                                                           min="-180" 
+                                                           max="180" 
+                                                           value="0"
+                                                           data-slug="{{ color.slug }}">
+                                                </div>
+                                                <div class="control-group">
+                                                    <label>Saturation</label>
+                                                    <input type="range" 
+                                                           class="saturation-slider" 
+                                                           min="-100" 
+                                                           max="100" 
+                                                           value="0"
+                                                           data-slug="{{ color.slug }}">
+                                                </div>
+                                                <div class="control-group">
+                                                    <label>Lightness</label>
+                                                    <input type="range" 
+                                                           class="lightness-slider" 
+                                                           min="-50" 
+                                                           max="50" 
+                                                           value="0"
+                                                           data-slug="{{ color.slug }}">
+                                                </div>
                                             </div>
-                                            <div class="control-group">
-                                                <label>Lightness</label>
-                                                <input type="range" 
-                                                       class="lightness-slider" 
-                                                       min="-100" 
-                                                       max="100" 
-                                                       value="0"
-                                                       data-slug="{{ color.slug }}">
+                                            
+                                            <div class="tab-content" data-tab="cmyk">
+                                                <div class="control-group">
+                                                    <label>Cyan</label>
+                                                    <input type="range" 
+                                                           class="cyan-slider" 
+                                                           min="-50" 
+                                                           max="50" 
+                                                           value="0"
+                                                           data-slug="{{ color.slug }}">
+                                                </div>
+                                                <div class="control-group">
+                                                    <label>Magenta</label>
+                                                    <input type="range" 
+                                                           class="magenta-slider" 
+                                                           min="-50" 
+                                                           max="50" 
+                                                           value="0"
+                                                           data-slug="{{ color.slug }}">
+                                                </div>
+                                                <div class="control-group">
+                                                    <label>Yellow</label>
+                                                    <input type="range" 
+                                                           class="yellow-slider" 
+                                                           min="-50" 
+                                                           max="50" 
+                                                           value="0"
+                                                           data-slug="{{ color.slug }}">
+                                                </div>
+                                                <div class="control-group">
+                                                    <label>Black</label>
+                                                    <input type="range" 
+                                                           class="black-slider" 
+                                                           min="-50" 
+                                                           max="50" 
+                                                           value="0"
+                                                           data-slug="{{ color.slug }}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div class="color-variable">
+                                <button class="css-variable-preview" data-variable="var(--wp--preset--color--{{ color.slug }})">
                                     <code>var(--wp--preset--color--{{ color.slug }})</code>
-                                    <button class="copy-btn" data-copy="var(--wp--preset--color--{{ color.slug }})">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                                        </svg>
-                                    </button>
-                                </div>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
                             </div>
                             
                             <!-- Hidden color picker -->

@@ -157,21 +157,6 @@
                     "slug": "extreme-dark",
                     "name": "Extreme Dark",
                     "color": "#000000"
-                },
-                {
-                    "slug": "base-white",
-                    "name": "Base White",
-                    "color": "#ffffff"
-                },
-                {
-                    "slug": "base-black",
-                    "name": "Base Black",
-                    "color": "#000000"
-                },
-                {
-                    "slug": "accent",
-                    "name": "Accent",
-                    "color": "#5a7b7c"
                 }
             ],
             "custom": {

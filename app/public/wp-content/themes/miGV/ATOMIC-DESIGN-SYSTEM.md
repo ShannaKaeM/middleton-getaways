@@ -4,6 +4,7 @@
 
 ### Completed
 - **Color Primitive Editor** (`/color-book/`) - Fully functional with all color groups (primary, secondary, neutral, base, extreme, other) displayed in proper grid layouts with live editing capabilities
+- **Color Cleanup & Enhancement** - Completed color cleanup and enhancement task
 
 ### In Progress
 - Typography Primitive Editor
@@ -199,6 +200,30 @@ Features:
 - Run `mi_get_theme_json_tokens` to see available tokens
 - Add missing tokens to theme.json
 - Regenerate CSS variables
+
+## Recent Completions
+
+### ✅ Color Cleanup & Enhancement (June 2025)
+**Status**: COMPLETED
+
+**Enhancements Made**:
+1. **Fixed Lightness Scale Issue**: Corrected HSL lightness slider to use percentage-based adjustments instead of absolute values, preventing colors from turning grayscale
+2. **Added CMYK Support**: Implemented full CMYK color space with tabbed interface (HSL/CMYK), individual sliders, and real-time conversion
+3. **Updated Typography**: Changed design book UI font to Montserrat for consistency
+4. **Color Palette Cleanup**: Removed duplicate colors from theme.json:
+   - Removed `base-white` (use `extreme-light` instead)
+   - Removed `base-black` (use `extreme-dark` instead) 
+   - Removed `accent` (use `secondary` instead)
+
+**Files Modified**:
+- `theme.json` - Cleaned color palette
+- `primitive-editor.css` - Added CMYK styles, updated font
+- `primitive-colors.js` - Fixed lightness, added CMYK support
+- `colors-editor.twig` - Added CMYK sliders and tabs
+- `villa-dashboard.css` - Updated all color references
+- `color-book.twig` - Removed duplicate color tokens
+
+**Result**: Clean, consistent color system with professional-grade editing capabilities and no duplicate color tokens.
 
 ## Future Enhancements
 

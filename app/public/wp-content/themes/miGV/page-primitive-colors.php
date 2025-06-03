@@ -96,7 +96,7 @@ if (isset($color_lookup['base-darkest'])) $color_groups['base']['colors'][] = $c
 if (isset($color_lookup['extreme-light'])) $color_groups['extreme']['colors'][] = $color_lookup['extreme-light'];
 if (isset($color_lookup['extreme-dark'])) $color_groups['extreme']['colors'][] = $color_lookup['extreme-dark'];
 
-// Other colors (base-white, base-black, accent, etc.)
+// Other colors (if any remain after cleanup)
 $assigned_slugs = ['primary-light', 'primary', 'primary-dark', 'secondary-light', 'secondary', 'secondary-dark', 
                    'neutral-light', 'neutral', 'neutral-dark', 'base-lightest', 'base-light', 'base', 'base-dark', 
                    'base-darkest', 'extreme-light', 'extreme-dark'];

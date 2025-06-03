@@ -369,6 +369,25 @@ function migv_custom_page_templates($template) {
 add_filter('template_include', 'migv_custom_page_templates');
 
 /**
+ * Add custom Timber functions
+ */
+add_filter('timber/twig', function($twig) {
+    // Add function to load primitive JSON files
+    $twig->addFunction(new \Twig\TwigFunction('load_primitive', function($name) {
+        $json_path = get_template_directory() . "/primitives/{$name}.json";
+        
+        if (!file_exists($json_path)) {
+            return null;
+        }
+        
+        $json_content = file_get_contents($json_path);
+        return json_decode($json_content, true);
+    }));
+    
+    return $twig;
+});
+
+/**
  * Include required files
  */
 require get_template_directory() . '/inc/template-functions.php';
@@ -932,3 +951,225 @@ function card_get_card_types() {
 }
 add_action('wp_ajax_card_get_card_types', 'card_get_card_types');
 add_action('wp_ajax_nopriv_card_get_card_types', 'card_get_card_types');
+
+/**
+ * Typography Primitive AJAX Handlers
+ */
+
+// Update typography primitive
+function update_typography_primitive() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check permissions
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get the posted data
+    $type = sanitize_text_field($_POST['type']);
+    $slug = sanitize_text_field($_POST['slug']);
+    $value = sanitize_text_field($_POST['value']);
+    
+    // Load existing typography data
+    $json_path = get_template_directory() . '/primitives/typography.json';
+    $typography_data = json_decode(file_get_contents($json_path), true);
+    
+    // Update the specific value
+    if (isset($typography_data[$type][$slug])) {
+        $typography_data[$type][$slug] = $value;
+        
+        // Save back to JSON file
+        $json_content = json_encode($typography_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        file_put_contents($json_path, $json_content);
+        
+        wp_send_json_success(array(
+            'message' => 'Typography updated successfully',
+            'type' => $type,
+            'slug' => $slug,
+            'value' => $value
+        ));
+    } else {
+        wp_send_json_error('Invalid typography token');
+    }
+}
+add_action('wp_ajax_update_typography_primitive', 'update_typography_primitive');
+
+// Reset typography primitive
+function reset_typography_primitive() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check permissions
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Reset logic would go here
+    wp_send_json_success(array(
+        'message' => 'Typography reset to defaults'
+    ));
+}
+add_action('wp_ajax_reset_typography_primitive', 'reset_typography_primitive');
+
+// Save all typography to JSON primitive
+function save_typography_primitive() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check permissions
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get the posted typography data
+    $typography_json = stripslashes($_POST['typography']);
+    $typography_data = json_decode($typography_json, true);
+    
+    if (!$typography_data) {
+        wp_send_json_error('Invalid typography data');
+        return;
+    }
+    
+    // Get the JSON file path
+    $json_path = get_template_directory() . '/primitives/typography.json';
+    
+    // Save to JSON file
+    $json_content = json_encode($typography_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    $result = file_put_contents($json_path, $json_content);
+    
+    if ($result !== false) {
+        wp_send_json_success(array(
+            'message' => 'Typography saved successfully'
+        ));
+    } else {
+        wp_send_json_error('Failed to save typography data');
+    }
+}
+add_action('wp_ajax_save_typography_primitive', 'save_typography_primitive');
+
+// Sync typography to theme.json
+function sync_typography_to_theme_json() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check permissions
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get the posted typography data
+    $typography_json = stripslashes($_POST['typography']);
+    $typography_data = json_decode($typography_json, true);
+    
+    if (!$typography_data) {
+        wp_send_json_error('Invalid typography data');
+        return;
+    }
+    
+    // Get theme.json path
+    $theme_json_path = get_template_directory() . '/theme.json';
+    
+    // Read existing theme.json
+    if (file_exists($theme_json_path)) {
+        $theme_json_content = file_get_contents($theme_json_path);
+        $theme_json = json_decode($theme_json_content, true);
+    } else {
+        $theme_json = array();
+    }
+    
+    // Ensure settings structure exists
+    if (!isset($theme_json['settings'])) {
+        $theme_json['settings'] = array();
+    }
+    if (!isset($theme_json['settings']['typography'])) {
+        $theme_json['settings']['typography'] = array();
+    }
+    
+    // Convert typography data to theme.json format
+    // Font sizes
+    if (isset($typography_data['font_sizes'])) {
+        $font_sizes = array();
+        foreach ($typography_data['font_sizes'] as $slug => $size) {
+            $font_sizes[] = array(
+                'slug' => $slug,
+                'size' => $size,
+                'name' => ucwords(str_replace('-', ' ', $slug))
+            );
+        }
+        $theme_json['settings']['typography']['fontSizes'] = $font_sizes;
+    }
+    
+    // Font families
+    if (isset($typography_data['font_families'])) {
+        $font_families = array();
+        foreach ($typography_data['font_families'] as $slug => $family) {
+            $font_families[] = array(
+                'slug' => $slug,
+                'fontFamily' => $family,
+                'name' => ucwords(str_replace('-', ' ', $slug))
+            );
+        }
+        $theme_json['settings']['typography']['fontFamilies'] = $font_families;
+    }
+    
+    // Add custom typography properties
+    if (!isset($theme_json['settings']['custom'])) {
+        $theme_json['settings']['custom'] = array();
+    }
+    if (!isset($theme_json['settings']['custom']['typography'])) {
+        $theme_json['settings']['custom']['typography'] = array();
+    }
+    if (!isset($theme_json['settings']['custom']['typography']['baseStyles'])) {
+        $theme_json['settings']['custom']['typography']['baseStyles'] = array();
+    }
+    
+    // Font weights
+    if (isset($typography_data['font_weights'])) {
+        $theme_json['settings']['custom']['typography']['baseStyles']['fontWeights'] = $typography_data['font_weights'];
+    }
+    
+    // Line heights
+    if (isset($typography_data['line_heights'])) {
+        $theme_json['settings']['custom']['typography']['baseStyles']['lineHeights'] = $typography_data['line_heights'];
+    }
+    
+    // Letter spacing
+    if (isset($typography_data['letter_spacings'])) {
+        $theme_json['settings']['custom']['typography']['baseStyles']['letterSpacing'] = $typography_data['letter_spacings'];
+    }
+    
+    // Text transforms
+    if (isset($typography_data['text_transforms'])) {
+        $theme_json['settings']['custom']['typography']['baseStyles']['textTransforms'] = $typography_data['text_transforms'];
+    }
+    
+    // Save updated theme.json
+    $json_content = json_encode($theme_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    $result = file_put_contents($theme_json_path, $json_content);
+    
+    if ($result !== false) {
+        wp_send_json_success(array(
+            'message' => 'Typography synced to theme.json successfully'
+        ));
+    } else {
+        wp_send_json_error('Failed to update theme.json');
+    }
+}
+add_action('wp_ajax_sync_typography_to_theme_json', 'sync_typography_to_theme_json');

@@ -1,7 +1,7 @@
 {#
   Color Primitive Book - Self-Sufficient Design Tokens
   
-  This primitive contains actual color values, not CSS variable references.
+  This primitive loads actual color values from JSON file.
   It is the single source of truth for colors in the design system.
   
   Color scheme:
@@ -19,26 +19,8 @@
   } %}
 #}
 
-{% set color_tokens = {
-  colors: {
-    'primary-light': '#d6dcd6',
-    'primary': '#5a7b7c',
-    'primary-dark': '#3a5a59',
-    'secondary-light': '#c38484',
-    'secondary': '#975d55',
-    'secondary-dark': '#853d2d',
-    'neutral-light': '#d1cfc2',
-    'neutral': '#b5b09f',
-    'neutral-dark': '#9e9983',
-    'base-lightest': '#e6e6e6',
-    'base-light': '#b3b3b3',
-    'base': '#808080',
-    'base-dark': '#676765',
-    'base-darkest': '#4d4d4d',
-    'extreme-light': '#ffffff',
-    'extreme-dark': '#000000'
-  }
-} %}
+{# Load color tokens from JSON #}
+{% set color_tokens = load_primitive('colors') %}
 
 {# Apply color styles based on parameters #}
 {% if color %}

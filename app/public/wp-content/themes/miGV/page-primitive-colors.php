@@ -122,4 +122,4 @@ $context['debug_colors'] = $colors;
 $context['debug_color_count'] = count($colors);
 
 // Render the template
-Timber::render('primitives/colors-editor.twig', $context);
+Timber::render('design-book-editors/colors-editor.twig', $context);

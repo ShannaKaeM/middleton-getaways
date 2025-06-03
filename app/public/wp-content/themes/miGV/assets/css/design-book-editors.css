@@ -1,13 +1,18 @@
 /* Primitive Editor Base Styles */
 :root {
     /* Ensure consistent font with design book */
-    --primitive-font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --primitive-font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --primitive-font-mono: 'Monaco', 'Consolas', 'Courier New', monospace;
+    
+    /* Color variables matching theme.json */
+    --color-base-dark: #1a1a1a;
+    --color-extreme-light: #ffffff;
 }
 
 .primitive-editor {
     min-height: 100vh;
-    background: #f8f9fa;
+    background: var(--color-base-dark);
+    color: var(--color-extreme-light);
     font-family: var(--primitive-font-primary) !important;
 }
 
@@ -26,8 +31,8 @@
 
 /* Header */
 .primitive-header {
-    background: white;
-    border-bottom: 1px solid #e1e4e8;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 2rem;
     position: sticky;
     top: 0;
@@ -44,13 +49,18 @@
 .primitive-title {
     font-size: 2rem;
     font-weight: 600;
-    margin: 0 0 0.5rem 0;
-    color: #1a1a1a;
-    font-family: var(--primitive-font-primary) !important;
+    margin: 0;
+    color: var(--color-extreme-light);
+}
+
+.primitive-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0.5rem 0 0 0;
 }
 
 .primitive-description {
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.7);
     margin: 0;
     font-family: var(--primitive-font-primary) !important;
 }
@@ -64,9 +74,9 @@
     width: 40px;
     height: 40px;
     border-radius: 8px;
-    border: 1px solid #e1e4e8;
-    background: white;
-    color: #6b7280;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -75,9 +85,9 @@
 }
 
 .btn-icon:hover {
-    background: #f3f4f6;
-    color: #1a1a1a;
-    border-color: #d1d5db;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-extreme-light);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Content */
@@ -122,7 +132,7 @@
 
 /* Color Cards */
 .color-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 16px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -194,13 +204,13 @@
     font-size: 1rem;
     font-weight: 600;
     margin: 0 0 0.15rem 0;
-    color: #1a1a1a;
+    color: var(--color-extreme-light);
     font-family: var(--primitive-font-primary) !important;
 }
 
 .color-slug {
     font-size: 0.875rem;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.7);
     margin: 0 0 .15rem 0;
     font-family: var(--primitive-font-mono) !important;
 }
@@ -221,7 +231,7 @@
 .control-group label {
     font-size: .75rem;
     font-weight: 500;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-family: var(--primitive-font-primary) !important;
@@ -238,12 +248,14 @@
     min-width: 5.5rem;
     max-width: 6rem;
     padding: 0.25rem 0.5rem;
-    border: 1px solid #e1e4e8;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     font-family: var(--primitive-font-mono) !important;
     font-size: 0.875rem;
     transition: border-color 0.2s;
     box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
 }
 
 .color-hex-input:focus {
@@ -619,12 +631,12 @@ input[type="range"]::-moz-range-thumb:hover {
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0 0 1.5rem 0;
-    color: #1a1a1a;
+    color: var(--color-extreme-light);
 }
 
 /* Typography Scale Controls */
 .scale-controls {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -662,7 +674,7 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .typography-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -675,7 +687,7 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .typography-preview {
     padding: 1.5rem;
-    background: #f9fafb;
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     margin-bottom: 1rem;
     min-height: 80px;
@@ -684,7 +696,7 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .typography-preview p {
     margin: 0;
-    color: #1a1a1a;
+    color: var(--color-extreme-light);
 }
 
 .typography-info {
@@ -695,12 +707,12 @@ input[type="range"]::-moz-range-thumb:hover {
     font-size: 1.125rem;
     font-weight: 600;
     margin: 0 0 0.25rem 0;
-    color: #1a1a1a;
+    color: var(--color-extreme-light);
 }
 
 .typography-slug {
     font-size: 0.875rem;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.7);
     font-family: var(--primitive-font-mono) !important;
     margin: 0 0 1rem 0;
 }
@@ -721,7 +733,7 @@ input[type="range"]::-moz-range-thumb:hover {
 .typography-controls label {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .typography-controls .input-group {
@@ -732,17 +744,21 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .typography-controls input[type="number"] {
     width: 100%;
+    max-width: 100%;
     padding: 0.5rem;
     padding-right: 3rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     font-size: 0.875rem;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
 }
 
 .typography-controls .input-suffix {
     position: absolute;
     right: 1rem;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.875rem;
     pointer-events: none;
 }
@@ -756,22 +772,27 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .typography-controls .unit-selector select {
     padding: 0.25rem 0.5rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     font-size: 0.75rem;
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
 }
 
 /* Font Stack Textarea */
 .font-stack-input {
     width: 100%;
+    max-width: 100%;
     padding: 0.75rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     font-family: var(--primitive-font-mono) !important;
     font-size: 0.875rem;
     resize: vertical;
     min-height: 80px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
 }
 
 /* Typography Variable Display */
@@ -802,9 +823,11 @@ input[type="range"]::-moz-range-thumb:hover {
 .letter-spacing-value {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     font-size: 0.875rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
 }
 
 /* Responsive Typography Editor */
@@ -819,4 +842,102 @@ input[type="range"]::-moz-range-thumb:hover {
         max-width: 400px;
         margin: 0 auto;
     }
+}
+
+/* Save Buttons */
+.btn-save {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-save:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-save.btn-primary {
+    background: var(--wp--preset--color--primary, #3b82f6);
+    color: white;
+    border-color: var(--wp--preset--color--primary, #3b82f6);
+}
+
+.btn-save.btn-primary:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-save.has-changes {
+    background: #fbbf24;
+    color: #78350f;
+    border-color: #f59e0b;
+    animation: pulse 2s infinite;
+}
+
+.btn-save.has-changes:hover {
+    background: #f59e0b;
+    border-color: #d97706;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(251, 191, 36, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+    }
+}
+
+/* Preview Scale Slider */
+.preview-scale-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 150px;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    outline: none;
+}
+
+.preview-scale-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--wp--preset--color--primary, #3b82f6);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.preview-scale-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--wp--preset--color--primary, #3b82f6);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.preview-scale-value {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    min-width: 45px;
+    text-align: right;
+}
+
+/* Font Family Name Styling */
+.font-name {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }

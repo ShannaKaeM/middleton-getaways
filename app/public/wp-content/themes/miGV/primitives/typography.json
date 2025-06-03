@@ -1,0 +1,37 @@
+{
+    "font_sizes": {
+        "small": "0.8125em",
+        "medium": "1em",
+        "large": "1.25em",
+        "x-large": "1.5em",
+        "xx-large": "2em",
+        "huge": "6.25em"
+    },
+    "font_families": [],
+    "font_weights": {
+        "regular": "400",
+        "medium": "500",
+        "semiBold": "600",
+        "bold": "700",
+        "extraBold": "800"
+    },
+    "line_heights": {
+        "tight": "1.1",
+        "normal": "1.2",
+        "relaxed": "1.4",
+        "loose": "1.6"
+    },
+    "letter_spacings": {
+        "tight": "-0.025em",
+        "normal": "0em",
+        "wide": "0.075em",
+        "wider": "0.1em",
+        "widest": "0.2em"
+    },
+    "text_transforms": {
+        "none": "none",
+        "uppercase": "uppercase",
+        "lowercase": "lowercase",
+        "capitalize": "capitalize"
+    }
+}

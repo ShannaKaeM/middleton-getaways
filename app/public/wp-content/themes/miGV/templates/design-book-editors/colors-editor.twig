@@ -1,11 +1,11 @@
-{% extends "base.twig" %}
+{# Colors Editor - Load tokens from JSON #}
+{% set color_tokens = load_primitive('colors') %}
 
-{% block content %}
 <div class="primitive-editor primitive-colors">
     <header class="primitive-header">
         <div class="primitive-header-content">
             <h1 class="primitive-title">Color Primitives</h1>
-            <p class="primitive-description">Edit and fine-tune your color design tokens. Changes sync directly to theme.json.</p>
+            <p class="primitive-description">Edit color values for the design system. Changes update the color primitive book.</p>
         </div>
         <div class="primitive-header-actions">
             <button class="btn-icon" id="reset-colors" title="Reset to defaults">
@@ -25,181 +25,158 @@
     </header>
 
     <div class="primitive-content">
-        {% for group_key, group in color_groups %}
-            <section class="color-group" data-group="{{ group_key }}">
-                <h2 class="group-title">{{ group.title }}</h2>
-                <div class="color-grid {% if group_key == 'base' %}color-grid--base{% elseif group_key == 'extreme' %}color-grid--extreme{% endif %}">
-                    {% for color in group.colors %}
-                        <div class="color-card" data-slug="{{ color.slug }}">
-                            <div class="color-preview" style="background-color: {{ color.color }}">
-                                <div class="color-actions">
-                                    <button class="color-picker-trigger" title="Pick color">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 2C11.5 2 11 2.19 10.59 2.59L2.59 10.59C1.8 11.37 1.8 12.63 2.59 13.41L8.59 19.41C9.37 20.2 10.63 20.2 11.41 19.41L19.41 11.41C19.8 11.03 20 10.53 20 10C20 8.9 19.11 8 18 8H14L12 2ZM12 4.9L14 9V10H18C18.05 10 18.09 10.03 18.12 10.06L10 18.17L4.83 13L12 4.9ZM7.5 13.5L10 16L7.5 18.5L5 16L7.5 13.5Z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="color-info">
-                                <h3 class="color-name">{{ color.name }}</h3>
-                                
-                                <div class="color-controls">
-                                    <div class="control-group">
-                                        <input type="text" 
-                                               class="color-hex-input" 
-                                               value="{{ color.color }}" 
-                                               data-slug="{{ color.slug }}"
-                                               placeholder="#000000">
-                                    </div>
-                                    
-                                    <div class="control-group">
-                                        <label>Opacity</label>
-                                        <div class="slider-container">
-                                            <input type="range" 
-                                                   class="color-opacity-slider" 
-                                                   min="0" 
-                                                   max="100" 
-                                                   value="100"
-                                                   data-slug="{{ color.slug }}">
-                                            <span class="slider-value">100%</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="color-adjustments">
-                                        <div class="adjustment-panel active">
-                                            <div class="adjustment-tabs">
-                                                <button class="tab-btn active" data-tab="hsl">HSL</button>
-                                                <button class="tab-btn" data-tab="cmyk">CMYK</button>
-                                            </div>
-                                            
-                                            <div class="tab-content active" data-tab="hsl">
-                                                <div class="control-group">
-                                                    <label>Hue</label>
-                                                    <input type="range" 
-                                                           class="hue-slider" 
-                                                           min="-180" 
-                                                           max="180" 
-                                                           value="0"
-                                                           data-slug="{{ color.slug }}">
-                                                </div>
-                                                <div class="control-group">
-                                                    <label>Saturation</label>
-                                                    <input type="range" 
-                                                           class="saturation-slider" 
-                                                           min="-100" 
-                                                           max="100" 
-                                                           value="0"
-                                                           data-slug="{{ color.slug }}">
-                                                </div>
-                                                <div class="control-group">
-                                                    <label>Lightness</label>
-                                                    <input type="range" 
-                                                           class="lightness-slider" 
-                                                           min="-50" 
-                                                           max="50" 
-                                                           value="0"
-                                                           data-slug="{{ color.slug }}">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="tab-content" data-tab="cmyk">
-                                                <div class="control-group">
-                                                    <label>Cyan</label>
-                                                    <input type="range" 
-                                                           class="cyan-slider" 
-                                                           min="-50" 
-                                                           max="50" 
-                                                           value="0"
-                                                           data-slug="{{ color.slug }}">
-                                                </div>
-                                                <div class="control-group">
-                                                    <label>Magenta</label>
-                                                    <input type="range" 
-                                                           class="magenta-slider" 
-                                                           min="-50" 
-                                                           max="50" 
-                                                           value="0"
-                                                           data-slug="{{ color.slug }}">
-                                                </div>
-                                                <div class="control-group">
-                                                    <label>Yellow</label>
-                                                    <input type="range" 
-                                                           class="yellow-slider" 
-                                                           min="-50" 
-                                                           max="50" 
-                                                           value="0"
-                                                           data-slug="{{ color.slug }}">
-                                                </div>
-                                                <div class="control-group">
-                                                    <label>Black</label>
-                                                    <input type="range" 
-                                                           class="black-slider" 
-                                                           min="-50" 
-                                                           max="50" 
-                                                           value="0"
-                                                           data-slug="{{ color.slug }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Hidden color picker -->
-                            <input type="color" 
-                                   class="color-picker-input" 
-                                   value="{{ color.color }}"
-                                   data-slug="{{ color.slug }}">
-                        </div>
-                    {% endfor %}
+        {# Macro for color card to avoid repetition #}
+        {% macro color_card(slug, hex) %}
+            <div class="color-card" data-slug="{{ slug }}" data-value="{{ hex }}">
+                <div class="color-preview" style="background-color: {{ hex }};">
+                    <button class="color-picker-btn" title="Pick color">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 21a8 8 0 0 1 13.292-6.706l4.712 4.712a4 4 0 1 1-5.656 5.656l-3.878-3.878A8 8 0 0 1 2 21z"/>
+                            <path d="M10 13.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                        </svg>
+                    </button>
                 </div>
-            </section>
-        {% endfor %}
+                
+                <div class="color-info">
+                    <h3 class="color-name">{{ slug|replace({'-': ' '})|title }}</h3>
+                    <p class="color-slug">{{ slug }}</p>
+                    
+                    <div class="color-controls">
+                        <div class="control-group">
+                            <input type="text" 
+                                   class="hex-input" 
+                                   value="{{ hex }}"
+                                   data-slug="{{ slug }}"
+                                   pattern="^#[0-9A-Fa-f]{6}$">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Opacity</label>
+                            <div class="slider-container">
+                                <input type="range" 
+                                       class="opacity-slider" 
+                                       min="0" 
+                                       max="100" 
+                                       value="100"
+                                       data-slug="{{ slug }}">
+                                <span class="slider-value">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-adjustments">
+                        <div class="adjustment-tabs">
+                            <button class="tab-btn active" data-tab="hsl-{{ slug }}">HSL</button>
+                            <button class="tab-btn" data-tab="cmyk-{{ slug }}">CMYK</button>
+                        </div>
+                        
+                        <div class="tab-content" id="hsl-{{ slug }}">
+                            <div class="control-group">
+                                <label>Hue</label>
+                                <input type="range" class="hue-slider" min="0" max="360" data-slug="{{ slug }}">
+                                <span class="slider-value">0°</span>
+                            </div>
+                            <div class="control-group">
+                                <label>Saturation</label>
+                                <input type="range" class="saturation-slider" min="0" max="100" data-slug="{{ slug }}">
+                                <span class="slider-value">0%</span>
+                            </div>
+                            <div class="control-group">
+                                <label>Lightness</label>
+                                <input type="range" class="lightness-slider" min="0" max="100" data-slug="{{ slug }}">
+                                <span class="slider-value">0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="cmyk-{{ slug }}" style="display: none;">
+                            <div class="control-group">
+                                <label>Cyan</label>
+                                <input type="range" class="cyan-slider" min="0" max="100" data-slug="{{ slug }}">
+                                <span class="slider-value">0%</span>
+                            </div>
+                            <div class="control-group">
+                                <label>Magenta</label>
+                                <input type="range" class="magenta-slider" min="0" max="100" data-slug="{{ slug }}">
+                                <span class="slider-value">0%</span>
+                            </div>
+                            <div class="control-group">
+                                <label>Yellow</label>
+                                <input type="range" class="yellow-slider" min="0" max="100" data-slug="{{ slug }}">
+                                <span class="slider-value">0%</span>
+                            </div>
+                            <div class="control-group">
+                                <label>Black</label>
+                                <input type="range" class="black-slider" min="0" max="100" data-slug="{{ slug }}">
+                                <span class="slider-value">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-value">
+                        <code>{{ hex }}</code>
+                        <button class="copy-btn" data-copy="{{ hex }}">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endmacro %}
+
+        <!-- Primary Colors -->
+        <section class="color-section">
+            <h2 class="section-title">Primary Colors</h2>
+            <div class="color-grid color-grid-3">
+                {% for slug in ['primary-light', 'primary', 'primary-dark'] %}
+                    {{ _self.color_card(slug, color_tokens.colors[slug]) }}
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Secondary Colors -->
+        <section class="color-section">
+            <h2 class="section-title">Secondary Colors</h2>
+            <div class="color-grid color-grid-3">
+                {% for slug in ['secondary-light', 'secondary', 'secondary-dark'] %}
+                    {{ _self.color_card(slug, color_tokens.colors[slug]) }}
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Neutral Colors -->
+        <section class="color-section">
+            <h2 class="section-title">Neutral Colors</h2>
+            <div class="color-grid color-grid-3">
+                {% for slug in ['neutral-light', 'neutral', 'neutral-dark'] %}
+                    {{ _self.color_card(slug, color_tokens.colors[slug]) }}
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Base Colors -->
+        <section class="color-section">
+            <h2 class="section-title">Base Colors</h2>
+            <div class="color-grid color-grid-3">
+                {% for slug in ['base-lightest', 'base-light', 'base', 'base-dark', 'base-darkest'] %}
+                    {{ _self.color_card(slug, color_tokens.colors[slug]) }}
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Extreme Colors -->
+        <section class="color-section">
+            <h2 class="section-title">Extreme Colors</h2>
+            <div class="color-grid color-grid-3 extreme-colors">
+                {% for slug in ['extreme-light', 'extreme-dark'] %}
+                    {{ _self.color_card(slug, color_tokens.colors[slug]) }}
+                {% endfor %}
+            </div>
+        </section>
     </div>
     
     <div class="floating-save-indicator" id="save-indicator">
         <span class="save-status"></span>
     </div>
 </div>
-
-<style>
-/* Additional styles for proper grid layouts */
-.color-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-}
-
-/* Base colors: 5 items, so 3 in first row, 2 in second */
-.color-grid--base {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-/* Extreme colors: only 2 items, but keep 3 column grid */
-.color-grid--extreme {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.color-grid--extreme .color-card:last-child {
-    grid-column: 2;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .color-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .color-grid--extreme .color-card:last-child {
-        grid-column: auto;
-    }
-}
-
-@media (max-width: 640px) {
-    .color-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
-{% endblock %}

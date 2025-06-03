@@ -347,6 +347,38 @@
                     }
                 }
             }
+        },
+        "custom": {
+            "typography": {
+                "baseStyles": {
+                    "fontWeights": {
+                        "regular": "400",
+                        "medium": "500",
+                        "semiBold": "600",
+                        "bold": "700",
+                        "extraBold": "900"
+                    },
+                    "lineHeights": {
+                        "tight": "1.1",
+                        "normal": "1.2",
+                        "relaxed": "1.4",
+                        "loose": "1.6"
+                    },
+                    "letterSpacing": {
+                        "tight": "-0.025em",
+                        "normal": "0em",
+                        "wide": "0.075em",
+                        "wider": "0.1em",
+                        "widest": "0.2em"
+                    },
+                    "textTransforms": {
+                        "none": "none",
+                        "uppercase": "uppercase",
+                        "lowercase": "lowercase",
+                        "capitalize": "capitalize"
+                    }
+                }
+            }
         }
     },
     "styles": {

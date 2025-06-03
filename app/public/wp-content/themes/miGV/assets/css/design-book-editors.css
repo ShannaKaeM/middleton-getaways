@@ -31,7 +31,7 @@
 
 /* Header */
 .primitive-header {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(30, 30, 30, 1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 2rem;
     position: sticky;
@@ -799,22 +799,12 @@ input[type="range"]::-moz-range-thumb:hover {
 .typography-variable {
     margin-top: 1rem;
     padding: 0.75rem;
-    background: #f3f4f6;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-}
-
-.typography-variable code {
-    font-size: 0.75rem;
-    color: #374151;
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     font-family: var(--primitive-font-mono) !important;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    word-break: break-all;
 }
 
 /* Weight, Line Height, Letter Spacing Specific */

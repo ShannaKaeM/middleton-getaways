@@ -738,13 +738,13 @@ function mi_sync_primitive_to_theme_json() {
             
         case 'custom':
             // Update custom properties
-            if (!isset($theme_json['settings']['custom'])) {
-                $theme_json['settings']['custom'] = [];
+            if (!isset($theme_json['custom'])) {
+                $theme_json['custom'] = [];
             }
             
             // Parse the path (e.g., 'layout.contentSize' -> ['layout', 'contentSize'])
             $path_parts = explode('.', $token_path);
-            $current = &$theme_json['settings']['custom'];
+            $current = &$theme_json['custom'];
             
             for ($i = 0; $i < count($path_parts) - 1; $i++) {
                 if (!isset($current[$path_parts[$i]])) {
@@ -1094,7 +1094,18 @@ function sync_typography_to_theme_json() {
         $theme_json = array();
     }
     
-    // Ensure settings structure exists
+    // Ensure custom section exists
+    if (!isset($theme_json['custom'])) {
+        $theme_json['custom'] = array();
+    }
+    if (!isset($theme_json['custom']['typography'])) {
+        $theme_json['custom']['typography'] = array();
+    }
+    if (!isset($theme_json['custom']['typography']['baseStyles'])) {
+        $theme_json['custom']['typography']['baseStyles'] = array();
+    }
+    
+    // Ensure settings section exists for font sizes and families
     if (!isset($theme_json['settings'])) {
         $theme_json['settings'] = array();
     }
@@ -1130,34 +1141,24 @@ function sync_typography_to_theme_json() {
     }
     
     // Add custom typography properties
-    if (!isset($theme_json['settings']['custom'])) {
-        $theme_json['settings']['custom'] = array();
-    }
-    if (!isset($theme_json['settings']['custom']['typography'])) {
-        $theme_json['settings']['custom']['typography'] = array();
-    }
-    if (!isset($theme_json['settings']['custom']['typography']['baseStyles'])) {
-        $theme_json['settings']['custom']['typography']['baseStyles'] = array();
-    }
-    
     // Font weights
     if (isset($typography_data['font_weights'])) {
-        $theme_json['settings']['custom']['typography']['baseStyles']['fontWeights'] = $typography_data['font_weights'];
+        $theme_json['custom']['typography']['baseStyles']['fontWeights'] = $typography_data['font_weights'];
     }
     
     // Line heights
     if (isset($typography_data['line_heights'])) {
-        $theme_json['settings']['custom']['typography']['baseStyles']['lineHeights'] = $typography_data['line_heights'];
+        $theme_json['custom']['typography']['baseStyles']['lineHeights'] = $typography_data['line_heights'];
     }
     
     // Letter spacing
     if (isset($typography_data['letter_spacings'])) {
-        $theme_json['settings']['custom']['typography']['baseStyles']['letterSpacing'] = $typography_data['letter_spacings'];
+        $theme_json['custom']['typography']['baseStyles']['letterSpacing'] = $typography_data['letter_spacings'];
     }
     
     // Text transforms
     if (isset($typography_data['text_transforms'])) {
-        $theme_json['settings']['custom']['typography']['baseStyles']['textTransforms'] = $typography_data['text_transforms'];
+        $theme_json['custom']['typography']['baseStyles']['textTransforms'] = $typography_data['text_transforms'];
     }
     
     // Save updated theme.json

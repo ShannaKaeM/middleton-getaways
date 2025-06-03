@@ -2,10 +2,10 @@
     "font_sizes": {
         "small": "0.8125em",
         "medium": "1em",
-        "large": "1.25em",
-        "x-large": "1.5em",
-        "xx-large": "2em",
-        "huge": "6.25em"
+        "large": "1.5em",
+        "x-large": "2em",
+        "xx-large": "3em",
+        "huge": "4em"
     },
     "font_families": [],
     "font_weights": {
@@ -13,7 +13,7 @@
         "medium": "500",
         "semiBold": "600",
         "bold": "700",
-        "extraBold": "800"
+        "extraBold": "900"
     },
     "line_heights": {
         "tight": "1.1",

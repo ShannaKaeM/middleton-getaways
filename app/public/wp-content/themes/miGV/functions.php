@@ -113,11 +113,17 @@ add_action('after_setup_theme', 'migv_setup');
  * Enqueue scripts and styles
  */
 function migv_scripts() {
-    // Enqueue main stylesheet (now cleaned to only have WordPress required styles)
-    wp_enqueue_style('migv-style', get_stylesheet_uri(), array(), '1.0.0');
+    // Enqueue Google Fonts
+    wp_enqueue_style('migv-google-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500;700&display=swap', array(), null);
     
-    // Remove blocks.css - all block styles should come from theme.json
-    // wp_enqueue_style('migv-blocks', get_template_directory_uri() . '/assets/css/blocks.css', array('migv-style'), '1.0.0');
+    // Enqueue main stylesheet (cleaned to only have WordPress required styles)
+    wp_enqueue_style('migv-style', get_stylesheet_uri(), array('migv-google-fonts'), '1.0.0');
+    
+    // Enqueue design system styles
+    wp_enqueue_style('migv-design-book', get_template_directory_uri() . '/assets/css/design-book.css', array('migv-style'), '1.0.0');
+    
+    // Note: blocks.css removed - all block styles should come from theme.json
+    // wp_enqueue_style('migv-blocks', get_template_directory_uri() . '/assets/css/blocks.css', array('migv-design-book'), '1.0.0');
     
     // Enqueue main JavaScript
     wp_enqueue_script('migv-main', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.0', true);
@@ -342,6 +348,55 @@ add_filter('template_include', 'migv_custom_page_templates');
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/customizer.php';
 // Design book router removed - functionality handled elsewhere
+
+/**
+ * AJAX handler for saving color palette
+ */
+add_action('wp_ajax_save_color_palette', 'migv_save_color_palette');
+function migv_save_color_palette() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'color_book_nonce')) {
+        wp_die('Security check failed');
+    }
+    
+    // Check permissions
+    if (!current_user_can('edit_theme_options')) {
+        wp_die('You do not have permission to edit theme options');
+    }
+    
+    // Get the colors from POST
+    $new_colors = isset($_POST['colors']) ? $_POST['colors'] : array();
+    
+    if (empty($new_colors)) {
+        wp_send_json_error('No colors provided');
+    }
+    
+    // Read current theme.json
+    $theme_json_path = get_template_directory() . '/theme.json';
+    $theme_json = json_decode(file_get_contents($theme_json_path), true);
+    
+    if (!$theme_json) {
+        wp_send_json_error('Could not read theme.json');
+    }
+    
+    // Update color palette
+    if (isset($theme_json['settings']['color']['palette'])) {
+        foreach ($theme_json['settings']['color']['palette'] as &$color) {
+            if (isset($new_colors[$color['slug']])) {
+                $color['color'] = sanitize_hex_color($new_colors[$color['slug']]);
+            }
+        }
+    }
+    
+    // Write back to theme.json
+    $json_content = json_encode($theme_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    
+    if (file_put_contents($theme_json_path, $json_content)) {
+        wp_send_json_success('Colors saved successfully');
+    } else {
+        wp_send_json_error('Could not write to theme.json');
+    }
+}
 
 /**
  * Timber Site class extension

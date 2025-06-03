@@ -1,0 +1,250 @@
+{#
+  Hero Book Component - Flexible Hero Component
+  
+  This component creates various hero section layouts using primitives.
+  Used for page headers, landing sections, and featured content areas.
+  
+  Usage:
+  {% include 'component-books/hero-book.twig' with {
+    variant: 'default',
+    title: 'Welcome to Middleton Getaways',
+    subtitle: 'Your perfect vacation rental awaits',
+    description: 'Discover beautiful properties in the heart of Middleton',
+    background_image: '/path/to/hero-bg.jpg',
+    overlay_opacity: 0.5,
+    actions: [
+      {label: 'Browse Properties', variant: 'primary', href: '/properties'},
+      {label: 'Learn More', variant: 'secondary', href: '/about'}
+    ],
+    alignment: 'center',
+    height: 'large',
+    class: 'additional-classes'
+  } %}
+  
+  Available variants:
+  - default: Standard centered hero with overlay
+  - minimal: Simple hero without overlay
+  - split: Split hero with content on one side
+  - gradient: Hero with gradient background
+  - furniture: Split hero with text on left and image gallery on right
+  
+  Heights:
+  - small: 300px
+  - medium: 500px
+  - large: 700px
+  - full: 100vh
+#}
+
+{# Set defaults #}
+{% set variant = variant ?? 'default' %}
+{% set alignment = alignment ?? 'center' %}
+{% set height = height ?? 'large' %}
+{% set overlay_opacity = overlay_opacity ?? 0.5 %}
+
+{# Hero variants configuration #}
+{% set hero_variants = {
+  default: {
+    class: 'hero-default',
+    show_overlay: true,
+    content_width: 'container',
+    padding: '7xl'
+  },
+  minimal: {
+    class: 'hero-minimal',
+    show_overlay: false,
+    content_width: 'container',
+    padding: '5xl'
+  },
+  split: {
+    class: 'hero-split',
+    show_overlay: false,
+    content_width: 'full',
+    padding: '6xl'
+  },
+  gradient: {
+    class: 'hero-gradient',
+    show_overlay: false,
+    content_width: 'container',
+    padding: '7xl'
+  },
+  furniture: {
+    class: 'hero-furniture',
+    show_overlay: false,
+    content_width: 'container',
+    padding: '7xl'
+  }
+} %}
+
+{# Height configuration #}
+{% set height_values = {
+  small: '300px',
+  medium: '500px',
+  large: '700px',
+  full: '100vh'
+} %}
+
+{# Alignment configuration #}
+{% set alignment_classes = {
+  left: 'text-left items-start',
+  center: 'text-center items-center',
+  right: 'text-right items-end'
+} %}
+
+{# Get variant configuration #}
+{% set config = hero_variants[variant] ?? hero_variants.default %}
+{% set element_class = ['villa-hero', config.class, alignment_classes[alignment], class]|join(' ')|trim %}
+
+{# Render the hero #}
+<section class="{{ element_class }}" style="
+  {%- if background_image and variant != 'gradient' -%}
+    background-image: url('{{ background_image }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  {%- elseif variant == 'gradient' -%}
+    {%- include 'primitive-books/color-book.twig' with {
+      gradient_start: gradient_start ?? 'primary',
+      gradient_end: gradient_end ?? 'primary-dark',
+      gradient_angle: gradient_angle ?? '135deg'
+    } only -%}
+  {%- else -%}
+    {%- include 'primitive-books/color-book.twig' with {
+      background_color: background_color ?? 'primary-light'
+    } only -%}
+  {%- endif -%}
+  height: {{ height_values[height] ?? height }};
+  position: relative;
+  display: flex;
+  align-items: center;
+  {%- include 'primitive-books/spacing-book.twig' with {
+    padding: config.padding
+  } only -%}
+">
+  
+  {# Overlay #}
+  {% if config.show_overlay and background_image %}
+    <div class="hero-overlay" style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      {%- include 'primitive-books/color-book.twig' with {
+        background_color: 'extreme-dark',
+        opacity: overlay_opacity
+      } only -%}
+    "></div>
+  {% endif %}
+  
+  {# Content #}
+  <div class="hero-content" style="
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    {%- if config.content_width == 'container' -%}
+      {%- include 'primitive-books/layout-book.twig' with {
+        container: 'xl'
+      } only -%}
+    {%- endif -%}
+  ">
+    <div class="hero-inner" style="
+      {%- if variant == 'split' or variant == 'furniture' -%}
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--wp--custom--layout--spacing--4xl);
+        align-items: center;
+      {%- endif -%}
+    ">
+      <div class="hero-text-content">
+        {# Title #}
+        {% if title %}
+          <h1 class="hero-title" style="
+            {%- include 'primitive-books/typography-book.twig' with {
+              font_family: title_font ?? 'montserrat',
+              font_size: title_size ?? 'xx-large',
+              font_weight: title_weight ?? 'bold',
+              line_height: 'tight',
+              color: title_color ?? (background_image or variant == 'gradient' ? 'extreme-light' : 'extreme-dark')
+            } only -%}
+            {%- include 'primitive-books/spacing-book.twig' with {
+              margin_bottom: '2xl'
+            } only -%}
+          ">{{ title }}</h1>
+        {% endif %}
+        
+        {# Subtitle #}
+        {% if subtitle %}
+          <p class="hero-subtitle" style="
+            {%- include 'primitive-books/typography-book.twig' with {
+              font_family: subtitle_font ?? 'montserrat',
+              font_size: subtitle_size ?? 'large',
+              font_weight: subtitle_weight ?? 'medium',
+              line_height: 'normal',
+              color: subtitle_color ?? (background_image or variant == 'gradient' ? 'extreme-light' : 'base-dark')
+            } only -%}
+            {%- include 'primitive-books/spacing-book.twig' with {
+              margin_bottom: '3xl'
+            } only -%}
+          ">{{ subtitle }}</p>
+        {% endif %}
+        
+        {# Description #}
+        {% if description %}
+          <p class="hero-description" style="
+            {%- include 'primitive-books/typography-book.twig' with {
+              font_family: 'montserrat',
+              font_size: 'medium',
+              line_height: 'relaxed',
+              color: description_color ?? (background_image or variant == 'gradient' ? 'extreme-light' : 'base')
+            } only -%}
+            {%- include 'primitive-books/spacing-book.twig' with {
+              margin_bottom: '4xl'
+            } only -%}
+            max-width: 600px;
+            {%- if alignment == 'center' -%}
+              margin-left: auto;
+              margin-right: auto;
+            {%- endif -%}
+          ">{{ description }}</p>
+        {% endif %}
+        
+        {# Actions #}
+        {% if actions %}
+          <div class="hero-actions" style="
+            display: flex;
+            gap: var(--wp--custom--layout--spacing--lg);
+            flex-wrap: wrap;
+            {%- if alignment == 'center' -%}
+              justify-content: center;
+            {%- elseif alignment == 'right' -%}
+              justify-content: flex-end;
+            {%- endif -%}
+          ">
+            {% for action in actions %}
+              {% include 'element-books/button-book.twig' with {
+                label: action.label,
+                variant: action.variant ?? 'primary',
+                href: action.href,
+                size: action.size ?? 'large'
+              } %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      
+      {# Split variant image/content area #}
+      {% if variant == 'split' and split_content %}
+        <div class="hero-split-content">
+          {{ split_content }}
+        </div>
+      {% endif %}
+      
+      {# Furniture variant image gallery #}
+      {% if variant == 'furniture' and furniture_gallery %}
+        <div class="hero-furniture-gallery">
+          {{ furniture_gallery }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

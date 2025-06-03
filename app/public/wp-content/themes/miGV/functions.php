@@ -113,11 +113,11 @@ add_action('after_setup_theme', 'migv_setup');
  * Enqueue scripts and styles
  */
 function migv_scripts() {
-    // Enqueue main stylesheet
+    // Enqueue main stylesheet (now cleaned to only have WordPress required styles)
     wp_enqueue_style('migv-style', get_stylesheet_uri(), array(), '1.0.0');
     
-    // Enqueue block styles
-    wp_enqueue_style('migv-blocks', get_template_directory_uri() . '/assets/css/blocks.css', array('migv-style'), '1.0.0');
+    // Remove blocks.css - all block styles should come from theme.json
+    // wp_enqueue_style('migv-blocks', get_template_directory_uri() . '/assets/css/blocks.css', array('migv-style'), '1.0.0');
     
     // Enqueue main JavaScript
     wp_enqueue_script('migv-main', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.0', true);
@@ -559,3 +559,206 @@ function mi_delete_card_type_handler() {
     }
 }
 add_action('wp_ajax_mi_delete_card_type', 'mi_delete_card_type_handler');
+
+/**
+ * AJAX handler for syncing primitive values back to theme.json
+ */
+function mi_sync_primitive_to_theme_json() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_die('Security check failed');
+    }
+    
+    // Check permissions
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+    }
+    
+    $token_type = sanitize_text_field($_POST['token_type']); // e.g., 'color', 'typography', 'spacing'
+    $token_path = sanitize_text_field($_POST['token_path']); // e.g., 'primary', 'heading-1'
+    $token_value = sanitize_text_field($_POST['token_value']); // The new value
+    
+    // Get the theme.json file path
+    $theme_json_path = get_template_directory() . '/theme.json';
+    
+    if (!file_exists($theme_json_path)) {
+        wp_send_json_error('theme.json not found');
+    }
+    
+    // Read and parse theme.json
+    $theme_json_content = file_get_contents($theme_json_path);
+    $theme_json = json_decode($theme_json_content, true);
+    
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        wp_send_json_error('Invalid theme.json format');
+    }
+    
+    // Update the appropriate token based on type
+    $updated = false;
+    
+    switch ($token_type) {
+        case 'color':
+            // Update color palette
+            if (isset($theme_json['settings']['color']['palette'])) {
+                foreach ($theme_json['settings']['color']['palette'] as &$color) {
+                    if ($color['slug'] === $token_path) {
+                        $color['color'] = $token_value;
+                        $updated = true;
+                        break;
+                    }
+                }
+            }
+            break;
+            
+        case 'typography':
+            // Update font sizes
+            if (isset($theme_json['settings']['typography']['fontSizes'])) {
+                foreach ($theme_json['settings']['typography']['fontSizes'] as &$size) {
+                    if ($size['slug'] === $token_path) {
+                        $size['size'] = $token_value;
+                        $updated = true;
+                        break;
+                    }
+                }
+            }
+            break;
+            
+        case 'spacing':
+            // Update spacing scale
+            if (isset($theme_json['settings']['spacing']['spacingSizes'])) {
+                foreach ($theme_json['settings']['spacing']['spacingSizes'] as &$spacing) {
+                    if ($spacing['slug'] === $token_path) {
+                        $spacing['size'] = $token_value;
+                        $updated = true;
+                        break;
+                    }
+                }
+            }
+            break;
+            
+        case 'custom':
+            // Update custom properties
+            if (!isset($theme_json['settings']['custom'])) {
+                $theme_json['settings']['custom'] = [];
+            }
+            
+            // Parse the path (e.g., 'layout.contentSize' -> ['layout', 'contentSize'])
+            $path_parts = explode('.', $token_path);
+            $current = &$theme_json['settings']['custom'];
+            
+            for ($i = 0; $i < count($path_parts) - 1; $i++) {
+                if (!isset($current[$path_parts[$i]])) {
+                    $current[$path_parts[$i]] = [];
+                }
+                $current = &$current[$path_parts[$i]];
+            }
+            
+            $current[$path_parts[count($path_parts) - 1]] = $token_value;
+            $updated = true;
+            break;
+    }
+    
+    if ($updated) {
+        // Write the updated theme.json back to file
+        $json_output = json_encode($theme_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        
+        if (file_put_contents($theme_json_path, $json_output) !== false) {
+            // Clear any caches
+            wp_cache_flush();
+            
+            // Regenerate CSS variables
+            do_action('wp_theme_json_data_theme', $theme_json);
+            
+            wp_send_json_success([
+                'message' => 'Token updated successfully',
+                'token_type' => $token_type,
+                'token_path' => $token_path,
+                'token_value' => $token_value
+            ]);
+        } else {
+            wp_send_json_error('Failed to write theme.json');
+        }
+    } else {
+        wp_send_json_error('Token not found');
+    }
+}
+add_action('wp_ajax_mi_sync_primitive_to_theme_json', 'mi_sync_primitive_to_theme_json');
+
+/**
+ * AJAX handler for getting all theme.json tokens for the design book
+ */
+function mi_get_theme_json_tokens() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_die('Security check failed');
+    }
+    
+    $theme_json = wp_get_global_settings();
+    $tokens = [];
+    
+    // Extract color tokens
+    if (isset($theme_json['color']['palette'])) {
+        foreach ($theme_json['color']['palette'] as $color) {
+            $tokens['colors'][] = [
+                'slug' => $color['slug'],
+                'name' => $color['name'],
+                'value' => $color['color'],
+                'variable' => '--wp--preset--color--' . $color['slug']
+            ];
+        }
+    }
+    
+    // Extract typography tokens
+    if (isset($theme_json['typography']['fontSizes'])) {
+        foreach ($theme_json['typography']['fontSizes'] as $size) {
+            $tokens['typography'][] = [
+                'slug' => $size['slug'],
+                'name' => $size['name'] ?? ucfirst(str_replace('-', ' ', $size['slug'])),
+                'value' => $size['size'],
+                'variable' => '--wp--preset--font-size--' . $size['slug']
+            ];
+        }
+    }
+    
+    // Extract spacing tokens
+    if (isset($theme_json['spacing']['spacingSizes'])) {
+        foreach ($theme_json['spacing']['spacingSizes'] as $spacing) {
+            $tokens['spacing'][] = [
+                'slug' => $spacing['slug'],
+                'name' => $spacing['name'] ?? 'Size ' . $spacing['slug'],
+                'value' => $spacing['size'],
+                'variable' => '--wp--preset--spacing--' . $spacing['slug']
+            ];
+        }
+    }
+    
+    // Extract custom tokens
+    if (isset($theme_json['custom'])) {
+        $tokens['custom'] = $theme_json['custom'];
+    }
+    
+    wp_send_json_success($tokens);
+}
+add_action('wp_ajax_mi_get_theme_json_tokens', 'mi_get_theme_json_tokens');
+
+/**
+ * Add theme.json sync capabilities to the design book
+ */
+function mi_enqueue_design_book_sync_scripts() {
+    if (is_page_template('page-mi-design-book.php')) {
+        wp_enqueue_script(
+            'mi-design-book-sync',
+            get_template_directory_uri() . '/assets/js/design-book-sync.js',
+            array('jquery'),
+            '1.0.0',
+            true
+        );
+        
+        wp_localize_script('mi-design-book-sync', 'miDesignBookSync', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('mi_design_book_nonce'),
+            'canEdit' => current_user_can('edit_theme_options')
+        ));
+    }
+}
+add_action('wp_enqueue_scripts', 'mi_enqueue_design_book_sync_scripts');

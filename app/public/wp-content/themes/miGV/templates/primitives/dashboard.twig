@@ -1,0 +1,158 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="primitive-editor primitive-dashboard">
+    <header class="primitive-header">
+        <div class="primitive-header-content">
+            <h1 class="primitive-title">Design Primitives</h1>
+            <p class="primitive-description">Edit and manage your design system's foundational tokens</p>
+        </div>
+    </header>
+
+    <div class="primitive-content">
+        <div class="primitives-grid">
+            {% for editor in primitive_editors %}
+                <a href="{{ editor.url }}" class="primitive-card" style="--accent-color: {{ editor.color }}">
+                    <div class="primitive-icon" style="color: {{ editor.color }}">
+                        {{ editor.icon|raw }}
+                    </div>
+                    <h2 class="primitive-card-title">{{ editor.title }}</h2>
+                    <p class="primitive-card-description">{{ editor.description }}</p>
+                    <div class="primitive-card-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        
+        <section class="info-section">
+            <h2 class="section-title">How It Works</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🎨 Visual Editing</h3>
+                    <p>Edit design tokens with intuitive visual controls including color pickers, sliders, and live previews.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Bidirectional Sync</h3>
+                    <p>Changes sync directly to theme.json and are immediately available throughout your theme.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🚀 No CSS Required</h3>
+                    <p>All styles are managed through design tokens - no need to write or maintain CSS files.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+/* Dashboard specific styles */
+.primitive-dashboard {
+    background: #f8f9fa;
+}
+
+.primitives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.primitive-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.primitive-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.primitive-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.primitive-card:hover::before {
+    transform: scaleX(1);
+}
+
+.primitive-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.primitive-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #1a1a1a;
+}
+
+.primitive-card-description {
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.primitive-card-arrow {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    color: #9ca3af;
+    transition: all 0.3s ease;
+}
+
+.primitive-card:hover .primitive-card-arrow {
+    color: var(--accent-color);
+    transform: translateX(4px);
+}
+
+.info-section {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.info-card h3 {
+    font-size: 1.125rem;
+    margin: 0 0 0.5rem 0;
+    color: #1a1a1a;
+}
+
+.info-card p {
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.6;
+}
+</style>
+{% endblock %}

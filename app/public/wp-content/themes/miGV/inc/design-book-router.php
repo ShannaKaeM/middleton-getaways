@@ -174,9 +174,15 @@ class VillaDesignBookRouter {
         // Add section-specific data
         $context = $this->add_section_data($context, $section);
 
+        // Get header
+        get_header();
+
         // Render template
         $template = $this->sections[$section]['template'];
         Timber::render($template, $context);
+        
+        // Get footer
+        get_footer();
         exit;
     }
 

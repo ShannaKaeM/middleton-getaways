@@ -35,7 +35,8 @@
                                 <div class="color-actions">
                                     <button class="color-picker-trigger" title="Pick color">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                                            <path d="M2 21a8 8 0 0 1 13.292-6.706l4.712 4.712a4 4 0 1 1-5.656 5.656l-3.878-3.878A8 8 0 0 1 2 21z"/>
+                                            <path d="M10 13.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
                                         </svg>
                                     </button>
                                 </div>
@@ -46,7 +47,6 @@
                                 
                                 <div class="color-controls">
                                     <div class="control-group">
-                                        <label>Hex</label>
                                         <input type="text" 
                                                class="color-hex-input" 
                                                value="{{ color.color }}" 
@@ -145,14 +145,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <button class="css-variable-preview" data-variable="var(--wp--preset--color--{{ color.slug }})">
-                                    <code>var(--wp--preset--color--{{ color.slug }})</code>
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                        <circle cx="12" cy="12" r="3"/>
-                                    </svg>
-                                </button>
                             </div>
                             
                             <!-- Hidden color picker -->

@@ -1,5 +1,5 @@
 /**
- * Mi Design Book - Interactive Card Component Editor
+ * Card Book - Interactive Card Component Editor
  */
 (function($) {
     'use strict';
@@ -68,6 +68,10 @@
         loadCardTypes();
         updatePreview();
         updateCode();
+        
+        // Set default background to white
+        $('#preview-background').val('white');
+        $('#preview-container').removeClass('bg-gray bg-dark bg-pattern');
     });
 
     // Initialize all event handlers
@@ -357,12 +361,12 @@
     // Fetch post data via AJAX
     function fetchPostData(postId, postType) {
         $.ajax({
-            url: miDesignBook.ajaxurl,
+            url: cardBook.ajaxurl,
             type: 'POST',
             data: {
-                action: 'mi_get_post_data',
+                action: 'card_get_post_data',
                 post_id: postId,
-                nonce: miDesignBook.nonce
+                nonce: cardBook.nonce
             },
             beforeSend: function() {
                 $('#dynamic-post-selector').prop('disabled', true);
@@ -533,6 +537,18 @@
     // Update card preview
     function updatePreview() {
         const $preview = $('#card-preview');
+        
+        // Check if we have any content
+        const hasContent = cardState.title || cardState.description || cardState.image || 
+                          cardState.badges.length > 0 || cardState.meta.length > 0 || 
+                          cardState.actions.length > 0;
+        
+        // Add or remove has-content class
+        if (hasContent) {
+            $preview.addClass('has-content');
+        } else {
+            $preview.removeClass('has-content');
+        }
         
         // Build preview HTML (simplified version of actual card component)
         let previewHTML = `
@@ -760,11 +776,11 @@
         
         // Save via AJAX
         $.ajax({
-            url: miDesignBook.ajaxurl,
+            url: cardBook.ajaxurl,
             type: 'POST',
             data: {
-                action: 'mi_save_card_type',
-                nonce: miDesignBook.nonce,
+                action: 'card_save_card_type',
+                nonce: cardBook.nonce,
                 type_name: typeName.toLowerCase().replace(/\s+/g, '-'),
                 display_name: typeName,
                 description: description,
@@ -798,11 +814,11 @@
     // Load card types from database
     function loadCardTypes() {
         $.ajax({
-            url: miDesignBook.ajaxurl,
+            url: cardBook.ajaxurl,
             type: 'POST',
             data: {
-                action: 'mi_get_card_types',
-                nonce: miDesignBook.nonce
+                action: 'card_get_card_types',
+                nonce: cardBook.nonce
             },
             success: function(response) {
                 if (response.success) {
@@ -882,6 +898,30 @@
         setTimeout(() => {
             $select.find('option:selected').text(originalText);
         }, 2000);
+    }
+
+    // Update dynamic data options
+    function updateDynamicDataOptions() {
+        const $dynamicSource = $('#dynamic-source');
+        $dynamicSource.empty();
+        
+        $dynamicSource.append('<option value="manual">Manual Entry</option>');
+        
+        if (cardState.type === 'property' && window.cardBook.properties) {
+            $dynamicSource.append('<optgroup label="Properties">');
+            window.cardBook.properties.forEach(property => {
+                $dynamicSource.append(`<option value="property-${property.id}">${property.title}</option>`);
+            });
+            $dynamicSource.append('</optgroup>');
+        }
+        
+        if (cardState.type === 'business' && window.cardBook.businesses) {
+            $dynamicSource.append('<optgroup label="Businesses">');
+            window.cardBook.businesses.forEach(business => {
+                $dynamicSource.append(`<option value="business-${business.id}">${business.title}</option>`);
+            });
+            $dynamicSource.append('</optgroup>');
+        }
     }
 
 })(jQuery);

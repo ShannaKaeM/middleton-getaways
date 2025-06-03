@@ -1,7 +1,7 @@
 <?php
 /**
- * Template Name: Mi Design Book
- * Description: Front-end component editor for the atomic design system
+ * Template Name: Card Book
+ * Description: Visual card component editor for the atomic design system
  */
 
 // Security check
@@ -9,14 +9,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+get_header();
+
 // Enqueue design book specific assets
-wp_enqueue_style('mi-design-book', get_template_directory_uri() . '/assets/css/mi-design-book.css', [], '1.0.0');
-wp_enqueue_script('mi-design-book', get_template_directory_uri() . '/assets/js/mi-design-book.js', ['jquery'], '1.0.0', true);
+wp_enqueue_style('card-book', get_template_directory_uri() . '/assets/css/design-book.css', [], '1.0.0');
+wp_enqueue_script('card-book', get_template_directory_uri() . '/assets/js/card-book.js', ['jquery'], '1.0.0', true);
 
 // Localize script for AJAX and component data
-wp_localize_script('mi-design-book', 'miDesignBook', [
+wp_localize_script('card-book', 'cardBook', [
     'ajaxurl' => admin_url('admin-ajax.php'),
-    'nonce' => wp_create_nonce('mi_design_book_nonce'),
+    'nonce' => wp_create_nonce('card_book_nonce'),
     'themeUrl' => get_template_directory_uri(),
     'componentsUrl' => get_template_directory_uri() . '/templates/',
     'uploadUrl' => admin_url('async-upload.php')
@@ -131,4 +133,6 @@ $context['sample_images'] = [
 ];
 
 // Render the template
-Timber::render('mi-design-book/index.twig', $context);
+Timber::render('card-book/index.twig', $context);
+
+get_footer();

@@ -800,7 +800,7 @@ add_action('wp_ajax_mi_get_theme_json_tokens', 'mi_get_theme_json_tokens');
  * Add theme.json sync capabilities to the design book
  */
 function mi_enqueue_design_book_sync_scripts() {
-    if (is_page_template('page-mi-design-book.php')) {
+    if (is_page_template('page-card-book.php')) {
         wp_enqueue_script(
             'mi-design-book-sync',
             get_template_directory_uri() . '/assets/js/design-book-sync.js',
@@ -817,3 +817,92 @@ function mi_enqueue_design_book_sync_scripts() {
     }
 }
 add_action('wp_enqueue_scripts', 'mi_enqueue_design_book_sync_scripts');
+
+/**
+ * AJAX handler to get post data for card book
+ */
+function card_get_post_data() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'card_book_nonce')) {
+        wp_die('Security check failed');
+    }
+    
+    $post_id = intval($_POST['post_id']);
+    $post = get_post($post_id);
+    
+    if (!$post) {
+        wp_send_json_error('Post not found');
+    }
+    
+    // Get post data
+    $data = array(
+        'title' => $post->post_title,
+        'excerpt' => $post->post_excerpt ?: wp_trim_words($post->post_content, 20),
+        'featured_image' => get_the_post_thumbnail_url($post_id, 'large'),
+        'meta' => get_post_meta($post_id)
+    );
+    
+    wp_send_json_success($data);
+}
+add_action('wp_ajax_card_get_post_data', 'card_get_post_data');
+add_action('wp_ajax_nopriv_card_get_post_data', 'card_get_post_data');
+
+/**
+ * AJAX handler to save card type
+ */
+function card_save_card_type() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'card_book_nonce')) {
+        wp_die('Security check failed');
+    }
+    
+    // Check permissions
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+    }
+    
+    $type_name = sanitize_text_field($_POST['type_name']);
+    $display_name = sanitize_text_field($_POST['display_name']);
+    $description = sanitize_text_field($_POST['description']);
+    $configuration = json_decode(stripslashes($_POST['configuration']), true);
+    
+    // Save to options
+    $card_types = get_option('card_book_types', array());
+    $card_types[$type_name] = array(
+        'name' => $display_name,
+        'description' => $description,
+        'configuration' => $configuration
+    );
+    
+    update_option('card_book_types', $card_types);
+    
+    wp_send_json_success('Card type saved');
+}
+add_action('wp_ajax_card_save_card_type', 'card_save_card_type');
+
+/**
+ * AJAX handler to get card types
+ */
+function card_get_card_types() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'card_book_nonce')) {
+        wp_die('Security check failed');
+    }
+    
+    $custom_types = get_option('card_book_types', array());
+    
+    $data = array(
+        'built_in' => array(
+            'property' => array('name' => 'Property Card', 'description' => 'Real estate property listing'),
+            'business' => array('name' => 'Business Card', 'description' => 'Business listing'),
+            'testimonial' => array('name' => 'Testimonial Card', 'description' => 'Customer testimonial'),
+            'team' => array('name' => 'Team Member Card', 'description' => 'Team member profile'),
+            'blog' => array('name' => 'Blog Post Card', 'description' => 'Blog post preview')
+        ),
+        'custom' => $custom_types
+    );
+    
+    wp_send_json_success($data);
+}
+add_action('wp_ajax_card_get_card_types', 'card_get_card_types');
+add_action('wp_ajax_nopriv_card_get_card_types', 'card_get_card_types');

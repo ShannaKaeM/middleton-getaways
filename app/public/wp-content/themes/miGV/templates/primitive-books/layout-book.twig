@@ -1,8 +1,8 @@
 {#
-  Layout Primitive Book - Pure Design Tokens
+  Layout Primitive Book - Self-Sufficient Design Tokens
   
-  This primitive provides pure layout design tokens from theme.json.
-  It should ONLY contain foundational layout properties, no semantic styling.
+  This primitive contains actual layout values, not CSS variable references.
+  It is the single source of truth for layout in the design system.
   
   Usage:
   {% include 'primitive-books/layout-book.twig' with {
@@ -16,81 +16,81 @@
 
 {% set layout_tokens = {
   container: {
-    sm: 'var(--wp--custom--layout--container--sm)',
-    md: 'var(--wp--custom--layout--container--md)',
-    lg: 'var(--wp--custom--layout--container--lg)',
-    xl: 'var(--wp--custom--layout--container--xl)',
-    '2xl': 'var(--wp--custom--layout--container--2xl)',
-    fluid: 'var(--wp--custom--layout--container--fluid)'
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px',
+    '2xl': '1536px',
+    fluid: '100%'
   },
   grid_columns: {
-    '1': 'var(--wp--custom--layout--grid--columns--1)',
-    '2': 'var(--wp--custom--layout--grid--columns--2)',
-    '3': 'var(--wp--custom--layout--grid--columns--3)',
-    '4': 'var(--wp--custom--layout--grid--columns--4)',
-    '6': 'var(--wp--custom--layout--grid--columns--6)',
-    '12': 'var(--wp--custom--layout--grid--columns--12)',
-    'auto-fit': 'var(--wp--custom--layout--grid--columns--auto-fit)',
-    'auto-fill': 'var(--wp--custom--layout--grid--columns--auto-fill)'
+    '1': 'repeat(1, minmax(0, 1fr))',
+    '2': 'repeat(2, minmax(0, 1fr))',
+    '3': 'repeat(3, minmax(0, 1fr))',
+    '4': 'repeat(4, minmax(0, 1fr))',
+    '6': 'repeat(6, minmax(0, 1fr))',
+    '12': 'repeat(12, minmax(0, 1fr))',
+    'auto-fit': 'repeat(auto-fit, minmax(250px, 1fr))',
+    'auto-fill': 'repeat(auto-fill, minmax(250px, 1fr))'
   },
   gaps: {
-    none: 'var(--wp--custom--layout--grid--gaps--none)',
-    xs: 'var(--wp--custom--layout--grid--gaps--xs)',
-    sm: 'var(--wp--custom--layout--grid--gaps--sm)',
-    md: 'var(--wp--custom--layout--grid--gaps--md)',
-    lg: 'var(--wp--custom--layout--grid--gaps--lg)',
-    xl: 'var(--wp--custom--layout--grid--gaps--xl)',
-    '2xl': 'var(--wp--custom--layout--grid--gaps--2xl)'
+    none: '0',
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem',
+    '2xl': '3rem'
   },
   flex_justify: {
-    start: 'var(--wp--custom--layout--flexbox--justify--start)',
-    end: 'var(--wp--custom--layout--flexbox--justify--end)',
-    center: 'var(--wp--custom--layout--flexbox--justify--center)',
-    between: 'var(--wp--custom--layout--flexbox--justify--between)',
-    around: 'var(--wp--custom--layout--flexbox--justify--around)',
-    evenly: 'var(--wp--custom--layout--flexbox--justify--evenly)'
+    start: 'flex-start',
+    end: 'flex-end',
+    center: 'center',
+    between: 'space-between',
+    around: 'space-around',
+    evenly: 'space-evenly'
   },
   flex_align: {
-    start: 'var(--wp--custom--layout--flexbox--align--start)',
-    end: 'var(--wp--custom--layout--flexbox--align--end)',
-    center: 'var(--wp--custom--layout--flexbox--align--center)',
-    baseline: 'var(--wp--custom--layout--flexbox--align--baseline)',
-    stretch: 'var(--wp--custom--layout--flexbox--align--stretch)'
+    start: 'flex-start',
+    end: 'flex-end',
+    center: 'center',
+    baseline: 'baseline',
+    stretch: 'stretch'
   },
   flex_direction: {
-    row: 'var(--wp--custom--layout--flexbox--direction--row)',
-    'row-reverse': 'var(--wp--custom--layout--flexbox--direction--row-reverse)',
-    col: 'var(--wp--custom--layout--flexbox--direction--col)',
-    'col-reverse': 'var(--wp--custom--layout--flexbox--direction--col-reverse)'
+    row: 'row',
+    'row-reverse': 'row-reverse',
+    col: 'column',
+    'col-reverse': 'column-reverse'
   },
   flex_wrap: {
-    wrap: 'var(--wp--custom--layout--flexbox--wrap--wrap)',
-    nowrap: 'var(--wp--custom--layout--flexbox--wrap--nowrap)',
-    'wrap-reverse': 'var(--wp--custom--layout--flexbox--wrap--wrap-reverse)'
+    wrap: 'wrap',
+    nowrap: 'nowrap',
+    'wrap-reverse': 'wrap-reverse'
   },
   z_index: {
-    auto: 'var(--wp--custom--layout--z-index--auto)',
-    '0': 'var(--wp--custom--layout--z-index--0)',
-    '10': 'var(--wp--custom--layout--z-index--10)',
-    '20': 'var(--wp--custom--layout--z-index--20)',
-    '30': 'var(--wp--custom--layout--z-index--30)',
-    '40': 'var(--wp--custom--layout--z-index--40)',
-    '50': 'var(--wp--custom--layout--z-index--50)',
-    dropdown: 'var(--wp--custom--layout--z-index--dropdown)',
-    sticky: 'var(--wp--custom--layout--z-index--sticky)',
-    fixed: 'var(--wp--custom--layout--z-index--fixed)',
-    'modal-backdrop': 'var(--wp--custom--layout--z-index--modal-backdrop)',
-    modal: 'var(--wp--custom--layout--z-index--modal)',
-    popover: 'var(--wp--custom--layout--z-index--popover)',
-    tooltip: 'var(--wp--custom--layout--z-index--tooltip)'
+    auto: 'auto',
+    '0': '0',
+    '10': '10',
+    '20': '20',
+    '30': '30',
+    '40': '40',
+    '50': '50',
+    dropdown: '1000',
+    sticky: '1020',
+    fixed: '1030',
+    'modal-backdrop': '1040',
+    modal: '1050',
+    popover: '1060',
+    tooltip: '1070'
   },
   aspect_ratio: {
-    square: 'var(--wp--custom--layout--aspect-ratio--square)',
-    video: 'var(--wp--custom--layout--aspect-ratio--video)',
-    '4/3': 'var(--wp--custom--layout--aspect-ratio--4\/3)',
-    '3/2': 'var(--wp--custom--layout--aspect-ratio--3\/2)',
-    '5/4': 'var(--wp--custom--layout--aspect-ratio--5\/4)',
-    golden: 'var(--wp--custom--layout--aspect-ratio--golden)'
+    square: '1 / 1',
+    video: '16 / 9',
+    '4/3': '4 / 3',
+    '3/2': '3 / 2',
+    '5/4': '5 / 4',
+    golden: '1.618 / 1'
   }
 } %}
 

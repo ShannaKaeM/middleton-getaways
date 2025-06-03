@@ -1,8 +1,8 @@
 {#
-  Color Primitive Book - Pure Design Tokens
+  Color Primitive Book - Self-Sufficient Design Tokens
   
-  This primitive provides pure color design tokens from theme.json.
-  It should ONLY contain foundational color properties, no semantic styling.
+  This primitive contains actual color values, not CSS variable references.
+  It is the single source of truth for colors in the design system.
   
   Color scheme:
   - Primary (light, default, dark)
@@ -21,22 +21,22 @@
 
 {% set color_tokens = {
   colors: {
-    'primary-light': 'var(--wp--preset--color--primary-light)',
-    'primary': 'var(--wp--preset--color--primary)',
-    'primary-dark': 'var(--wp--preset--color--primary-dark)',
-    'secondary-light': 'var(--wp--preset--color--secondary-light)',
-    'secondary': 'var(--wp--preset--color--secondary)',
-    'secondary-dark': 'var(--wp--preset--color--secondary-dark)',
-    'neutral-light': 'var(--wp--preset--color--neutral-light)',
-    'neutral': 'var(--wp--preset--color--neutral)',
-    'neutral-dark': 'var(--wp--preset--color--neutral-dark)',
-    'base-lightest': 'var(--wp--preset--color--base-lightest)',
-    'base-light': 'var(--wp--preset--color--base-light)',
-    'base': 'var(--wp--preset--color--base)',
-    'base-dark': 'var(--wp--preset--color--base-dark)',
-    'base-darkest': 'var(--wp--preset--color--base-darkest)',
-    'extreme-light': 'var(--wp--preset--color--extreme-light)',
-    'extreme-dark': 'var(--wp--preset--color--extreme-dark)'
+    'primary-light': '#d6dcd6',
+    'primary': '#5a7b7c',
+    'primary-dark': '#3a5a59',
+    'secondary-light': '#c38484',
+    'secondary': '#975d55',
+    'secondary-dark': '#853d2d',
+    'neutral-light': '#d1cfc2',
+    'neutral': '#b5b09f',
+    'neutral-dark': '#9e9983',
+    'base-lightest': '#e6e6e6',
+    'base-light': '#b3b3b3',
+    'base': '#808080',
+    'base-dark': '#676765',
+    'base-darkest': '#4d4d4d',
+    'extreme-light': '#ffffff',
+    'extreme-dark': '#000000'
   }
 } %}
 

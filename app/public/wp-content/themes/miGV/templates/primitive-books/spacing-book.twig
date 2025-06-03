@@ -1,8 +1,8 @@
 {#
-  Spacing Primitive Book - Pure Design Tokens
+  Spacing Primitive Book - Self-Sufficient Design Tokens
   
-  This primitive provides pure spacing design tokens from theme.json.
-  It should ONLY contain foundational spacing properties, no semantic styling.
+  This primitive contains actual spacing values, not CSS variable references.
+  It is the single source of truth for spacing in the design system.
   
   Usage:
   {% include 'primitive-books/spacing-book.twig' with {
@@ -14,20 +14,20 @@
 
 {% set spacing_tokens = {
   spacing: {
-    xs: 'var(--wp--custom--layout--spacing--xs)',
-    sm: 'var(--wp--custom--layout--spacing--sm)',
-    md: 'var(--wp--custom--layout--spacing--md)',
-    lg: 'var(--wp--custom--layout--spacing--lg)',
-    xl: 'var(--wp--custom--layout--spacing--xl)',
-    '2xl': 'var(--wp--custom--layout--spacing--2xl)',
-    '3xl': 'var(--wp--custom--layout--spacing--3xl)',
-    '4xl': 'var(--wp--custom--layout--spacing--4xl)',
-    '5xl': 'var(--wp--custom--layout--spacing--5xl)',
-    '6xl': 'var(--wp--custom--layout--spacing--6xl)',
-    '7xl': 'var(--wp--custom--layout--spacing--7xl)',
-    '8xl': 'var(--wp--custom--layout--spacing--8xl)',
-    '9xl': 'var(--wp--custom--layout--spacing--9xl)',
-    '10xl': 'var(--wp--custom--layout--spacing--10xl)'
+    xs: '4px',
+    sm: '8px',
+    md: '12px',
+    lg: '16px',
+    xl: '20px',
+    '2xl': '24px',
+    '3xl': '32px',
+    '4xl': '40px',
+    '5xl': '48px',
+    '6xl': '56px',
+    '7xl': '64px',
+    '8xl': '80px',
+    '9xl': '96px',
+    '10xl': '128px'
   }
 } %}
 

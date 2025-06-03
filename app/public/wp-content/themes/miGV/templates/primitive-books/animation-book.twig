@@ -1,8 +1,8 @@
 {#
-  Animation Primitive Book - Pure Design Tokens
+  Animation Primitive Book - Self-Sufficient Design Tokens
   
-  This primitive provides pure animation design tokens from theme.json.
-  It should ONLY contain foundational animation properties, no semantic styling.
+  This primitive contains actual animation values, not CSS variable references.
+  It is the single source of truth for animations in the design system.
   
   Usage:
   {% include 'primitive-books/animation-book.twig' with {
@@ -14,18 +14,18 @@
 
 {% set animation_tokens = {
   durations: {
-    fast: 'var(--wp--custom--animation--duration--fast)',
-    base: 'var(--wp--custom--animation--duration--base)',
-    slow: 'var(--wp--custom--animation--duration--slow)',
-    slower: 'var(--wp--custom--animation--duration--slower)'
+    fast: '150ms',
+    base: '200ms',
+    slow: '300ms',
+    slower: '500ms'
   },
   timings: {
-    linear: 'var(--wp--custom--animation--timing--linear)',
-    ease: 'var(--wp--custom--animation--timing--ease)',
-    'ease-in': 'var(--wp--custom--animation--timing--ease-in)',
-    'ease-out': 'var(--wp--custom--animation--timing--ease-out)',
-    'ease-in-out': 'var(--wp--custom--animation--timing--ease-in-out)',
-    bounce: 'var(--wp--custom--animation--timing--bounce)'
+    linear: 'linear',
+    ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    'ease-in': 'cubic-bezier(0.4, 0, 1, 1)',
+    'ease-out': 'cubic-bezier(0, 0, 0.2, 1)',
+    'ease-in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+    bounce: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
   }
 } %}
 

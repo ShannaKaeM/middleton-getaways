@@ -15,42 +15,42 @@ class VillaDesignBookRouter {
             'name' => 'Typography',
             'description' => 'Manage fonts, sizes, and text styles',
             'icon' => 'text',
-            'template' => 'primitives/typography-editor.twig',
+            'template' => 'design-book-editors/typography-editor.twig',
             'capabilities' => ['edit_theme_options']
         ],
         'colors' => [
             'name' => 'Colors',
             'description' => 'Manage color palette and schemes',
             'icon' => 'palette',
-            'template' => 'primitives/colors-editor.twig',
+            'template' => 'design-book-editors/colors-editor.twig',
             'capabilities' => ['edit_theme_options']
         ],
         'layout' => [
             'name' => 'Layout',
             'description' => 'Spacing, grids, and layout tokens',
             'icon' => 'grid',
-            'template' => 'design-book/layout.twig',
+            'template' => 'design-book-editors/layout-editor.twig',
             'capabilities' => ['edit_theme_options']
         ],
         'components' => [
             'name' => 'Components',
             'description' => 'UI components and patterns',
             'icon' => 'components',
-            'template' => 'design-book/components.twig',
+            'template' => 'design-book-editors/components.twig',
             'capabilities' => ['edit_theme_options']
         ],
         'tokens' => [
             'name' => 'Design Tokens',
             'description' => 'CSS custom properties and variables',
             'icon' => 'code',
-            'template' => 'design-book/tokens.twig',
+            'template' => 'design-book-editors/tokens.twig',
             'capabilities' => ['edit_theme_options']
         ],
         'documentation' => [
             'name' => 'Documentation',
             'description' => 'Usage guidelines and examples',
             'icon' => 'book',
-            'template' => 'design-book/documentation.twig',
+            'template' => 'design-book-editors/documentation.twig',
             'capabilities' => ['read']
         ]
     ];
@@ -140,7 +140,7 @@ class VillaDesignBookRouter {
 
         // Enqueue section-specific assets
         if ($section === 'colors') {
-            wp_enqueue_style('primitive-editor', get_template_directory_uri() . '/assets/css/primitive-editor.css', array(), '1.0.1');
+            wp_enqueue_style('design-book-editors', get_template_directory_uri() . '/assets/css/design-book-editors.css', array(), '1.0.1');
             wp_enqueue_script('primitive-colors', get_template_directory_uri() . '/assets/js/primitive-colors.js', array('jquery'), '1.0.1', true);
             
             // Localize script for primitive colors
@@ -150,7 +150,7 @@ class VillaDesignBookRouter {
                 'themeUrl' => get_template_directory_uri()
             ));
         } elseif ($section === 'typography') {
-            wp_enqueue_style('primitive-editor', get_template_directory_uri() . '/assets/css/primitive-editor.css', array(), '1.0.1');
+            wp_enqueue_style('design-book-editors', get_template_directory_uri() . '/assets/css/design-book-editors.css', array(), '1.0.1');
             wp_enqueue_script('primitive-typography', get_template_directory_uri() . '/assets/js/primitive-typography.js', array('jquery'), '1.0.1', true);
             
             // Localize script for primitive typography

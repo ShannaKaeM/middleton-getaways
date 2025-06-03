@@ -235,6 +235,32 @@ function migv_add_to_twig($twig) {
     $twig->addFunction(new Twig\TwigFunction('body_class', 'body_class'));
     $twig->addFunction(new Twig\TwigFunction('language_attributes', 'language_attributes'));
     
+    // Add function to get theme.json data directly in Twig templates
+    $twig->addFunction(new Twig\TwigFunction('get_theme_json', function($path = null) {
+        $theme_json = wp_get_global_settings();
+        
+        if ($path === null) {
+            return $theme_json;
+        }
+        
+        // Allow dot notation to access nested values
+        $keys = explode('.', $path);
+        $value = $theme_json;
+        
+        foreach ($keys as $key) {
+            if (isset($value[$key])) {
+                $value = $value[$key];
+            } else {
+                return null;
+            }
+        }
+        
+        return $value;
+    }));
+    
+    // Add function to get theme mods
+    $twig->addFunction(new Twig\TwigFunction('get_theme_mod', 'get_theme_mod'));
+    
     return $twig;
 }
 
@@ -740,7 +766,7 @@ function mi_sync_primitive_to_theme_json() {
 add_action('wp_ajax_mi_sync_primitive_to_theme_json', 'mi_sync_primitive_to_theme_json');
 
 /**
- * AJAX handler for getting all theme.json tokens for the design book
+ * AJAX handler to get all theme.json tokens for the design book
  */
 function mi_get_theme_json_tokens() {
     // Verify nonce

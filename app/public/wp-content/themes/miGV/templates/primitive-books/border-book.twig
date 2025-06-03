@@ -1,8 +1,8 @@
 {#
-  Border Primitive Book - Pure Design Tokens
+  Border Primitive Book - Self-Sufficient Design Tokens
   
-  This primitive provides pure border design tokens from theme.json.
-  It should ONLY contain foundational border properties, no semantic styling.
+  This primitive contains actual border values, not CSS variable references.
+  It is the single source of truth for borders in the design system.
   
   Usage:
   {% include 'primitive-books/border-book.twig' with {
@@ -15,21 +15,21 @@
 
 {% set border_tokens = {
   widths: {
-    none: 'var(--wp--custom--layout--border-width--none)',
-    thin: 'var(--wp--custom--layout--border-width--thin)',
-    medium: 'var(--wp--custom--layout--border-width--medium)',
-    thick: 'var(--wp--custom--layout--border-width--thick)',
-    heavy: 'var(--wp--custom--layout--border-width--heavy)'
+    none: '0',
+    thin: '1px',
+    medium: '2px',
+    thick: '3px',
+    heavy: '4px'
   },
   radius: {
-    none: 'var(--wp--custom--layout--border-radius--none)',
-    sm: 'var(--wp--custom--layout--border-radius--sm)',
-    md: 'var(--wp--custom--layout--border-radius--md)',
-    lg: 'var(--wp--custom--layout--border-radius--lg)',
-    xl: 'var(--wp--custom--layout--border-radius--xl)',
-    '2xl': 'var(--wp--custom--layout--border-radius--2xl)',
-    '3xl': 'var(--wp--custom--layout--border-radius--3xl)',
-    full: 'var(--wp--custom--layout--border-radius--full)'
+    none: '0',
+    sm: '4px',
+    md: '6px',
+    lg: '8px',
+    xl: '12px',
+    '2xl': '16px',
+    '3xl': '24px',
+    full: '9999px'
   },
   styles: {
     none: 'none',
@@ -47,22 +47,22 @@
 {# Import color tokens for border colors #}
 {% set color_tokens = {
   colors: {
-    'primary-light': 'var(--wp--preset--color--primary-light)',
-    'primary': 'var(--wp--preset--color--primary)',
-    'primary-dark': 'var(--wp--preset--color--primary-dark)',
-    'secondary-light': 'var(--wp--preset--color--secondary-light)',
-    'secondary': 'var(--wp--preset--color--secondary)',
-    'secondary-dark': 'var(--wp--preset--color--secondary-dark)',
-    'neutral-light': 'var(--wp--preset--color--neutral-light)',
-    'neutral': 'var(--wp--preset--color--neutral)',
-    'neutral-dark': 'var(--wp--preset--color--neutral-dark)',
-    'base-lightest': 'var(--wp--preset--color--base-lightest)',
-    'base-light': 'var(--wp--preset--color--base-light)',
-    'base': 'var(--wp--preset--color--base)',
-    'base-dark': 'var(--wp--preset--color--base-dark)',
-    'base-darkest': 'var(--wp--preset--color--base-darkest)',
-    'extreme-light': 'var(--wp--preset--color--extreme-light)',
-    'extreme-dark': 'var(--wp--preset--color--extreme-dark)'
+    'primary-light': '#d6dcd6',
+    'primary': '#5a7b7c',
+    'primary-dark': '#3a5a59',
+    'secondary-light': '#c38484',
+    'secondary': '#975d55',
+    'secondary-dark': '#853d2d',
+    'neutral-light': '#d1cfc2',
+    'neutral': '#b5b09f',
+    'neutral-dark': '#9e9983',
+    'base-lightest': '#e6e6e6',
+    'base-light': '#b3b3b3',
+    'base': '#808080',
+    'base-dark': '#676765',
+    'base-darkest': '#4d4d4d',
+    'extreme-light': '#ffffff',
+    'extreme-dark': '#000000'
   }
 } %}
 

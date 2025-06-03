@@ -24,6 +24,11 @@
             "fluid": true,
             "fontFamilies": [
                 {
+                    "fontFamily": "Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                    "name": "Montserrat",
+                    "slug": "montserrat"
+                },
+                {
                     "fontFamily": "Inter, system-ui, sans-serif",
                     "name": "Inter",
                     "slug": "inter"

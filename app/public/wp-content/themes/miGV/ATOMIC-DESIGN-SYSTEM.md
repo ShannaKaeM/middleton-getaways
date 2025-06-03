@@ -3,8 +3,10 @@
 ## Implementation Status
 
 ### Completed
-- **Color Primitive Editor** (`/color-book/`) - Fully functional with all color groups (primary, secondary, neutral, base, extreme, other) displayed in proper grid layouts with live editing capabilities
-- **Color Cleanup & Enhancement** - Completed color cleanup and enhancement task
+- **Color Primitive Editor** (`/design-book/colors/`) - Fully functional with HSL/CMYK sliders, live editing, and theme.json sync
+- **Color Cleanup & Enhancement** - Removed duplicate colors, added CMYK support, fixed lightness scaling
+- **Design Book Router** - Dynamic routing system for all design book sections
+- **CSS Architecture Cleanup** - Separated concerns between design-book.css and primitive-editor.css
 
 ### In Progress
 - Typography Primitive Editor
@@ -38,17 +40,22 @@ miGV/
 ├── theme.json                    # All design tokens
 ├── style.css                     # Only WordPress required styles
 ├── templates/
-│   ├── primitive-books/         # Atomic design tokens
+│   ├── primitives/              # Atomic design tokens editors
+│   │   └── colors-editor.twig   # Color primitive editor
+│   ├── primitive-books/         # Token display templates
 │   ├── element-books/          # Small UI elements
 │   ├── component-books/        # Larger components
 │   └── section-books/          # Page sections
 ├── assets/
 │   ├── css/
-│   │   └── design-book.css     # Editor UI only
+│   │   ├── design-book.css     # General design book layout
+│   │   └── primitive-editor.css # Editor-specific UI (sliders, tabs)
 │   └── js/
-│       └── design-book-sync.js # Sync functionality
-└── functions.php               # Sync handlers
-
+│       ├── design-book.js      # General design book functionality
+│       └── primitive-colors.js  # Color editor sync functionality
+├── inc/
+│   └── design-book-router.php  # Dynamic routing for design book
+└── functions.php               # Theme setup and sync handlers
 ```
 
 ### 3. Design Tokens in theme.json
@@ -107,12 +114,52 @@ Primitives reference theme.json tokens directly:
 
 The design book editor allows live editing of tokens that sync back to theme.json:
 
-1. **Color Editing**: Click on any color swatch to change it
+1. **Color Editing**: HSL and CMYK sliders with live preview
 2. **Typography Editing**: Adjust font sizes in the typography section
 3. **Spacing Editing**: Modify spacing values
 4. **Custom Properties**: Edit any custom token
 
 Changes are saved via AJAX to `theme.json` and immediately reflected in the UI.
+
+## Routing System
+
+### Design Book Router
+
+The theme includes a custom router (`inc/design-book-router.php`) that handles dynamic design book sections:
+
+- **Base URL**: `/design-book/`
+- **Sections**: `/design-book/{section}/` (e.g., `/design-book/colors/`)
+- **Supported Sections**: colors, typography, spacing, layout, components, tokens, documentation
+
+### Legacy URLs
+
+- `/color-book/` - Redirects to `/design-book/colors/`
+- Direct page templates still work for backwards compatibility
+
+## CSS Architecture
+
+### Separation of Concerns
+
+1. **design-book.css** - General layout and navigation
+   - Design book wrapper and header styles
+   - Navigation menu styling
+   - General button and action styles
+   - Section layouts (non-specific)
+
+2. **primitive-editor.css** - Editor-specific functionality
+   - Color cards and swatches
+   - HSL/CMYK sliders and controls
+   - Tab interfaces
+   - Interactive elements
+   - Editor-specific layouts
+
+### Key Features Preserved
+
+- **HSL Sliders**: Percentage-based lightness adjustments
+- **CMYK Support**: Full CMYK color space with proper gradients
+- **Tab Switching**: Clean tab interface for HSL/CMYK modes
+- **Montserrat Font**: Consistent typography throughout
+- **Live Preview**: Real-time color updates
 
 ## Usage Guide
 
@@ -190,6 +237,7 @@ Features:
 - Check theme.json syntax
 - Verify CSS custom property names
 - Clear WordPress cache
+- Ensure rewrite rules are flushed
 
 ### Sync Not Working
 - Check user permissions (edit_theme_options)
@@ -201,29 +249,32 @@ Features:
 - Add missing tokens to theme.json
 - Regenerate CSS variables
 
+### Router Not Working
+- Flush rewrite rules by visiting Settings > Permalinks
+- Check if mod_rewrite is enabled
+- Verify .htaccess is writable
+
 ## Recent Completions
 
 ### ✅ Color Cleanup & Enhancement (June 2025)
 **Status**: COMPLETED
 
 **Enhancements Made**:
-1. **Fixed Lightness Scale Issue**: Corrected HSL lightness slider to use percentage-based adjustments instead of absolute values, preventing colors from turning grayscale
-2. **Added CMYK Support**: Implemented full CMYK color space with tabbed interface (HSL/CMYK), individual sliders, and real-time conversion
+1. **Fixed Lightness Scale Issue**: Corrected HSL lightness slider to use percentage-based adjustments
+2. **Added CMYK Support**: Implemented full CMYK color space with tabbed interface
 3. **Updated Typography**: Changed design book UI font to Montserrat for consistency
-4. **Color Palette Cleanup**: Removed duplicate colors from theme.json:
-   - Removed `base-white` (use `extreme-light` instead)
-   - Removed `base-black` (use `extreme-dark` instead) 
-   - Removed `accent` (use `secondary` instead)
+4. **Color Palette Cleanup**: Removed duplicate colors from theme.json
+5. **Router Integration**: Fixed design book router to properly load color editor
 
 **Files Modified**:
 - `theme.json` - Cleaned color palette
 - `primitive-editor.css` - Added CMYK styles, updated font
 - `primitive-colors.js` - Fixed lightness, added CMYK support
 - `colors-editor.twig` - Added CMYK sliders and tabs
-- `villa-dashboard.css` - Updated all color references
-- `color-book.twig` - Removed duplicate color tokens
+- `design-book-router.php` - Fixed template path and data structure
+- `design-book.css` - Removed duplicate color-specific styles
 
-**Result**: Clean, consistent color system with professional-grade editing capabilities and no duplicate color tokens.
+**Result**: Clean, consistent color system with professional-grade editing capabilities and proper routing.
 
 ## Future Enhancements
 

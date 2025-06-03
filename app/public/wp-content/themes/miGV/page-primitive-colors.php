@@ -6,8 +6,8 @@
 
 // Enqueue necessary scripts and styles
 add_action('wp_enqueue_scripts', function() {
-    wp_enqueue_style('primitive-editor', get_template_directory_uri() . '/assets/css/primitive-editor.css', array(), '1.0.0');
-    wp_enqueue_script('primitive-colors', get_template_directory_uri() . '/assets/js/primitive-colors.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_style('primitive-editor', get_template_directory_uri() . '/assets/css/primitive-editor.css', array(), '1.0.1');
+    wp_enqueue_script('primitive-colors', get_template_directory_uri() . '/assets/js/primitive-colors.js', array('jquery'), '1.0.1', true);
     
     // Localize script for AJAX
     wp_localize_script('primitive-colors', 'primitiveColors', array(

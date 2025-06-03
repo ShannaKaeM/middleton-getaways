@@ -15,7 +15,7 @@ class VillaDesignBookRouter {
             'name' => 'Typography',
             'description' => 'Manage fonts, sizes, and text styles',
             'icon' => 'text',
-            'template' => 'design-book/typography.twig',
+            'template' => 'primitives/typography-editor.twig',
             'capabilities' => ['edit_theme_options']
         ],
         'colors' => [
@@ -149,6 +149,16 @@ class VillaDesignBookRouter {
                 'nonce' => wp_create_nonce('migv_nonce'),
                 'themeUrl' => get_template_directory_uri()
             ));
+        } elseif ($section === 'typography') {
+            wp_enqueue_style('primitive-editor', get_template_directory_uri() . '/assets/css/primitive-editor.css', array(), '1.0.1');
+            wp_enqueue_script('primitive-typography', get_template_directory_uri() . '/assets/js/primitive-typography.js', array('jquery'), '1.0.1', true);
+            
+            // Localize script for primitive typography
+            wp_localize_script('primitive-typography', 'primitiveTypography', array(
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('migv_nonce'),
+                'themeUrl' => get_template_directory_uri()
+            ));
         }
 
         // Localize script for AJAX
@@ -223,7 +233,7 @@ class VillaDesignBookRouter {
     private function add_section_data($context, $section) {
         switch ($section) {
             case 'typography':
-                $context['typography'] = $this->get_typography_data();
+                $context = array_merge($context, $this->get_typography_data());
                 break;
             case 'colors':
                 $context = array_merge($context, $this->get_colors_editor_data());
@@ -248,9 +258,54 @@ class VillaDesignBookRouter {
     private function get_typography_data() {
         $theme_json = wp_get_global_settings();
         
+        // Get custom typography data
+        $custom_typography = $theme_json['custom']['typography']['baseStyles'] ?? [];
+        $font_weights = $custom_typography['fontWeights'] ?? [];
+        $line_heights = $custom_typography['lineHeights'] ?? [];
+        $letter_spacings = $custom_typography['letterSpacing'] ?? [];
+        
+        // Convert font weights to array format if needed
+        if (!empty($font_weights) && !isset($font_weights[0])) {
+            $weights_array = [];
+            foreach ($font_weights as $slug => $value) {
+                $weights_array[] = [
+                    'slug' => $slug,
+                    'value' => $value
+                ];
+            }
+            $font_weights = $weights_array;
+        }
+        
+        // Convert line heights to array format if needed
+        if (!empty($line_heights) && !isset($line_heights[0])) {
+            $heights_array = [];
+            foreach ($line_heights as $slug => $value) {
+                $heights_array[] = [
+                    'slug' => $slug,
+                    'value' => $value
+                ];
+            }
+            $line_heights = $heights_array;
+        }
+        
+        // Convert letter spacing to array format if needed
+        if (!empty($letter_spacings) && !isset($letter_spacings[0])) {
+            $spacings_array = [];
+            foreach ($letter_spacings as $slug => $value) {
+                $spacings_array[] = [
+                    'slug' => $slug,
+                    'value' => $value
+                ];
+            }
+            $letter_spacings = $spacings_array;
+        }
+        
         return [
             'font_families' => $theme_json['typography']['fontFamilies'] ?? [],
             'font_sizes' => $theme_json['typography']['fontSizes'] ?? [],
+            'font_weights' => $font_weights,
+            'line_heights' => $line_heights,
+            'letter_spacings' => $letter_spacings,
             'current_scale' => get_theme_mod('villa_typography_scale', 1.25),
             'base_font_size' => get_theme_mod('villa_base_font_size', 16)
         ];

@@ -5,7 +5,7 @@
         "large": "1.5em",
         "x-large": "2em",
         "xx-large": "3em",
-        "huge": "4em"
+        "huge": "5em"
     },
     "font_families": [],
     "font_weights": {
@@ -16,7 +16,7 @@
         "extraBold": "900"
     },
     "line_heights": {
-        "tight": "1.1",
+        "tight": "1",
         "normal": "1.2",
         "relaxed": "1.4",
         "loose": "1.6"

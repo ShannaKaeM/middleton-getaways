@@ -23,7 +23,7 @@ Design Book Editor System
 │   ├── Timber/Twig Functions
 │   └── Theme.json Sync (optional)
 └── Asset Layer
-    ├── CSS (design-book-editors.css)
+    ├── CSS (design-book-editors.css): Styles for the editor UI. **The core UI of the Design Book Editor (e.g., its layout, buttons, input fields, text labels) should maintain its own fixed, accessible, and consistent styling. This ensures the editor remains usable regardless of the theme primitives being actively edited. This CSS should *not* directly use the dynamic theme primitives for the editor's own chrome. However, specific *preview areas* within the editor (e.g., color swatches, font example text, a live preview iframe) MUST use the dynamic theme primitives to accurately reflect the user's choices.** This approach is often called 'dogfooding' for the preview elements, while maintaining a stable UI for the tool itself. The [Primitive Design Library](./PRIMITIVE-DESIGN-LIBRARY.md) provides the CSS Custom Properties from the theme's primitives for these preview purposes.
     ├── JavaScript (primitive-*.js)
     └── Dependencies (jQuery, WordPress Core)
 ```
@@ -31,10 +31,11 @@ Design Book Editor System
 ## Key Features
 
 ### 1. Visual Token Editing
-- **Real-time Preview**: Changes update instantly in the preview area
-- **Intuitive Controls**: Sliders, color pickers, and input fields
-- **Grouped Organization**: Tokens organized by type and purpose
-- **Reset Capability**: Restore default values with one click
+- **Real-time Preview**: Changes to primitives update instantly in dedicated preview areas or a live preview pane, accurately reflecting the chosen theme styles.
+- **Intuitive Controls**: Clear and accessible sliders, color pickers, and input fields that maintain a consistent, usable style independent of the theme primitives being edited.
+- **Stable Editor UI**: The editor's own interface (buttons, backgrounds, text) uses a fixed, high-contrast design to ensure usability, regardless of the theme's color or typography choices.
+- **Grouped Organization**: Tokens organized by type and purpose within a clear and consistent editor layout.
+- **Reset Capability**: Restore default values with one click.
 
 ### 2. Persistent Storage
 - **JSON-based**: Human-readable, version-control friendly
@@ -380,6 +381,8 @@ add_filter('design_book_control_types', function($controls) {
    - Implement queue system for large updates
 
 ## Future Enhancements
+
+- **Internal UI Componentization:** To improve maintainability and development speed of the editor UI, common UI patterns within the editor's Twig templates (e.g., the 'card' displaying a token, input groups) can be refactored into smaller, reusable Twig components (e.g., `_editor-token-card.twig`, `_editor-input-group.twig`). These internal components would reside in a dedicated directory like `templates/editor-components/` and would be styled using the editor's fixed CSS to ensure UI consistency.
 
 1. **AI Integration**
    - Suggest color harmonies

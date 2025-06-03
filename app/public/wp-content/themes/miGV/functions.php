@@ -142,6 +142,27 @@ function migv_scripts() {
 add_action('wp_enqueue_scripts', 'migv_scripts');
 
 /**
+ * Outputs the dynamically generated primitive CSS variables into the site's <head>.
+ * This makes the CSS custom properties available globally for theme components
+ * and Design Book Editor previews.
+ */
+function migv_output_primitive_css_variables_in_head() {
+    // Ensure our core function is available
+    if ( ! function_exists( 'migv_generate_primitive_css_variables' ) ) {
+        // This might happen if design-system-core.php wasn't included correctly.
+        // Optionally log an error here.
+        // error_log('Error: migv_generate_primitive_css_variables function not found.');
+        return;
+    }
+
+    $generated_css = migv_generate_primitive_css_variables();
+    if ( ! empty( $generated_css ) ) {
+        echo "<style id='migv-primitive-variables'>\n" . $generated_css . "</style>\n";
+    }
+}
+add_action( 'wp_head', 'migv_output_primitive_css_variables_in_head' );
+
+/**
  * Enqueue admin scripts and styles
  */
 function migv_admin_scripts() {
@@ -391,6 +412,9 @@ add_filter('timber/twig', function($twig) {
  * Include required files
  */
 require get_template_directory() . '/inc/template-functions.php';
+// Include Design System Core for CSS variable generation
+require_once get_template_directory() . '/inc/design-system-core.php';
+
 require get_template_directory() . '/inc/customizer.php';
 // Design book router removed - functionality handled elsewhere
 

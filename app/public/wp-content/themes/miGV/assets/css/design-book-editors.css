@@ -1,12 +1,74 @@
 /* Primitive Editor Base Styles */
 :root {
-    /* Ensure consistent font with design book */
+    /* Typography - Font Sizes */
+    --font-size-small: 0.8125em;
+    --font-size-medium: 1em;
+    --font-size-large: 1.5em;
+    --font-size-x-large: 2em;
+    --font-size-xx-large: 3em;
+    --font-size-huge: 5em;
+    
+    /* Typography - Font Weights */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semiBold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extraBold: 900;
+    
+    /* Typography - Line Heights */
+    --line-height-tight: 1.1;
+    --line-height-normal: 1.2;
+    --line-height-relaxed: 1.4;
+    --line-height-loose: 1.6;
+    
+    /* Typography - Letter Spacing */
+    --letter-spacing-tight: -0.025em;
+    --letter-spacing-normal: 0em;
+    --letter-spacing-wide: 0.075em;
+    --letter-spacing-wider: 0.1em;
+    --letter-spacing-widest: 0.2em;
+    
+    /* Typography - Text Transforms */
+    --text-transform-none: none;
+    --text-transform-uppercase: uppercase;
+    --text-transform-lowercase: lowercase;
+    --text-transform-capitalize: capitalize;
+    
+    /* Colors - Primary Palette */
+    --color-primary: #3b82f6;
+    --color-secondary: #10b981;
+    --color-tertiary: #f59e0b;
+    --color-accent: #8b5cf6;
+    
+    /* Colors - Base Colors */
+    --color-base-light: #f3f4f6;
+    --color-base-medium: #9ca3af;
+    --color-base-dark: #1a1a1a;
+    
+    /* Colors - Extreme Colors */
+    --color-extreme-light: #ffffff;
+    --color-extreme-dark: #000000;
+    
+    /* Colors - Semantic Colors */
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-info: #3b82f6;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+    --spacing-4xl: 6rem;
+    --spacing-5xl: 8rem;
+    
+    /* Fonts */
     --primitive-font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --primitive-font-mono: 'Monaco', 'Consolas', 'Courier New', monospace;
-    
-    /* Color variables matching theme.json */
-    --color-base-dark: #1a1a1a;
-    --color-extreme-light: #ffffff;
 }
 
 .primitive-editor {

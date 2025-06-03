@@ -19,8 +19,8 @@
             <div class="typography-grid">
                 {% for slug, size in typography_tokens.font_sizes %}
                 <div class="typography-card">
-                    <div class="preview preview-{{ slug }}">
-                        <p style="font-size: {{ size }};">Text</p>
+                    <div class="typography-preview preview-{{ slug }}">
+                        <p style="font-size: var(--typography-font-sizes-{{ slug }});">Text</p>
                     </div>
                     <div class="typography-controls">
                         <label style="font-weight: 600;">{{ slug|upper }}</label>
@@ -55,8 +55,8 @@
             <div class="typography-grid">
                 {% for slug, family in typography_tokens.font_families %}
                 <div class="typography-card">
-                    <div class="preview preview-family-{{ slug }}">
-                        <p style="font-family: {{ family }};">{{ family }}</p>
+                    <div class="typography-preview preview-family-{{ slug }}">
+                        <p style="font-family: var(--typography-font-families-{{ slug }});">{{ family }}</p>
                     </div>
                     <div class="typography-controls">
                         <label>FONT STACK</label>
@@ -80,9 +80,9 @@
             <div class="typography-grid">
                 {% for slug, weight in typography_tokens.font_weights %}
                 <div class="typography-card">
-                    <div class="preview preview-weight-{{ slug }}">
-                        <p style="font-weight: {{ weight }};">
-                            <strong style="font-weight: 600;">{{ slug|capitalize }}</strong>
+                    <div class="typography-preview preview-weight-{{ slug }}">
+                        <p style="font-weight: var(--typography-font-weights-{{ slug }});">
+                            {{ slug|capitalize }}
                         </p>
                     </div>
                     <div class="typography-controls">
@@ -113,10 +113,9 @@
             <div class="typography-grid">
                 {% for slug, height in typography_tokens.line_heights %}
                 <div class="typography-card">
-                    <div class="preview preview-line-height-{{ slug }}">
-                        <p style="line-height: {{ height }};">
-                            <strong style="font-weight: 600;">{{ slug|capitalize }}</strong>
-                        </p>
+                    <div class="typography-preview preview-line-height-{{ slug }}" style="line-height: var(--typography-line-heights-{{ slug }});">
+                        <p style="font-weight: 600; margin-bottom: 0; display: block;">{{ slug|capitalize }}</p>
+                        <p class="editor-preview-label" style="text-transform: uppercase; font-weight: 500; margin-top: 0; display: block;">LINEHEIGHT</p>
                     </div>
                     <div class="typography-controls">
                         <label>LINE HEIGHT</label>
@@ -146,8 +145,8 @@
             <div class="typography-grid">
                 {% for slug, spacing in typography_tokens.letter_spacings %}
                 <div class="typography-card">
-                    <div class="preview preview-letter-spacing-{{ slug }}">
-                        <p style="letter-spacing: {{ spacing }}; font-weight: 600;">{{ slug|capitalize }}</p>
+                    <div class="typography-preview preview-letter-spacing-{{ slug }}">
+                        <p style="letter-spacing: var(--typography-letter-spacings-{{ slug }}); font-weight: 600;">{{ slug|capitalize }}</p>
                     </div>
                     <div class="typography-controls">
                         <label>SPACING</label>
@@ -177,8 +176,8 @@
             <div class="typography-grid">
                 {% for slug, transform in typography_tokens.text_transforms %}
                 <div class="typography-card">
-                    <div class="preview preview-text-transform-{{ slug }}">
-                        <p style="text-transform: {{ transform }}; font-weight: 600;">{{ slug }}</p>
+                    <div class="typography-preview preview-text-transform-{{ slug }}">
+                        <p style="text-transform: var(--typography-text-transforms-{{ slug }}); font-weight: 600;">{{ slug }}</p>
                     </div>
                     <div class="typography-controls">
                         <label>TRANSFORM</label>

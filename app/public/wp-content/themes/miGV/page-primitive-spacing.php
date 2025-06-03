@@ -17,21 +17,18 @@ add_action('wp_enqueue_scripts', function() {
     ));
 });
 
-// Get theme.json spacing data
-$theme_json = wp_get_global_settings();
-$spacing_sizes = $theme_json['spacing']['spacingSizes'] ?? [];
-
-// Sort spacing sizes by numeric value
-usort($spacing_sizes, function($a, $b) {
-    $a_val = floatval(preg_replace('/[^0-9.]/', '', $a['size']));
-    $b_val = floatval(preg_replace('/[^0-9.]/', '', $b['size']));
-    return $a_val <=> $b_val;
-});
+// Get header
+get_header();
 
 // Set up Timber context
 $context = Timber::context();
-$context['spacing_sizes'] = $spacing_sizes;
-$context['can_edit'] = current_user_can('edit_theme_options');
+$context['post'] = Timber::get_post();
 
-// Render the template
-Timber::render('primitives/spacing-editor.twig', $context);
+// The spacing editor template will include the primitive book directly
+// No need to pass theme.json data since we're using self-sufficient primitives
+
+// Render the spacing editor template
+Timber::render('design-book-editors/spacing-editor.twig', $context);
+
+// Get footer
+get_footer();

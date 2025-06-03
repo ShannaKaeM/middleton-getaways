@@ -1198,3 +1198,201 @@ function sync_typography_to_theme_json() {
     }
 }
 add_action('wp_ajax_sync_typography_to_theme_json', 'sync_typography_to_theme_json');
+
+// === SPACING PRIMITIVE AJAX HANDLERS (Updated for categorized structure) ===
+
+// Save spacing primitive
+function save_spacing_primitive() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get and validate data
+    $spacing_data = isset($_POST['spacing_data']) ? json_decode(stripslashes($_POST['spacing_data']), true) : null;
+    
+    if (!$spacing_data) {
+        wp_send_json_error('Invalid spacing data');
+        return;
+    }
+    
+    // Validate expected structure
+    $expected_categories = ['scale', 'padding', 'margin', 'gap', 'layout'];
+    foreach ($expected_categories as $category) {
+        if (!isset($spacing_data[$category]) || !is_array($spacing_data[$category])) {
+            $spacing_data[$category] = [];
+        }
+    }
+    
+    // Save to JSON file
+    $json_path = get_template_directory() . '/primitives/spacing.json';
+    
+    // Create backup before saving
+    if (file_exists($json_path)) {
+        $backup_path = get_template_directory() . '/primitives/spacing.backup.json';
+        copy($json_path, $backup_path);
+    }
+    
+    $result = file_put_contents($json_path, json_encode($spacing_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if ($result !== false) {
+        // Trigger action for any additional processing
+        do_action('mi_spacing_primitive_saved', $spacing_data);
+        
+        wp_send_json_success('Spacing primitive saved successfully');
+    } else {
+        wp_send_json_error('Failed to save spacing primitive');
+    }
+}
+add_action('wp_ajax_save_spacing_primitive', 'save_spacing_primitive');
+
+// Sync spacing to theme.json
+function sync_spacing_to_theme_json() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get spacing data
+    $spacing_data = isset($_POST['spacing_data']) ? json_decode(stripslashes($_POST['spacing_data']), true) : null;
+    
+    if (!$spacing_data) {
+        wp_send_json_error('Invalid spacing data');
+        return;
+    }
+    
+    // Load existing theme.json
+    $theme_json_path = get_template_directory() . '/theme.json';
+    $theme_json = json_decode(file_get_contents($theme_json_path), true);
+    
+    if (!$theme_json) {
+        wp_send_json_error('Failed to load theme.json');
+        return;
+    }
+    
+    // Update spacing settings
+    if (!isset($theme_json['settings']['spacing'])) {
+        $theme_json['settings']['spacing'] = [];
+    }
+    
+    // Convert scale values to spacingSizes
+    $theme_json['settings']['spacing']['spacingSizes'] = [];
+    if (isset($spacing_data['scale'])) {
+        foreach ($spacing_data['scale'] as $slug => $size) {
+            $theme_json['settings']['spacing']['spacingSizes'][] = [
+                'slug' => $slug,
+                'size' => $size,
+                'name' => strtoupper(str_replace('-', ' ', $slug))
+            ];
+        }
+    }
+    
+    // Ensure spacing features are enabled
+    $theme_json['settings']['spacing']['blockGap'] = true;
+    $theme_json['settings']['spacing']['margin'] = true;
+    $theme_json['settings']['spacing']['padding'] = true;
+    $theme_json['settings']['spacing']['units'] = ['px', 'em', 'rem', '%', 'vh', 'vw'];
+    
+    // Custom spacing values (for documentation/reference)
+    if (!isset($theme_json['settings']['custom'])) {
+        $theme_json['settings']['custom'] = [];
+    }
+    
+    $theme_json['settings']['custom']['spacing'] = [
+        'padding' => $spacing_data['padding'] ?? [],
+        'margin' => $spacing_data['margin'] ?? [],
+        'gap' => $spacing_data['gap'] ?? [],
+        'layout' => $spacing_data['layout'] ?? []
+    ];
+    
+    // Create backup before saving
+    $backup_path = get_template_directory() . '/theme.json.backup';
+    copy($theme_json_path, $backup_path);
+    
+    // Save updated theme.json
+    $result = file_put_contents($theme_json_path, json_encode($theme_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if ($result !== false) {
+        // Clear any caches
+        do_action('mi_theme_json_updated', 'spacing');
+        
+        wp_send_json_success('Spacing synced to theme.json');
+    } else {
+        wp_send_json_error('Failed to sync to theme.json');
+    }
+}
+add_action('wp_ajax_sync_spacing_to_theme_json', 'sync_spacing_to_theme_json');
+
+// Register main Design Book menu
+function register_design_book_menu() {
+    add_menu_page(
+        'Design Book',
+        'Design Book',
+        'edit_theme_options',
+        'design-book',
+        'render_design_book_main_page',
+        'dashicons-art',
+        30
+    );
+}
+add_action('admin_menu', 'register_design_book_menu');
+
+// Render main design book page
+function render_design_book_main_page() {
+    echo '<div class="wrap">';
+    echo '<h1>Design Book</h1>';
+    echo '<p>Welcome to the Design Book. Use the submenu to access different primitive editors.</p>';
+    echo '<ul>';
+    echo '<li><a href="' . admin_url('admin.php?page=spacing-primitive') . '">Spacing Editor</a></li>';
+    // Add links to other editors as they are created
+    echo '</ul>';
+    echo '</div>';
+}
+
+// Page registration for Spacing Editor
+function register_spacing_editor_page() {
+    add_submenu_page(
+        'design-book', // Parent menu slug
+        'Spacing Primitive',
+        'Spacing',
+        'edit_theme_options',
+        'spacing-primitive',
+        'render_spacing_editor_page'
+    );
+}
+add_action('admin_menu', 'register_spacing_editor_page');
+
+// Render the spacing editor page
+function render_spacing_editor_page() {
+    // Enqueue editor assets
+    wp_enqueue_style('design-book-editors', get_template_directory_uri() . '/assets/css/design-book-editors.css', array(), '1.0.0');
+    wp_enqueue_script('primitive-spacing', get_template_directory_uri() . '/assets/js/primitive-spacing.js', array('jquery'), '1.0.0', true);
+    
+    // Localize script
+    wp_localize_script('primitive-spacing', 'primitiveSpacing', array(
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('mi_design_book_nonce'),
+        'primitiveType' => 'spacing'
+    ));
+    
+    // Prepare context for Timber
+    $context = Timber::context();
+    $context['page_title'] = 'Spacing Primitive Editor';
+    
+    // Render the template
+    Timber::render('design-book-editors/spacing-editor.twig', $context);
+}

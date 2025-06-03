@@ -1,0 +1,258 @@
+{#
+  Spacing Primitive Editor
+  Following the established pattern from typography-editor.twig
+#}
+
+{% set spacing_tokens = load_primitive('spacing') %}
+
+<div class="primitive-editor" data-primitive-type="spacing">
+    <header class="editor-header">
+        <h1>Spacing Primitive Editor</h1>
+        <div class="editor-actions">
+            <button class="btn-save" data-action="save">Save to JSON</button>
+            <button class="btn-sync" data-action="sync">Sync to theme.json</button>
+            <button class="btn-reset" data-action="reset">Reset to Defaults</button>
+        </div>
+    </header>
+
+    <div class="editor-content">
+        <!-- Scale Section -->
+        <section class="token-group" data-token-type="scale">
+            <h2>Spacing Scale</h2>
+            <p class="section-description">Base spacing scale used throughout the design system</p>
+            <div class="token-grid spacing-grid">
+                {% for slug, value in spacing_tokens.scale %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|upper }}</label>
+                        <div class="spacing-preview">
+                            <div class="spacing-box" style="width: {{ value }}; height: {{ value }};"></div>
+                            <div class="spacing-ruler" style="width: {{ value }};"></div>
+                        </div>
+                        <input type="text" 
+                               class="token-input spacing-scale-input" 
+                               value="{{ value }}"
+                               data-category="scale"
+                               data-slug="{{ slug }}"
+                               name="data[scale][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Padding Section -->
+        <section class="token-group" data-token-type="padding">
+            <h2>Padding Values</h2>
+            <p class="section-description">Purpose-specific padding values including section padding</p>
+            <div class="token-grid spacing-grid">
+                {% for slug, value in spacing_tokens.padding %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="padding-preview">
+                            <div class="padding-container" style="padding: {{ value }};">
+                                <div class="padding-content">Content</div>
+                            </div>
+                        </div>
+                        <input type="text" 
+                               class="token-input padding-input" 
+                               value="{{ value }}"
+                               data-category="padding"
+                               data-slug="{{ slug }}"
+                               name="data[padding][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Margin Section -->
+        <section class="token-group" data-token-type="margin">
+            <h2>Margin Values</h2>
+            <p class="section-description">Margin values for component and section spacing</p>
+            <div class="token-grid spacing-grid">
+                {% for slug, value in spacing_tokens.margin %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="margin-preview">
+                            <div class="margin-container">
+                                <div class="margin-element" style="margin: {{ value }};">
+                                    <div class="margin-content">Element</div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" 
+                               class="token-input margin-input" 
+                               value="{{ value }}"
+                               data-category="margin"
+                               data-slug="{{ slug }}"
+                               name="data[margin][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Gap Section -->
+        <section class="token-group" data-token-type="gap">
+            <h2>Gap Values</h2>
+            <p class="section-description">Gap values for flexbox and grid layouts</p>
+            <div class="token-grid spacing-grid">
+                {% for slug, value in spacing_tokens.gap %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="gap-preview">
+                            <div class="gap-container" style="display: flex; gap: {{ value }};">
+                                <div class="gap-item">1</div>
+                                <div class="gap-item">2</div>
+                                <div class="gap-item">3</div>
+                            </div>
+                        </div>
+                        <input type="text" 
+                               class="token-input gap-input" 
+                               value="{{ value }}"
+                               data-category="gap"
+                               data-slug="{{ slug }}"
+                               name="data[gap][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Layout Section -->
+        <section class="token-group" data-token-type="layout">
+            <h2>Layout Spacing</h2>
+            <p class="section-description">Spacing values specific to layout components</p>
+            <div class="token-grid spacing-grid">
+                {% for slug, value in spacing_tokens.layout %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="layout-preview">
+                            {% if 'width' in slug %}
+                                <div class="width-preview" style="width: {{ value }}; height: 40px;"></div>
+                            {% else %}
+                                <div class="layout-spacing-preview" style="padding: {{ value }};">
+                                    <div class="layout-content">{{ slug }}</div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <input type="text" 
+                               class="token-input layout-input" 
+                               value="{{ value }}"
+                               data-category="layout"
+                               data-slug="{{ slug }}"
+                               name="data[layout][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Live Preview Section -->
+        <section class="preview-section">
+            <h2>Live Preview</h2>
+            <div class="preview-controls">
+                <label>Select spacing type:</label>
+                <select class="preview-type">
+                    <option value="padding">Padding</option>
+                    <option value="margin">Margin</option>
+                    <option value="gap">Gap</option>
+                </select>
+                <label>Select value:</label>
+                <select class="preview-value">
+                    {% for slug, value in spacing_tokens.scale %}
+                        <option value="{{ slug }}">{{ slug|upper }} ({{ value }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="live-preview-container">
+                <div class="preview-element" id="spacing-preview">
+                    <div class="preview-content">
+                        Preview Content
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+/* Preview-specific styles that use the CSS variables */
+.spacing-preview .spacing-box {
+    background: var(--color-primary, #5a7b7c);
+    transition: all 0.3s ease;
+}
+
+.spacing-preview .spacing-ruler {
+    height: 4px;
+    background: var(--color-neutral, #b5b09f);
+    margin-top: 8px;
+}
+
+.padding-preview .padding-container {
+    background: var(--color-base-light, #e9e7e0);
+    border: 1px dashed var(--color-neutral-dark, #8f8c7f);
+    position: relative;
+}
+
+.padding-preview .padding-content {
+    background: var(--color-extreme-light, white);
+    padding: 8px;
+    text-align: center;
+}
+
+.margin-preview .margin-container {
+    background: var(--color-base-light, #e9e7e0);
+    padding: 20px;
+}
+
+.margin-preview .margin-element {
+    background: var(--color-primary-light, #d6dcd6);
+}
+
+.margin-preview .margin-content {
+    background: var(--color-extreme-light, white);
+    padding: 12px;
+    text-align: center;
+}
+
+.gap-preview .gap-container {
+    background: var(--color-base-light, #e9e7e0);
+    padding: 12px;
+}
+
+.gap-preview .gap-item {
+    background: var(--color-primary, #5a7b7c);
+    color: var(--color-extreme-light, white);
+    padding: 12px 20px;
+    text-align: center;
+}
+
+.layout-preview .width-preview {
+    background: var(--color-secondary, #975d55);
+}
+
+.layout-preview .layout-spacing-preview {
+    background: var(--color-neutral-light, #d1cfc2);
+    display: inline-block;
+}
+
+.layout-preview .layout-content {
+    background: var(--color-extreme-light, white);
+    padding: 8px;
+    font-size: 0.875rem;
+}
+
+/* Live preview dynamic styles */
+#spacing-preview {
+    background: var(--color-base-light, #e9e7e0);
+    border: 2px solid var(--color-neutral, #b5b09f);
+    transition: all 0.3s ease;
+}
+
+#spacing-preview .preview-content {
+    background: var(--color-extreme-light, white);
+    padding: 20px;
+    text-align: center;
+}
+</style>

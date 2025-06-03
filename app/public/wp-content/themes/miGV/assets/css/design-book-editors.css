@@ -731,8 +731,9 @@ input[type="range"]::-moz-range-thumb:hover {
 /* Typography Grid */
 .typography-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .typography-card {
@@ -745,20 +746,6 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .typography-card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.typography-preview {
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    min-height: 80px;
-    overflow: hidden;
-}
-
-.typography-preview p {
-    margin: 0;
-    color: var(--color-extreme-light);
 }
 
 .typography-info {
@@ -804,7 +791,10 @@ input[type="range"]::-moz-range-thumb:hover {
     position: relative;
 }
 
-.typography-controls input[type="number"] {
+.font-size-input,
+.weight-value,
+.line-height-value,
+.letter-spacing-value {
     width: 100%;
     max-width: 100%;
     padding: 0.5rem;
@@ -832,7 +822,8 @@ input[type="range"]::-moz-range-thumb:hover {
     transform: translateY(-50%);
 }
 
-.typography-controls .unit-selector select {
+.typography-controls .unit-selector select,
+.font-size-unit {
     padding: 0.25rem 0.5rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
@@ -869,17 +860,26 @@ input[type="range"]::-moz-range-thumb:hover {
     word-break: break-all;
 }
 
-/* Weight, Line Height, Letter Spacing Specific */
-.weight-value,
-.line-height-value,
-.letter-spacing-value {
-    width: 100%;
-    padding: 0.5rem;
+/* Typography Preview */
+.typography-preview {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    font-size: 0.875rem;
-    background: rgba(255, 255, 255, 0.05);
+}
+
+.typography-preview h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.typography-sample {
     color: var(--color-extreme-light);
+    margin: 0;
+    line-height: 1.4;
 }
 
 /* Responsive Typography Editor */
@@ -891,8 +891,11 @@ input[type="range"]::-moz-range-thumb:hover {
     
     .typography-grid {
         grid-template-columns: 1fr;
-        max-width: 400px;
-        margin: 0 auto;
+        gap: 1.5rem;
+    }
+    
+    .typography-card {
+        padding: 1rem;
     }
 }
 
@@ -992,4 +995,380 @@ input[type="range"]::-moz-range-thumb:hover {
 /* Font Family Name Styling */
 .font-name {
     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* =========================================
+   SPACING EDITOR STYLES
+   ========================================= */
+
+/* Editor Header */
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background: rgba(30, 30, 30, 1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.editor-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-extreme-light);
+}
+
+.editor-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.editor-content {
+    padding: 2rem;
+    background: var(--color-base-dark);
+    min-height: 100vh;
+}
+
+/* Token Groups */
+.token-group {
+    margin-bottom: 3rem;
+}
+
+.token-group h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-extreme-light);
+}
+
+.section-description {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 1.5rem 0;
+}
+
+/* Token Grid */
+.token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.spacing-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Token Items */
+.token-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s;
+}
+
+.token-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.token-item label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-extreme-light);
+}
+
+.token-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
+    font-size: 0.875rem;
+    font-family: var(--primitive-font-mono);
+    transition: all 0.2s;
+}
+
+.token-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Spacing Previews */
+.spacing-preview {
+    margin-bottom: 1rem;
+}
+
+.spacing-box {
+    background: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.spacing-ruler {
+    height: 4px;
+    background: var(--color-neutral);
+    margin-top: 8px;
+    transition: width 0.3s ease;
+}
+
+/* Padding Preview */
+.padding-preview {
+    margin-bottom: 1rem;
+}
+
+.padding-container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    position: relative;
+    transition: padding 0.3s ease;
+}
+
+.padding-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    text-align: center;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Margin Preview */
+.margin-preview {
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.margin-container {
+    background: rgba(255, 255, 255, 0.05);
+    display: inline-block;
+}
+
+.margin-element {
+    background: rgba(255, 255, 255, 0.08);
+    transition: margin 0.3s ease;
+}
+
+.margin-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    text-align: center;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Gap Preview */
+.gap-preview {
+    margin-bottom: 1rem;
+}
+
+.gap-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+    transition: gap 0.3s ease;
+}
+
+.gap-item {
+    background: var(--color-primary);
+    color: var(--color-extreme-light);
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+/* Layout Preview */
+.layout-preview {
+    margin-bottom: 1rem;
+}
+
+.width-preview {
+    background: var(--color-secondary);
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.layout-spacing-preview {
+    background: rgba(255, 255, 255, 0.05);
+    display: inline-block;
+    border-radius: 8px;
+    transition: padding 0.3s ease;
+}
+
+.layout-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+}
+
+/* Live Preview Section */
+.preview-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.preview-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    color: var(--color-extreme-light);
+}
+
+.preview-controls {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.preview-controls label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-right: 0.5rem;
+}
+
+.preview-controls select {
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
+    font-size: 0.875rem;
+}
+
+.live-preview-container {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 8px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#spacing-preview {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+#spacing-preview .preview-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    text-align: center;
+    color: var(--color-extreme-light);
+    font-weight: 500;
+}
+
+/* Copy Button */
+.copy-button {
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.copy-button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Editor Notifications */
+.editor-notification {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.editor-notification.show {
+    transform: translateX(0);
+}
+
+.notification-success {
+    background: #10b981;
+    color: white;
+}
+
+.notification-error {
+    background: #ef4444;
+    color: white;
+}
+
+.notification-info {
+    background: #3b82f6;
+    color: white;
+}
+
+/* Buttons */
+.btn-sync,
+.btn-reset {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+}
+
+.btn-sync:hover,
+.btn-reset:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Spacing Editor */
+@media (max-width: 1024px) {
+    .spacing-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .editor-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .editor-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .preview-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .spacing-grid {
+        grid-template-columns: 1fr;
+    }
 }

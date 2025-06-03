@@ -1,77 +1,126 @@
 {#
-  Spacing Primitive Book - Self-Sufficient Design Tokens
+  Spacing Primitive Book - JSON-Based Design Tokens
   
-  This primitive contains actual spacing values, not CSS variable references.
-  It is the single source of truth for spacing in the design system.
+  This primitive loads spacing values from the JSON primitive file.
+  It is part of the self-sufficient design system where JSON files are the single source of truth.
   
   Usage:
   {% include 'primitive-books/spacing-book.twig' with {
-    padding: 'lg',
-    margin: 'md',
-    gap: 'sm'
+    padding: 'lg',           # Uses padding.lg or scale.lg
+    margin: 'md',           # Uses margin.md or scale.md
+    gap: 'sm',              # Uses gap.sm or scale.sm
+    padding_top: 'xl',      # Uses padding.xl or scale.xl
+    margin_bottom: 'section' # Uses margin.section
   } %}
 #}
 
-{% set spacing_tokens = {
-  spacing: {
-    xs: '4px',
-    sm: '8px',
-    md: '12px',
-    lg: '16px',
-    xl: '20px',
-    '2xl': '24px',
-    '3xl': '32px',
-    '4xl': '40px',
-    '5xl': '48px',
-    '6xl': '56px',
-    '7xl': '64px',
-    '8xl': '80px',
-    '9xl': '96px',
-    '10xl': '128px'
-  }
-} %}
+{# Load spacing tokens from JSON #}
+{% set spacing_tokens = load_primitive('spacing') %}
 
-{# Apply spacing styles based on parameters #}
+{# Helper function to resolve spacing values with fallback #}
+{# First check category-specific value, then scale, then use raw value #}
+
+{# Apply padding styles #}
 {% if padding %}
-  padding: {{ spacing_tokens.spacing[padding] ?? padding }};
+  {% set padding_value = spacing_tokens.padding[padding] ?? spacing_tokens.scale[padding] ?? padding %}
+  padding: {{ padding_value }};
 {% endif %}
 
 {% if padding_top %}
-  padding-top: {{ spacing_tokens.spacing[padding_top] ?? padding_top }};
+  {% set pt_value = spacing_tokens.padding[padding_top] ?? spacing_tokens.scale[padding_top] ?? padding_top %}
+  padding-top: {{ pt_value }};
 {% endif %}
 
 {% if padding_bottom %}
-  padding-bottom: {{ spacing_tokens.spacing[padding_bottom] ?? padding_bottom }};
+  {% set pb_value = spacing_tokens.padding[padding_bottom] ?? spacing_tokens.scale[padding_bottom] ?? padding_bottom %}
+  padding-bottom: {{ pb_value }};
 {% endif %}
 
 {% if padding_left %}
-  padding-left: {{ spacing_tokens.spacing[padding_left] ?? padding_left }};
+  {% set pl_value = spacing_tokens.padding[padding_left] ?? spacing_tokens.scale[padding_left] ?? padding_left %}
+  padding-left: {{ pl_value }};
 {% endif %}
 
 {% if padding_right %}
-  padding-right: {{ spacing_tokens.spacing[padding_right] ?? padding_right }};
+  {% set pr_value = spacing_tokens.padding[padding_right] ?? spacing_tokens.scale[padding_right] ?? padding_right %}
+  padding-right: {{ pr_value }};
 {% endif %}
 
+{# Apply padding axis shorthands #}
+{% if padding_x %}
+  {% set px_value = spacing_tokens.padding[padding_x] ?? spacing_tokens.scale[padding_x] ?? padding_x %}
+  padding-left: {{ px_value }};
+  padding-right: {{ px_value }};
+{% endif %}
+
+{% if padding_y %}
+  {% set py_value = spacing_tokens.padding[padding_y] ?? spacing_tokens.scale[padding_y] ?? padding_y %}
+  padding-top: {{ py_value }};
+  padding-bottom: {{ py_value }};
+{% endif %}
+
+{# Apply margin styles #}
 {% if margin %}
-  margin: {{ spacing_tokens.spacing[margin] ?? margin }};
+  {% set margin_value = spacing_tokens.margin[margin] ?? spacing_tokens.scale[margin] ?? margin %}
+  margin: {{ margin_value }};
 {% endif %}
 
 {% if margin_top %}
-  margin-top: {{ spacing_tokens.spacing[margin_top] ?? margin_top }};
+  {% set mt_value = spacing_tokens.margin[margin_top] ?? spacing_tokens.scale[margin_top] ?? margin_top %}
+  margin-top: {{ mt_value }};
 {% endif %}
 
 {% if margin_bottom %}
-  margin-bottom: {{ spacing_tokens.spacing[margin_bottom] ?? margin_bottom }};
+  {% set mb_value = spacing_tokens.margin[margin_bottom] ?? spacing_tokens.scale[margin_bottom] ?? margin_bottom %}
+  margin-bottom: {{ mb_value }};
 {% endif %}
 
 {% if margin_left %}
-  margin-left: {{ spacing_tokens.spacing[margin_left] ?? margin_left }};
+  {% set ml_value = spacing_tokens.margin[margin_left] ?? spacing_tokens.scale[margin_left] ?? margin_left %}
+  margin-left: {{ ml_value }};
 {% endif %}
 
 {% if margin_right %}
-  margin-right: {{ spacing_tokens.spacing[margin_right] ?? margin_right }};
+  {% set mr_value = spacing_tokens.margin[margin_right] ?? spacing_tokens.scale[margin_right] ?? margin_right %}
+  margin-right: {{ mr_value }};
 {% endif %}
 
+{# Apply margin axis shorthands #}
+{% if margin_x %}
+  {% set mx_value = spacing_tokens.margin[margin_x] ?? spacing_tokens.scale[margin_x] ?? margin_x %}
+  margin-left: {{ mx_value }};
+  margin-right: {{ mx_value }};
+{% endif %}
+
+{% if margin_y %}
+  {% set my_value = spacing_tokens.margin[margin_y] ?? spacing_tokens.scale[margin_y] ?? margin_y %}
+  margin-top: {{ my_value }};
+  margin-bottom: {{ my_value }};
+{% endif %}
+
+{# Apply gap styles (for flexbox/grid) #}
 {% if gap %}
-  gap: {{ spacing_tokens.spacing[gap] ?? gap }};
+  {% set gap_value = spacing_tokens.gap[gap] ?? spacing_tokens.scale[gap] ?? gap %}
+  gap: {{ gap_value }};
+{% endif %}
+
+{% if row_gap %}
+  {% set row_gap_value = spacing_tokens.gap[row_gap] ?? spacing_tokens.scale[row_gap] ?? row_gap %}
+  row-gap: {{ row_gap_value }};
+{% endif %}
+
+{% if column_gap %}
+  {% set col_gap_value = spacing_tokens.gap[column_gap] ?? spacing_tokens.scale[column_gap] ?? column_gap %}
+  column-gap: {{ col_gap_value }};
+{% endif %}
+
+{# Apply layout-specific spacing #}
+{% if container_padding %}
+  {% set cp_value = spacing_tokens.layout[container_padding] ?? container_padding %}
+  padding: {{ cp_value }};
+{% endif %}
+
+{% if max_width %}
+  {% set mw_value = spacing_tokens.layout[max_width] ?? max_width %}
+  max-width: {{ mw_value }};
 {% endif %}

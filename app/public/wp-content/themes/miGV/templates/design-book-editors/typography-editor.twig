@@ -17,7 +17,7 @@
         <section class="primitive-section">
             <h2>Font Sizes</h2>
             <div class="typography-grid">
-                {% for slug, size in typography_tokens.font_sizes %}
+                {% for slug, size in typography_tokens.fontSizes %}
                 <div class="typography-card">
                     <div class="typography-preview preview-{{ slug }}">
                         <p style="font-size: var(--typography-font-sizes-{{ slug }});">Text</p>
@@ -53,15 +53,19 @@
         <section class="primitive-section">
             <h2>Font Families</h2>
             <div class="typography-grid">
-                {% for slug, family in typography_tokens.font_families %}
+                {% for slug, family in typography_tokens.fontFamilies %}
                 <div class="typography-card">
-                    <div class="typography-preview preview-family-{{ slug }}">
-                        <p style="font-family: var(--typography-font-families-{{ slug }});">{{ family }}</p>
+                    <div class="typography-preview preview-{{ slug }}">
+                        <p style="font-family: {{ family }};">Text Sample</p>
                     </div>
                     <div class="typography-controls">
-                        <label>FONT STACK</label>
-                        <textarea class="font-stack-display" readonly>{{ family }}</textarea>
-                        <p class="font-name" style="font-family: Montserrat, sans-serif;">{{ family|split(',')[0] }}</p>
+                        <label style="font-weight: 600;">{{ slug|upper }}</label>
+                        <div class="control-group">
+                            <textarea class="font-stack-input" 
+                                      data-slug="{{ slug }}" 
+                                      rows="3">{{ family }}</textarea>
+                        </div>
+                        <span class="value-display font-family-value" data-slug="{{ slug }}">{{ family }}</span>
                         <button class="copy-btn" data-copy="{{ family }}">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -78,22 +82,20 @@
         <section class="primitive-section">
             <h2>Font Weights</h2>
             <div class="typography-grid">
-                {% for slug, weight in typography_tokens.font_weights %}
+                {% for slug, weight in typography_tokens.fontWeights %}
                 <div class="typography-card">
-                    <div class="typography-preview preview-weight-{{ slug }}">
-                        <p style="font-weight: var(--typography-font-weights-{{ slug }});">
-                            {{ slug|capitalize }}
-                        </p>
+                    <div class="typography-preview preview-{{ slug }}">
+                        <p style="font-weight: {{ weight }};">Text Sample</p>
                     </div>
                     <div class="typography-controls">
-                        <label>WEIGHT</label>
-                        <input type="range" 
-                               class="font-weight-input" 
-                               data-slug="{{ slug }}" 
-                               value="{{ weight }}"
-                               min="100" 
-                               max="900" 
-                               step="100">
+                        <label style="font-weight: 600;">{{ slug|upper }}</label>
+                        <div class="control-group">
+                            <input type="number" 
+                                   class="weight-value" 
+                                   data-slug="{{ slug }}" 
+                                   value="{{ weight }}"
+                                   min="100" max="900" step="100">
+                        </div>
                         <span class="value-display font-weight-value" data-slug="{{ slug }}">{{ weight }}</span>
                         <button class="copy-btn" data-copy="{{ weight }}">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -111,22 +113,21 @@
         <section class="primitive-section">
             <h2>Line Heights</h2>
             <div class="typography-grid">
-                {% for slug, height in typography_tokens.line_heights %}
+                {% for slug, height in typography_tokens.lineHeights %}
                 <div class="typography-card">
-                    <div class="typography-preview preview-line-height-{{ slug }}" style="line-height: var(--typography-line-heights-{{ slug }});">
-                        <p style="font-weight: 600; margin-bottom: 0; display: block;">{{ slug|capitalize }}</p>
-                        <p class="editor-preview-label" style="text-transform: uppercase; font-weight: 500; margin-top: 0; display: block;">LINEHEIGHT</p>
+                    <div class="typography-preview preview-{{ slug }}">
+                        <p style="line-height: {{ height }};">This is a sample text to demonstrate line height. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                     </div>
                     <div class="typography-controls">
-                        <label>LINE HEIGHT</label>
-                        <input type="number" 
-                               class="line-height-input" 
-                               data-slug="{{ slug }}" 
-                               value="{{ height }}"
-                               min="1" 
-                               max="3" 
-                               step="0.1">
-                        <span class="value-display line-height-value" data-slug="{{ slug }}">{{ height }}</span>
+                        <label style="font-weight: 600;">{{ slug|upper }}</label>
+                        <div class="control-group">
+                            <input type="number" 
+                                   class="line-height-value" 
+                                   data-slug="{{ slug }}" 
+                                   value="{{ height }}"
+                                   step="0.1" min="0.8" max="3">
+                        </div>
+                        <span class="value-display line-height-display" data-slug="{{ slug }}">{{ height }}</span>
                         <button class="copy-btn" data-copy="{{ height }}">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -143,21 +144,22 @@
         <section class="primitive-section">
             <h2>Letter Spacing</h2>
             <div class="typography-grid">
-                {% for slug, spacing in typography_tokens.letter_spacings %}
+                {% for slug, spacing in typography_tokens.letterSpacings %}
                 <div class="typography-card">
-                    <div class="typography-preview preview-letter-spacing-{{ slug }}">
-                        <p style="letter-spacing: var(--typography-letter-spacings-{{ slug }}); font-weight: 600;">{{ slug|capitalize }}</p>
+                    <div class="typography-preview preview-{{ slug }}">
+                        <p style="letter-spacing: {{ spacing }};">LETTER SPACING</p>
                     </div>
                     <div class="typography-controls">
-                        <label>SPACING</label>
-                        <input type="number" 
-                               class="letter-spacing-input" 
-                               data-slug="{{ slug }}" 
-                               value="{{ spacing|replace({'em': ''}) }}"
-                               min="-0.1" 
-                               max="0.5" 
-                               step="0.01">
-                        <span class="value-display letter-spacing-value" data-slug="{{ slug }}">{{ spacing }}</span>
+                        <label style="font-weight: 600;">{{ slug|upper }}</label>
+                        <div class="control-group">
+                            <input type="number" 
+                                   class="letter-spacing-value" 
+                                   data-slug="{{ slug }}" 
+                                   value="{{ spacing|replace({'em': ''}) }}"
+                                   step="0.01" min="-0.1" max="0.5">
+                            <span class="input-suffix">em</span>
+                        </div>
+                        <span class="value-display letter-spacing-display" data-slug="{{ slug }}">{{ spacing }}</span>
                         <button class="copy-btn" data-copy="{{ spacing }}">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -174,20 +176,22 @@
         <section class="primitive-section">
             <h2>Text Transform</h2>
             <div class="typography-grid">
-                {% for slug, transform in typography_tokens.text_transforms %}
+                {% for slug, transform in typography_tokens.textTransforms %}
                 <div class="typography-card">
-                    <div class="typography-preview preview-text-transform-{{ slug }}">
-                        <p style="text-transform: var(--typography-text-transforms-{{ slug }}); font-weight: 600;">{{ slug }}</p>
+                    <div class="typography-preview preview-{{ slug }}">
+                        <p style="text-transform: {{ transform }};">Sample Text Transform</p>
                     </div>
                     <div class="typography-controls">
-                        <label>TRANSFORM</label>
-                        <select class="text-transform-input" data-slug="{{ slug }}">
-                            <option value="none" {% if transform == 'none' %}selected{% endif %}>None</option>
-                            <option value="uppercase" {% if transform == 'uppercase' %}selected{% endif %}>Uppercase</option>
-                            <option value="lowercase" {% if transform == 'lowercase' %}selected{% endif %}>Lowercase</option>
-                            <option value="capitalize" {% if transform == 'capitalize' %}selected{% endif %}>Capitalize</option>
-                        </select>
-                        <span class="value-display text-transform-value" data-slug="{{ slug }}">{{ transform }}</span>
+                        <label style="font-weight: 600;">{{ slug|upper }}</label>
+                        <div class="control-group">
+                            <select class="text-transform-value" data-slug="{{ slug }}">
+                                <option value="none" {% if transform == 'none' %}selected{% endif %}>None</option>
+                                <option value="uppercase" {% if transform == 'uppercase' %}selected{% endif %}>Uppercase</option>
+                                <option value="lowercase" {% if transform == 'lowercase' %}selected{% endif %}>Lowercase</option>
+                                <option value="capitalize" {% if transform == 'capitalize' %}selected{% endif %}>Capitalize</option>
+                            </select>
+                        </div>
+                        <span class="value-display text-transform-display" data-slug="{{ slug }}">{{ transform }}</span>
                         <button class="copy-btn" data-copy="{{ transform }}">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>

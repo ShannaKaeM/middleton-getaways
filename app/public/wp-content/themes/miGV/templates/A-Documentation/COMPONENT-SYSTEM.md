@@ -2,13 +2,13 @@
 
 ## Core Architecture Principle
 
-The miGV theme implements a **self-sufficient atomic design system** where primitives are the single source of truth. The system has evolved from Twig-based primitives to a JSON-based architecture that provides better data/presentation separation and easier programmatic updates.
+The miGV theme implements a **self-sufficient atomic design system** where primitives are the single source of truth. The system uses a JSON-based architecture that provides data/presentation separation and programmatic updates.
 
 ## JSON-Based Primitive Architecture (Current Implementation)
 
 ### Overview
 
-The design system now uses JSON files as the single source of truth for all primitive values. This approach provides:
+The design system uses JSON files as the single source of truth for all primitive values. This approach provides:
 
 1. **Clean Data/Presentation Separation**: JSON files store pure data, Twig templates handle rendering
 2. **Easy Programmatic Updates**: AJAX saves write directly to JSON files

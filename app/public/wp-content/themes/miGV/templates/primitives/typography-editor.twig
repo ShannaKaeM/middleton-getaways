@@ -5,7 +5,7 @@
     <header class="primitive-header">
         <div class="primitive-header-content">
             <h1 class="primitive-title">Typography Primitives</h1>
-            <p class="primitive-description">Edit font sizes and typography scales. Changes sync directly to theme.json.</p>
+            <p class="primitive-description">Edit font sizes, weights, line heights, and letter spacing. Changes sync directly to theme.json.</p>
         </div>
         <div class="primitive-header-actions">
             <button class="btn-icon" id="reset-typography" title="Reset to defaults">
@@ -63,33 +63,33 @@
         <!-- Font Sizes -->
         <section class="typography-section">
             <h2 class="section-title">Font Sizes</h2>
-            <div class="font-sizes-grid">
+            <div class="typography-grid">
                 {% for size in font_sizes %}
-                    <div class="font-size-card" data-slug="{{ size.slug }}">
-                        <div class="size-preview">
+                    <div class="typography-card" data-slug="{{ size.slug }}">
+                        <div class="typography-preview">
                             <p style="font-size: {{ size.size }}; line-height: 1.5;">
                                 The quick brown fox jumps over the lazy dog
                             </p>
                         </div>
                         
-                        <div class="size-info">
-                            <h3 class="size-name">{{ size.name|default(size.slug|capitalize) }}</h3>
-                            <p class="size-slug">{{ size.slug }}</p>
+                        <div class="typography-info">
+                            <h3 class="typography-name">{{ size.name|default(size.slug|capitalize) }}</h3>
+                            <p class="typography-slug">{{ size.slug }}</p>
                             
-                            <div class="size-controls">
+                            <div class="typography-controls">
                                 <div class="control-group">
                                     <label>Size</label>
                                     <div class="input-group">
-                                        <input type="text" 
-                                               class="size-input" 
-                                               value="{{ size.size }}" 
+                                        <input type="number" 
+                                               class="size-value" 
+                                               value="{{ size.size|replace({'rem': '', 'px': '', 'em': ''}) }}"
                                                data-slug="{{ size.slug }}"
-                                               placeholder="1rem">
+                                               step="0.125">
                                         <div class="unit-selector">
                                             <select class="size-unit" data-slug="{{ size.slug }}">
-                                                <option value="rem">rem</option>
-                                                <option value="px">px</option>
-                                                <option value="em">em</option>
+                                                <option value="rem" {% if 'rem' in size.size %}selected{% endif %}>rem</option>
+                                                <option value="px" {% if 'px' in size.size %}selected{% endif %}>px</option>
+                                                <option value="em" {% if 'em' in size.size %}selected{% endif %}>em</option>
                                             </select>
                                         </div>
                                     </div>
@@ -99,7 +99,7 @@
                                     <label>Preview Scale</label>
                                     <div class="slider-container">
                                         <input type="range" 
-                                               class="preview-scale-slider" 
+                                               class="preview-scale" 
                                                min="50" 
                                                max="200" 
                                                value="100"
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                             
-                            <div class="size-variable">
+                            <div class="typography-variable">
                                 <code>var(--wp--preset--font-size--{{ size.slug }})</code>
                                 <button class="copy-btn" data-copy="var(--wp--preset--font-size--{{ size.slug }})">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -127,19 +127,24 @@
         <!-- Font Families -->
         <section class="typography-section">
             <h2 class="section-title">Font Families</h2>
-            <div class="font-families-grid">
+            <div class="typography-grid">
                 {% for family in font_families %}
-                    <div class="font-family-card" data-slug="{{ family.slug }}">
-                        <div class="family-preview">
-                            <p style="font-family: {{ family.fontFamily }}; font-size: 1.5rem;">
-                                {{ family.name|default(family.slug|capitalize) }}
+                    <div class="typography-card" data-slug="{{ family.slug }}">
+                        <div class="typography-preview">
+                            <h3 style="font-family: {{ family.fontFamily }}; font-size: 1.5rem; margin: 0 0 0.5rem 0;">
+                                {{ family.name|default(family.slug|replace({'-': ' '})|title) }}
+                            </h3>
+                            <p style="font-family: {{ family.fontFamily }}; font-size: 1rem; margin: 0;">
+                                The quick brown fox jumps over the lazy dog
                             </p>
-                            <p style="font-family: {{ family.fontFamily }}; font-size: 1rem; color: #6b7280;">
-                                ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+                            <p style="font-family: {{ family.fontFamily }}; font-size: 0.875rem; margin: 0.5rem 0 0 0;">
+                                ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                                abcdefghijklmnopqrstuvwxyz<br>
+                                0123456789 !@#$%^&*()
                             </p>
                         </div>
                         
-                        <div class="family-info">
+                        <div class="typography-info">
                             <div class="control-group">
                                 <label>Font Stack</label>
                                 <textarea class="font-stack-input" 
@@ -147,9 +152,152 @@
                                           rows="3">{{ family.fontFamily }}</textarea>
                             </div>
                             
-                            <div class="family-variable">
+                            <div class="typography-variable">
                                 <code>var(--wp--preset--font-family--{{ family.slug }})</code>
                                 <button class="copy-btn" data-copy="var(--wp--preset--font-family--{{ family.slug }})">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Font Weights -->
+        <section class="typography-section">
+            <h2 class="section-title">Font Weights</h2>
+            <div class="typography-grid">
+                {% for weight in font_weights %}
+                    <div class="typography-card" data-slug="{{ weight.slug }}">
+                        <div class="typography-preview">
+                            <p style="font-weight: {{ weight.value }}; font-size: 1.25rem;">
+                                {{ weight.name|default(weight.slug|replace({'-': ' '})|title) }}
+                            </p>
+                            <p style="font-weight: {{ weight.value }}; font-size: 1rem;">
+                                The quick brown fox jumps over the lazy dog
+                            </p>
+                        </div>
+                        
+                        <div class="typography-info">
+                            <h3 class="typography-name">{{ weight.name|default(weight.slug|replace({'-': ' '})|title) }}</h3>
+                            <p class="typography-slug">{{ weight.slug }}</p>
+                            
+                            <div class="typography-controls">
+                                <div class="control-group">
+                                    <label>Weight Value</label>
+                                    <input type="number" 
+                                           class="weight-value" 
+                                           value="{{ weight.value }}"
+                                           data-slug="{{ weight.slug }}"
+                                           min="100"
+                                           max="900"
+                                           step="100">
+                                </div>
+                            </div>
+                            
+                            <div class="typography-variable">
+                                <code>var(--wp--custom--typography--base-styles--font-weights--{{ weight.slug }})</code>
+                                <button class="copy-btn" data-copy="var(--wp--custom--typography--base-styles--font-weights--{{ weight.slug }})">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Line Heights -->
+        <section class="typography-section">
+            <h2 class="section-title">Line Heights</h2>
+            <div class="typography-grid">
+                {% for height in line_heights %}
+                    <div class="typography-card" data-slug="{{ height.slug }}">
+                        <div class="typography-preview">
+                            <p style="line-height: {{ height.value }}; font-size: 1rem; border-left: 3px solid var(--wp--preset--color--primary, #3b82f6); padding-left: 1rem;">
+                                {{ height.name|default(height.slug|replace({'-': ' '})|title) }}<br>
+                                The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.
+                            </p>
+                        </div>
+                        
+                        <div class="typography-info">
+                            <h3 class="typography-name">{{ height.name|default(height.slug|replace({'-': ' '})|title) }}</h3>
+                            <p class="typography-slug">{{ height.slug }}</p>
+                            
+                            <div class="typography-controls">
+                                <div class="control-group">
+                                    <label>Line Height</label>
+                                    <input type="number" 
+                                           class="line-height-value" 
+                                           value="{{ height.value }}"
+                                           data-slug="{{ height.slug }}"
+                                           min="1"
+                                           max="3"
+                                           step="0.1">
+                                </div>
+                            </div>
+                            
+                            <div class="typography-variable">
+                                <code>var(--wp--custom--typography--base-styles--line-heights--{{ height.slug }})</code>
+                                <button class="copy-btn" data-copy="var(--wp--custom--typography--base-styles--line-heights--{{ height.slug }})">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Letter Spacing -->
+        <section class="typography-section">
+            <h2 class="section-title">Letter Spacing</h2>
+            <div class="typography-grid">
+                {% for spacing in letter_spacings %}
+                    <div class="typography-card" data-slug="{{ spacing.slug }}">
+                        <div class="typography-preview">
+                            <p style="letter-spacing: {{ spacing.value }}; font-size: 1.25rem; text-transform: uppercase;">
+                                {{ spacing.name|default(spacing.slug|replace({'-': ' '})|title) }}
+                            </p>
+                            <p style="letter-spacing: {{ spacing.value }}; font-size: 1rem;">
+                                The quick brown fox jumps over the lazy dog
+                            </p>
+                            <p style="letter-spacing: {{ spacing.value }}; font-size: 0.875rem; text-transform: uppercase;">
+                                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                            </p>
+                        </div>
+                        
+                        <div class="typography-info">
+                            <h3 class="typography-name">{{ spacing.name|default(spacing.slug|replace({'-': ' '})|title) }}</h3>
+                            <p class="typography-slug">{{ spacing.slug }}</p>
+                            
+                            <div class="typography-controls">
+                                <div class="control-group">
+                                    <label>Letter Spacing</label>
+                                    <div class="input-group">
+                                        <input type="number" 
+                                               class="letter-spacing-value" 
+                                               value="{{ spacing.value|replace({'em': '', 'px': ''}) }}"
+                                               data-slug="{{ spacing.slug }}"
+                                               step="0.01">
+                                        <span class="input-suffix">em</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="typography-variable">
+                                <code>var(--wp--custom--typography--base-styles--letter-spacing--{{ spacing.slug }})</code>
+                                <button class="copy-btn" data-copy="var(--wp--custom--typography--base-styles--letter-spacing--{{ spacing.slug }})">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -167,149 +315,4 @@
         <span class="save-status"></span>
     </div>
 </div>
-
-<style>
-/* Typography-specific styles */
-.typography-section {
-    margin-bottom: 3rem;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0 0 1.5rem 0;
-    color: #1a1a1a;
-}
-
-.scale-controls {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    display: flex;
-    gap: 2rem;
-    align-items: flex-end;
-}
-
-.input-group {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.input-group input {
-    padding-right: 3rem;
-}
-
-.input-suffix {
-    position: absolute;
-    right: 1rem;
-    color: #6b7280;
-    font-size: 0.875rem;
-}
-
-.unit-selector {
-    position: absolute;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.unit-selector select {
-    padding: 0.25rem 0.5rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    background: white;
-}
-
-.btn-primary {
-    padding: 0.75rem 1.5rem;
-    background: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.btn-primary:hover {
-    background: #2563eb;
-}
-
-.font-sizes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-}
-
-.font-size-card {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.size-preview {
-    padding: 1rem;
-    background: #f9fafb;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-}
-
-.size-preview p {
-    margin: 0;
-    color: #1a1a1a;
-}
-
-.font-families-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 1.5rem;
-}
-
-.font-family-card {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.family-preview {
-    padding: 1.5rem;
-    background: #f9fafb;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.family-preview p {
-    margin: 0 0 0.5rem 0;
-}
-
-.font-stack-input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    font-family: monospace;
-    font-size: 0.875rem;
-    resize: vertical;
-}
-
-.size-variable,
-.family-variable {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    background: #f3f4f6;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-}
-</style>
 {% endblock %}

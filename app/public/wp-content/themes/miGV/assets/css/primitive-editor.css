@@ -605,3 +605,218 @@ input[type="range"]::-moz-range-thumb:hover {
         max-width: 360px;
     }
 }
+
+/* Typography Editor Styles */
+.primitive-typography {
+    padding-top: 0;
+}
+
+.typography-section {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    color: #1a1a1a;
+}
+
+/* Typography Scale Controls */
+.scale-controls {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 2rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.scale-controls .control-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.scale-controls .btn-primary {
+    padding: 0.75rem 1.5rem;
+    background: var(--wp--preset--color--primary, #3b82f6);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.scale-controls .btn-primary:hover {
+    background: #2563eb;
+}
+
+/* Typography Grid */
+.typography-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.typography-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+}
+
+.typography-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.typography-preview {
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    overflow: hidden;
+}
+
+.typography-preview p {
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.typography-info {
+    position: relative;
+}
+
+.typography-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    color: #1a1a1a;
+}
+
+.typography-slug {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-family: var(--primitive-font-mono) !important;
+    margin: 0 0 1rem 0;
+}
+
+.typography-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.typography-controls .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.typography-controls label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.typography-controls .input-group {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.typography-controls input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    padding-right: 3rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}
+
+.typography-controls .input-suffix {
+    position: absolute;
+    right: 1rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+    pointer-events: none;
+}
+
+.typography-controls .unit-selector {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.typography-controls .unit-selector select {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    background: white;
+}
+
+/* Font Stack Textarea */
+.font-stack-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-family: var(--primitive-font-mono) !important;
+    font-size: 0.875rem;
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Typography Variable Display */
+.typography-variable {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: #f3f4f6;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.typography-variable code {
+    font-size: 0.75rem;
+    color: #374151;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--primitive-font-mono) !important;
+}
+
+/* Weight, Line Height, Letter Spacing Specific */
+.weight-value,
+.line-height-value,
+.letter-spacing-value {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}
+
+/* Responsive Typography Editor */
+@media (max-width: 768px) {
+    .scale-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .typography-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}

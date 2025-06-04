@@ -27,12 +27,6 @@
 {# Load animation tokens from JSON #}
 {% set animation_tokens = load_primitive('animations') %}
 
-{# Export tokens to parent scope if requested #}
-{% if export_tokens is defined and export_tokens %}
-  {% set _parent = _context %}
-  {% do _parent.animation_tokens = animation_tokens %}
-{% endif %}
-
 {# Helper function to resolve animation values with fallback #}
 {% macro resolve_animation_value(tokens, category, key, fallback) %}
   {{- tokens[category][key] ?? fallback ?? key -}}

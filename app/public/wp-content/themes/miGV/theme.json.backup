@@ -95,21 +95,6 @@
                     "slug": "montserrat",
                     "fontFamily": "Montserrat, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
                     "name": "Montserrat"
-                },
-                {
-                    "slug": "inter",
-                    "fontFamily": "Inter, system-ui, sans-serif",
-                    "name": "Inter"
-                },
-                {
-                    "slug": "playfair-display",
-                    "fontFamily": "Playfair Display, serif",
-                    "name": "Playfair Display"
-                },
-                {
-                    "slug": "roboto",
-                    "fontFamily": "Roboto, sans-serif",
-                    "name": "Roboto"
                 }
             ],
             "fontSizes": [
@@ -308,7 +293,100 @@
                     "sidebar-width": "300px",
                     "gutter": "1.5rem"
                 }
+            },
+            "borders": {
+                "widths": {
+                    "none": "0",
+                    "thin": "1px",
+                    "medium": "2px",
+                    "thick": "3px",
+                    "heavy": "5px"
+                },
+                "styles": {
+                    "none": "none",
+                    "solid": "solid",
+                    "dashed": "dashed",
+                    "dotted": "dotted",
+                    "double": "double"
+                },
+                "radii": {
+                    "none": "0",
+                    "xs": "0.125rem",
+                    "sm": "0.25rem",
+                    "md": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "2xl": "1.5rem",
+                    "full": "9999px"
+                }
+            },
+            "layout": {
+                "containers": {
+                    "xs": "480px",
+                    "sm": "640px",
+                    "md": "768px",
+                    "lg": "1024px",
+                    "xl": "1280px",
+                    "2xl": "1536px",
+                    "full": "100%"
+                },
+                "breakpoints": {
+                    "mobile": "480px",
+                    "tablet": "768px",
+                    "desktop": "1024px",
+                    "wide": "1280px",
+                    "ultrawide": "1536px"
+                },
+                "grid": {
+                    "columns-2": "repeat(2, minmax(0, 1fr))",
+                    "columns-3": "repeat(3, minmax(0, 1fr))",
+                    "columns-4": "repeat(4, minmax(0, 1fr))",
+                    "columns-6": "repeat(6, minmax(0, 1fr))",
+                    "columns-12": "repeat(12, minmax(0, 1fr))",
+                    "auto-fit": "repeat(auto-fit, minmax(250px, 1fr))",
+                    "auto-fill": "repeat(auto-fill, minmax(200px, 1fr))"
+                },
+                "flexbox": {
+                    "center": "flex items-center justify-center",
+                    "between": "flex items-center justify-between",
+                    "around": "flex items-center justify-around",
+                    "start": "flex items-start justify-start",
+                    "end": "flex items-end justify-end",
+                    "column": "flex flex-col",
+                    "row": "flex flex-row",
+                    "wrap": "flex flex-wrap"
+                },
+                "aspectRatios": {
+                    "square": "1 / 1",
+                    "video": "16 / 9",
+                    "golden": "1.618 / 1",
+                    "photo": "4 / 3",
+                    "portrait": "3 / 4",
+                    "wide": "21 / 9",
+                    "ultra-wide": "32 / 9"
+                },
+                "zIndex": {
+                    "behind": "-1",
+                    "default": "0",
+                    "dropdown": "10",
+                    "sticky": "20",
+                    "fixed": "30",
+                    "modal": "40",
+                    "popover": "50",
+                    "tooltip": "60",
+                    "toast": "70"
+                }
             }
+        },
+        "border": {
+            "color": true,
+            "radius": true,
+            "style": true,
+            "width": true
+        },
+        "layout": {
+            "contentSize": "1024px",
+            "wideSize": "1280px"
         }
     }
 }

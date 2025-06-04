@@ -1,0 +1,198 @@
+{#
+  Animations Primitive Editor
+  Following the established pattern from shadows editor
+#}
+
+{% set animations_tokens = load_primitive('animations') %}
+
+<div class="primitive-editor animations-editor" data-primitive-type="animations">
+    <header class="editor-header">
+        <h1>Animations Primitive Editor</h1>
+        <div class="editor-actions">
+            <button class="btn-save" data-action="save">Save to JSON</button>
+            <button class="btn-sync" data-action="sync">Sync to theme.json</button>
+            <button class="btn-reset" data-action="reset">Reset to Defaults</button>
+        </div>
+    </header>
+
+    <div class="editor-content">
+        <!-- Durations Section -->
+        <section class="token-group" data-token-type="durations">
+            <h2>Animation Durations</h2>
+            <p class="section-description">Timing values for animation and transition durations</p>
+            <div class="token-grid animations-grid">
+                {% for slug, value in animations_tokens.durations %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|upper }}</label>
+                        <div class="animation-preview">
+                            <div class="animation-preview-box duration-demo" 
+                                 style="animation-duration: {{ value }};" 
+                                 data-duration="{{ value }}">
+                                <div class="preview-content">{{ value }}</div>
+                            </div>
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="durations"
+                               data-slug="{{ slug }}"
+                               name="data[durations][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Easings Section -->
+        <section class="token-group" data-token-type="easings">
+            <h2>Animation Easings</h2>
+            <p class="section-description">Timing functions for smooth animation curves</p>
+            <div class="token-grid animations-grid">
+                {% for slug, value in animations_tokens.easings %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|upper|replace({'_': ' ', '-': ' '}) }}</label>
+                        <div class="animation-preview">
+                            <div class="animation-preview-box easing-demo" 
+                                 style="animation-timing-function: {{ value }};" 
+                                 data-easing="{{ value }}">
+                                <div class="preview-content">{{ slug }}</div>
+                            </div>
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="easings"
+                               data-slug="{{ slug }}"
+                               name="data[easings][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Delays Section -->
+        <section class="token-group" data-token-type="delays">
+            <h2>Animation Delays</h2>
+            <p class="section-description">Delay values for staggered animations</p>
+            <div class="token-grid animations-grid">
+                {% for slug, value in animations_tokens.delays %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|upper }}</label>
+                        <div class="animation-preview">
+                            <div class="animation-preview-box delay-demo" 
+                                 style="animation-delay: {{ value }};" 
+                                 data-delay="{{ value }}">
+                                <div class="preview-content">{{ value }}</div>
+                            </div>
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="delays"
+                               data-slug="{{ slug }}"
+                               name="data[delays][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Transitions Section -->
+        <section class="token-group" data-token-type="transitions">
+            <h2>Transition Properties</h2>
+            <p class="section-description">CSS properties that can be animated</p>
+            <div class="token-grid animations-grid">
+                {% for slug, value in animations_tokens.transitions %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|upper }}</label>
+                        <div class="animation-preview">
+                            <div class="animation-preview-box transition-demo" 
+                                 style="transition-property: {{ value }};" 
+                                 data-transition="{{ value }}">
+                                <div class="preview-content">{{ slug }}</div>
+                            </div>
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="transitions"
+                               data-slug="{{ slug }}"
+                               name="data[transitions][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Live Preview Section -->
+        <section class="preview-section">
+            <h2>Live Animation Preview</h2>
+            <div class="preview-controls">
+                <label>
+                    Duration:
+                    <select id="preview-duration">
+                        {% for slug, value in animations_tokens.durations %}
+                            <option value="{{ value }}" {% if slug == 'normal' %}selected{% endif %}>{{ slug }} ({{ value }})</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>
+                    Easing:
+                    <select id="preview-easing">
+                        {% for slug, value in animations_tokens.easings %}
+                            <option value="{{ value }}" {% if slug == 'ease-out' %}selected{% endif %}>{{ slug }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>
+                    Delay:
+                    <select id="preview-delay">
+                        {% for slug, value in animations_tokens.delays %}
+                            <option value="{{ value }}" {% if slug == 'none' %}selected{% endif %}>{{ slug }} ({{ value }})</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <button id="trigger-animation" class="btn-primary">Trigger Animation</button>
+            </div>
+            <div class="live-preview-container">
+                <div id="animation-preview" class="animation-preview-element">
+                    <div class="preview-content">Animation Preview</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Examples Section -->
+        <section class="usage-section">
+            <h2>Usage Examples</h2>
+            <div class="usage-examples">
+                <div class="example-item">
+                    <h3>Basic Transition</h3>
+                    <pre><code>{% include 'primitive-books/animation-book.twig' with {
+    duration: 'normal',
+    easing: 'ease-out',
+    transition: 'all'
+} %}</code></pre>
+                </div>
+                <div class="example-item">
+                    <h3>Hover Effect</h3>
+                    <pre><code>{% include 'primitive-books/animation-book.twig' with {
+    duration: 'fast',
+    easing: 'smooth',
+    transition: 'colors'
+} %}</code></pre>
+                </div>
+                <div class="example-item">
+                    <h3>Staggered Animation</h3>
+                    <pre><code>{% include 'primitive-books/animation-book.twig' with {
+    duration: 'slow',
+    easing: 'bounce',
+    delay: 'medium'
+} %}</code></pre>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="animation-status" class="editor-notification" style="display: none;"></div>
+</div>

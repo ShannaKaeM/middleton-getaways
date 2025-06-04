@@ -1,0 +1,94 @@
+{#
+  Animation Primitive Book - JSON-Based Design Tokens
+  
+  This primitive loads animation values from the JSON primitive file.
+  It is part of the self-sufficient design system where JSON files are the single source of truth.
+  
+  Usage:
+  {% include 'primitive-books/animation-book.twig' with {
+    duration: 'normal',           # Uses durations.normal
+    easing: 'ease-out',          # Uses easings.ease-out
+    delay: 'short',              # Uses delays.short
+    transition: 'colors',        # Uses transitions.colors
+    animation_duration: 'slow',   # Alternative parameter name
+    timing_function: 'bounce',   # Alternative for easing
+    transition_delay: 'medium'   # Alternative for delay
+  } %}
+  
+  Multiple properties:
+  {% include 'primitive-books/animation-book.twig' with {
+    duration: 'fast',
+    easing: 'smooth',
+    delay: 'none',
+    transition: 'all'
+  } %}
+#}
+
+{# Load animation tokens from JSON #}
+{% set animation_tokens = load_primitive('animations') %}
+
+{# Export tokens to parent scope if requested #}
+{% if export_tokens is defined and export_tokens %}
+  {% set _parent = _context %}
+  {% do _parent.animation_tokens = animation_tokens %}
+{% endif %}
+
+{# Helper function to resolve animation values with fallback #}
+{% macro resolve_animation_value(tokens, category, key, fallback) %}
+  {{- tokens[category][key] ?? fallback ?? key -}}
+{% endmacro %}
+
+{# Process duration parameter (with alternative names) #}
+{% set resolved_duration = null %}
+{% if duration %}
+  {% set resolved_duration = _self.resolve_animation_value(animation_tokens, 'durations', duration, duration) %}
+{% elseif animation_duration %}
+  {% set resolved_duration = _self.resolve_animation_value(animation_tokens, 'durations', animation_duration, animation_duration) %}
+{% endif %}
+
+{# Process easing parameter (with alternative names) #}
+{% set resolved_easing = null %}
+{% if easing %}
+  {% set resolved_easing = _self.resolve_animation_value(animation_tokens, 'easings', easing, easing) %}
+{% elseif timing_function %}
+  {% set resolved_easing = _self.resolve_animation_value(animation_tokens, 'easings', timing_function, timing_function) %}
+{% endif %}
+
+{# Process delay parameter (with alternative names) #}
+{% set resolved_delay = null %}
+{% if delay %}
+  {% set resolved_delay = _self.resolve_animation_value(animation_tokens, 'delays', delay, delay) %}
+{% elseif transition_delay %}
+  {% set resolved_delay = _self.resolve_animation_value(animation_tokens, 'delays', transition_delay, transition_delay) %}
+{% endif %}
+
+{# Process transition property parameter #}
+{% set resolved_transition = null %}
+{% if transition %}
+  {% set resolved_transition = _self.resolve_animation_value(animation_tokens, 'transitions', transition, transition) %}
+{% endif %}
+
+{# Apply animation styles based on parameters #}
+{% if resolved_duration %}
+transition-duration: {{ resolved_duration }};
+animation-duration: {{ resolved_duration }};
+{% endif %}
+
+{% if resolved_easing %}
+transition-timing-function: {{ resolved_easing }};
+animation-timing-function: {{ resolved_easing }};
+{% endif %}
+
+{% if resolved_delay %}
+transition-delay: {{ resolved_delay }};
+animation-delay: {{ resolved_delay }};
+{% endif %}
+
+{% if resolved_transition %}
+transition-property: {{ resolved_transition }};
+{% endif %}
+
+{# If all transition properties are provided, create complete transition #}
+{% if resolved_transition and resolved_duration and resolved_easing %}
+transition: {{ resolved_transition }} {{ resolved_duration }} {{ resolved_easing }}{% if resolved_delay and resolved_delay != '0ms' %} {{ resolved_delay }}{% endif %};
+{% endif %}

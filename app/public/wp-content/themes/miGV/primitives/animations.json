@@ -1,0 +1,32 @@
+{
+    "durations": {
+        "instant": "0ms",
+        "fast": "150ms",
+        "normal": "300ms",
+        "slow": "500ms",
+        "slower": "700ms",
+        "slowest": "1000ms"
+    },
+    "easings": {
+        "linear": "linear",
+        "ease": "ease",
+        "ease-in": "ease-in",
+        "ease-out": "ease-out",
+        "ease-in-out": "ease-in-out",
+        "bounce": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+        "smooth": "cubic-bezier(0.4, 0, 0.2, 1)"
+    },
+    "delays": {
+        "none": "0ms",
+        "short": "100ms",
+        "medium": "200ms",
+        "long": "400ms"
+    },
+    "transitions": {
+        "all": "all",
+        "colors": "background-color, border-color, color, fill, stroke",
+        "opacity": "opacity",
+        "transform": "transform",
+        "shadow": "box-shadow"
+    }
+}

@@ -34,36 +34,37 @@ jQuery(document).ready(function($) {
             $preview.css('transform-origin', 'top left');
         });
 
-        // Font family controls
-        $('.font-family-select').on('change', function() {
+        // Font family controls (textarea)
+        $('.font-stack-input').on('input change', function() {
             const slug = $(this).data('slug');
             const value = $(this).val();
             updateFontFamily(slug, value);
+            markAsChanged();
         });
 
         // Font weight controls
-        $('.font-weight-input').on('input change', function() {
+        $('.weight-value').on('input change', function() {
             const slug = $(this).data('slug');
             const value = $(this).val();
             updateFontWeight(slug, value);
         });
 
         // Line height controls
-        $('.line-height-input').on('input change', function() {
+        $('.line-height-value').on('input change', function() {
             const slug = $(this).data('slug');
             const value = $(this).val();
             updateLineHeight(slug, value);
         });
 
         // Letter spacing controls
-        $('.letter-spacing-input').on('input change', function() {
+        $('.letter-spacing-value').on('input change', function() {
             const slug = $(this).data('slug');
-            const value = $(this).val() + 'em';
-            updateLetterSpacing(slug, value);
+            const value = $(this).val();
+            updateLetterSpacing(slug, value.includes('em') ? value : value + 'em');
         });
 
         // Text transform controls
-        $('.text-transform-input').on('change', function() {
+        $('.text-transform-value').on('change', function() {
             const slug = $(this).data('slug');
             const value = $(this).val();
             updateTextTransform(slug, value);
@@ -190,7 +191,7 @@ jQuery(document).ready(function($) {
             type: 'POST',
             data: {
                 action: 'save_typography_primitive',
-                typography: JSON.stringify(typography),
+                typography_data: JSON.stringify(typography),
                 nonce: primitiveTypography.nonce
             },
             success: function(response) {
@@ -225,7 +226,7 @@ jQuery(document).ready(function($) {
             type: 'POST',
             data: {
                 action: 'sync_typography_to_theme_json',
-                typography: JSON.stringify(typography),
+                typography_data: JSON.stringify(typography),
                 nonce: primitiveTypography.nonce
             },
             success: function(response) {
@@ -261,36 +262,37 @@ jQuery(document).ready(function($) {
             typography.font_sizes[slug] = value + unit;
         });
 
-        // Collect font families
-        $('.font-family-input').each(function() {
+        // Collect font families from textarea
+        $('.font-stack-input').each(function() {
             const slug = $(this).data('slug');
             const value = $(this).val();
             typography.font_families[slug] = value;
         });
 
         // Collect font weights
-        $('.font-weight-input').each(function() {
+        $('.weight-value').each(function() {
             const slug = $(this).data('slug');
             const value = $(this).val();
             typography.font_weights[slug] = value;
         });
 
         // Collect line heights
-        $('.line-height-input').each(function() {
+        $('.line-height-value').each(function() {
             const slug = $(this).data('slug');
             const value = $(this).val();
             typography.line_heights[slug] = value;
         });
 
         // Collect letter spacings
-        $('.letter-spacing-input').each(function() {
+        $('.letter-spacing-value').each(function() {
             const slug = $(this).data('slug');
-            const value = $(this).val() + 'em';
-            typography.letter_spacings[slug] = value;
+            const value = $(this).val();
+            // Check if the value already has 'em' unit
+            typography.letter_spacings[slug] = value.includes('em') ? value : value + 'em';
         });
 
         // Collect text transforms
-        $('.text-transform-input').each(function() {
+        $('.text-transform-value').each(function() {
             const slug = $(this).data('slug');
             const value = $(this).val();
             typography.text_transforms[slug] = value;

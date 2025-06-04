@@ -1,44 +1,155 @@
 {#
-  Shadow Primitive Book - Self-Sufficient Design Tokens
+  Shadow Primitive Book - JSON-Based Design Tokens
   
-  This primitive contains actual shadow values, not CSS variable references.
-  It is the single source of truth for shadows in the design system.
+  This primitive loads shadow values from the JSON primitive file.
+  It is part of the self-sufficient design system where JSON files are the single source of truth.
   
   Usage:
   {% include 'primitive-books/shadow-book.twig' with {
-    box_shadow: 'md',
-    text_shadow: 'sm'
+    shadow: 'md',              # Uses scale.md
+    box_shadow: 'lg',          # Alternative parameter name
+    elevation: '3',            # Uses elevation levels (0-5)
+    inset_shadow: 'sm',        # Uses inset shadows
+    text_shadow: 'text',       # Uses special.text
+    focus_shadow: 'focus',     # Uses special.focus
+    custom_shadow: 'card'      # Uses special shadows like card, button, etc.
+  } %}
+  
+  Multiple shadows:
+  {% include 'primitive-books/shadow-book.twig' with {
+    shadow: 'md',
+    inset_shadow: 'sm'         # Both will be combined with comma
   } %}
 #}
 
-{% set shadow_tokens = {
-  box_shadows: {
-    none: 'none',
-    sm: '0 1px 2px rgba(0, 0, 0, 0.05)',
-    md: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    lg: '0 4px 8px rgba(0, 0, 0, 0.15)',
-    xl: '0 8px 16px rgba(0, 0, 0, 0.2)',
-    '2xl': '0 16px 32px rgba(0, 0, 0, 0.25)',
-    inner: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)'
-  },
-  text_shadows: {
-    none: 'none',
-    sm: '0 1px 2px rgba(0, 0, 0, 0.25)',
-    md: '0 2px 4px rgba(0, 0, 0, 0.3)',
-    lg: '0 3px 6px rgba(0, 0, 0, 0.35)',
-    xl: '0 4px 8px rgba(0, 0, 0, 0.4)'
-  }
-} %}
+{# Load shadow tokens from JSON #}
+{% set shadow_tokens = load_primitive('shadows') %}
 
-{# Apply shadow styles based on parameters #}
+{# Initialize shadow values array to handle multiple shadows #}
+{% set shadow_values = [] %}
+
+{# Helper function to resolve shadow values with fallback #}
+{# Check scale, elevation, special, colored, then use raw value #}
+
+{# Apply standard box shadow #}
+{% if shadow %}
+  {% set shadow_value = shadow_tokens.scale[shadow] ?? 
+                        shadow_tokens.elevation[shadow] ?? 
+                        shadow_tokens.special[shadow] ?? 
+                        shadow_tokens.colored[shadow] ?? 
+                        shadow %}
+  {% set shadow_values = shadow_values|merge([shadow_value]) %}
+{% endif %}
+
+{# Alternative parameter name for box shadow #}
 {% if box_shadow %}
-  box-shadow: {{ shadow_tokens.box_shadows[box_shadow] ?? box_shadow }};
+  {% set box_shadow_value = shadow_tokens.scale[box_shadow] ?? 
+                            shadow_tokens.elevation[box_shadow] ?? 
+                            shadow_tokens.special[box_shadow] ?? 
+                            shadow_tokens.colored[box_shadow] ?? 
+                            box_shadow %}
+  {% set shadow_values = shadow_values|merge([box_shadow_value]) %}
 {% endif %}
 
+{# Apply elevation-based shadow #}
+{% if elevation %}
+  {% set elevation_value = shadow_tokens.elevation[elevation] ?? 
+                           shadow_tokens.scale[elevation] ?? 
+                           elevation %}
+  {% set shadow_values = shadow_values|merge([elevation_value]) %}
+{% endif %}
+
+{# Apply inset shadow #}
+{% if inset_shadow %}
+  {% set inset_value = shadow_tokens.inset[inset_shadow] ?? inset_shadow %}
+  {% set shadow_values = shadow_values|merge([inset_value]) %}
+{% endif %}
+
+{# Apply colored shadows #}
+{% if colored_shadow %}
+  {% set colored_value = shadow_tokens.colored[colored_shadow] ?? colored_shadow %}
+  {% set shadow_values = shadow_values|merge([colored_value]) %}
+{% endif %}
+
+{# Apply special purpose shadows #}
+{% if focus_shadow %}
+  {% set focus_value = shadow_tokens.special[focus_shadow] ?? 
+                       shadow_tokens.special.focus ?? 
+                       focus_shadow %}
+  {% set shadow_values = shadow_values|merge([focus_value]) %}
+{% endif %}
+
+{% if card_shadow %}
+  {% set card_value = shadow_tokens.special[card_shadow] ?? 
+                      shadow_tokens.special.card ?? 
+                      card_shadow %}
+  {% set shadow_values = shadow_values|merge([card_value]) %}
+{% endif %}
+
+{% if button_shadow %}
+  {% set button_value = shadow_tokens.special[button_shadow] ?? 
+                        shadow_tokens.special.button ?? 
+                        button_shadow %}
+  {% set shadow_values = shadow_values|merge([button_value]) %}
+{% endif %}
+
+{% if dropdown_shadow %}
+  {% set dropdown_value = shadow_tokens.special[dropdown_shadow] ?? 
+                          shadow_tokens.special.dropdown ?? 
+                          dropdown_shadow %}
+  {% set shadow_values = shadow_values|merge([dropdown_value]) %}
+{% endif %}
+
+{% if modal_shadow %}
+  {% set modal_value = shadow_tokens.special[modal_shadow] ?? 
+                       shadow_tokens.special.modal ?? 
+                       modal_shadow %}
+  {% set shadow_values = shadow_values|merge([modal_value]) %}
+{% endif %}
+
+{# Apply custom shadow by key #}
+{% if custom_shadow %}
+  {% set custom_value = shadow_tokens.special[custom_shadow] ?? 
+                        shadow_tokens.colored[custom_shadow] ?? 
+                        shadow_tokens.scale[custom_shadow] ?? 
+                        custom_shadow %}
+  {% set shadow_values = shadow_values|merge([custom_value]) %}
+{% endif %}
+
+{# Output combined box-shadow value #}
+{% if shadow_values|length > 0 %}
+  {% set filtered_shadows = [] %}
+  {% for value in shadow_values %}
+    {% if value != 'none' %}
+      {% set filtered_shadows = filtered_shadows|merge([value]) %}
+    {% endif %}
+  {% endfor %}
+  
+  {% if filtered_shadows|length > 0 %}
+    box-shadow: {{ filtered_shadows|join(', ') }};
+  {% else %}
+    box-shadow: none;
+  {% endif %}
+{% endif %}
+
+{# Apply text shadow separately #}
 {% if text_shadow %}
-  text-shadow: {{ shadow_tokens.text_shadows[text_shadow] ?? text_shadow }};
+  {% set text_shadow_value = shadow_tokens.special[text_shadow] ?? 
+                             shadow_tokens.special.text ?? 
+                             text_shadow %}
+  text-shadow: {{ text_shadow_value }};
 {% endif %}
 
-{% if filter_drop_shadow %}
-  filter: drop-shadow({{ filter_drop_shadow }});
+{# Apply filter-based shadows (for better performance in some cases) #}
+{% if drop_shadow %}
+  {% set drop_value = shadow_tokens.scale[drop_shadow] ?? drop_shadow %}
+  {# Convert box-shadow to drop-shadow format if needed #}
+  {% if drop_value starts with '0 ' %}
+    {% set parts = drop_value|split(' ') %}
+    {% if parts|length >= 5 %}
+      filter: drop-shadow({{ parts[1] }} {{ parts[2] }} {{ parts[3] }} {{ parts[4] }});
+    {% endif %}
+  {% else %}
+    filter: drop-shadow({{ drop_value }});
+  {% endif %}
 {% endif %}

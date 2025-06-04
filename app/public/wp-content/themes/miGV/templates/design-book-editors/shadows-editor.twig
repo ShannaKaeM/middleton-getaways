@@ -1,0 +1,237 @@
+{#
+  Shadows Primitive Editor
+  Following the established pattern from borders editor
+#}
+
+{% set shadows_tokens = load_primitive('shadows') %}
+
+<div class="primitive-editor shadows-editor" data-primitive-type="shadows">
+    <header class="editor-header">
+        <h1>Shadows Primitive Editor</h1>
+        <div class="editor-actions">
+            <button class="btn-save" data-action="save">Save to JSON</button>
+            <button class="btn-sync" data-action="sync">Sync to theme.json</button>
+            <button class="btn-reset" data-action="reset">Reset to Defaults</button>
+        </div>
+    </header>
+
+    <div class="editor-content">
+        <!-- Shadow Scale Section -->
+        <section class="token-group" data-token-type="scale">
+            <h2>Shadow Scale</h2>
+            <p class="section-description">Progressive shadow sizes for general use</p>
+            <div class="token-grid shadows-grid">
+                {% for slug, value in shadows_tokens.scale %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|upper }}</label>
+                        <div class="shadow-preview">
+                            <div class="shadow-preview-box" style="box-shadow: {{ value }};"></div>
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="scale"
+                               data-slug="{{ slug }}"
+                               name="data[scale][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Elevation System Section -->
+        <section class="token-group" data-token-type="elevation">
+            <h2>Elevation System</h2>
+            <p class="section-description">Material Design inspired elevation levels</p>
+            <div class="token-grid shadows-grid">
+                {% for slug, value in shadows_tokens.elevation %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>Level {{ slug }}</label>
+                        <div class="shadow-preview">
+                            <div class="shadow-preview-box" style="box-shadow: {{ value }};"></div>
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="elevation"
+                               data-slug="{{ slug }}"
+                               name="data[elevation][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Inset Shadows Section -->
+        <section class="token-group" data-token-type="inset">
+            <h2>Inset Shadows</h2>
+            <p class="section-description">For pressed or recessed effects</p>
+            <div class="token-grid shadows-grid">
+                {% for slug, value in shadows_tokens.inset %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|upper }}</label>
+                        <div class="shadow-preview inset-preview">
+                            <div class="shadow-preview-box inset-box" style="box-shadow: {{ value }};"></div>
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="inset"
+                               data-slug="{{ slug }}"
+                               name="data[inset][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Colored Shadows Section -->
+        <section class="token-group" data-token-type="colored">
+            <h2>Colored Shadows</h2>
+            <p class="section-description">Brand-colored shadow effects</p>
+            <div class="token-grid shadows-grid">
+                {% for slug, value in shadows_tokens.colored %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="shadow-preview">
+                            <div class="shadow-preview-box" style="box-shadow: {{ value }};"></div>
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="colored"
+                               data-slug="{{ slug }}"
+                               name="data[colored][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Special Purpose Shadows Section -->
+        <section class="token-group" data-token-type="special">
+            <h2>Special Purpose Shadows</h2>
+            <p class="section-description">Pre-configured shadows for specific UI patterns</p>
+            <div class="token-grid shadows-grid">
+                {% for slug, value in shadows_tokens.special %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="shadow-preview">
+                            {% if slug == 'text' %}
+                                <div class="text-shadow-preview" style="text-shadow: {{ value }};">Text</div>
+                            {% else %}
+                                <div class="shadow-preview-box" style="box-shadow: {{ value }};"></div>
+                            {% endif %}
+                        </div>
+                        <input type="text" 
+                               class="token-input" 
+                               value="{{ value }}"
+                               data-category="special"
+                               data-slug="{{ slug }}"
+                               name="data[special][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Live Preview Section -->
+        <section class="preview-section">
+            <h2>Live Preview</h2>
+            <div class="preview-controls">
+                <div class="control-item">
+                    <label>Shadow Type:</label>
+                    <select class="preview-shadow-type">
+                        <option value="scale">Scale</option>
+                        <option value="elevation">Elevation</option>
+                        <option value="inset">Inset</option>
+                        <option value="colored">Colored</option>
+                    </select>
+                </div>
+                <div class="control-item" id="size-control">
+                    <label>Size:</label>
+                    <select class="preview-shadow-size">
+                        <option value="xs">XS</option>
+                        <option value="sm">SM</option>
+                        <option value="md" selected>MD</option>
+                        <option value="lg">LG</option>
+                        <option value="xl">XL</option>
+                        <option value="2xl">2XL</option>
+                    </select>
+                </div>
+                <div class="control-item" id="elevation-control" style="display: none;">
+                    <label>Level:</label>
+                    <select class="preview-elevation">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="live-preview-container">
+                <div class="preview-element" id="shadow-preview-element">
+                    <div class="preview-content">
+                        Shadow Preview
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+jQuery(document).ready(function($) {
+    // Initialize live preview when document is ready
+    function initShadowsPreview() {
+        updateShadowPreview();
+        
+        // Bind change events to preview controls
+        $('.preview-shadow-type').on('change', function() {
+            const type = $(this).val();
+            if (type === 'elevation') {
+                $('#size-control').hide();
+                $('#elevation-control').show();
+            } else {
+                $('#size-control').show();
+                $('#elevation-control').hide();
+            }
+            updateShadowPreview();
+        });
+        
+        $('.preview-shadow-size, .preview-elevation').on('change', updateShadowPreview);
+    }
+    
+    // Update the live shadow preview
+    function updateShadowPreview() {
+        const $preview = $('#shadow-preview-element');
+        const type = $('.preview-shadow-type').val();
+        
+        // Get shadow tokens
+        const shadows_tokens = {{ shadows_tokens|json_encode|raw }};
+        
+        let shadowValue = '';
+        
+        if (type === 'scale') {
+            const size = $('.preview-shadow-size').val();
+            shadowValue = shadows_tokens.scale[size] || shadows_tokens.scale.md;
+        } else if (type === 'elevation') {
+            const level = $('.preview-elevation').val();
+            shadowValue = shadows_tokens.elevation[level] || shadows_tokens.elevation['3'];
+        } else if (type === 'inset') {
+            const size = $('.preview-shadow-size').val();
+            shadowValue = shadows_tokens.inset[size] || shadows_tokens.inset.md;
+        } else if (type === 'colored') {
+            shadowValue = shadows_tokens.colored.primary;
+        }
+        
+        // Apply shadow to preview
+        $preview.css('box-shadow', shadowValue);
+    }
+    
+    // Initialize preview
+    initShadowsPreview();
+});
+</script>

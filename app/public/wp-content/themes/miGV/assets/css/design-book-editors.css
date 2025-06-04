@@ -35,8 +35,8 @@
     --text-transform-capitalize: capitalize;
     
     /* Colors - Primary Palette */
-    --color-primary: #3b82f6;
-    --color-secondary: #10b981;
+    --color-primary: #5a7b7c;
+    --color-secondary: #975d55;
     --color-tertiary: #f59e0b;
     --color-accent: #8b5cf6;
     
@@ -250,12 +250,12 @@
 
 .color-picker-trigger:hover {
     background: rgba(255, 255, 255, 1);
-    border-color: var(--wp--preset--color--primary, #1a73e8);
+    border-color: var(--wp--preset--color--primary, #5a7b7c);
     transform: translateY(-1px);
 }
 
 .color-picker-trigger:hover svg {
-    fill: var(--wp--preset--color--primary, #1a73e8);
+    fill: var(--wp--preset--color--primary, #5a7b7c);
 }
 
 .color-info {
@@ -322,8 +322,8 @@
 
 .color-hex-input:focus {
     outline: none;
-    border-color: var(--wp--preset--color--primary, #4c4c4c);
-    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+    border-color: var(--wp--preset--color--primary, #5a7b7c);
+    box-shadow: 0 0 0 3px rgba(90, 123, 124, 0.1);
 }
 
 /* Sliders */
@@ -347,7 +347,7 @@ input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 16px;
     height: 16px;
-    background: var(--wp--preset--color--primary, #1a73e8);
+    background: var(--wp--preset--color--primary, #5a7b7c);
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.2s;
@@ -356,7 +356,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
     width: 16px;
     height: 16px;
-    background: var(--wp--preset--color--primary, #1a73e8);
+    background: var(--wp--preset--color--primary, #5a7b7c);
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.2s;
@@ -630,7 +630,7 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .floating-save-indicator.saving {
-    background: #3b82f6;
+    background: #5a7b7c;
     color: white;
 }
 
@@ -715,7 +715,7 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .scale-controls .btn-primary {
     padding: 0.75rem 1.5rem;
-    background: var(--wp--preset--color--primary, #3b82f6);
+    background: var(--wp--preset--color--primary, #5a7b7c);
     color: white;
     border: none;
     border-radius: 6px;
@@ -725,7 +725,7 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .scale-controls .btn-primary:hover {
-    background: #2563eb;
+    background: #3a5a59;
 }
 
 /* Typography Grid */
@@ -921,14 +921,14 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .btn-save.btn-primary {
-    background: var(--wp--preset--color--primary, #3b82f6);
+    background: var(--wp--preset--color--primary, #5a7b7c);
     color: white;
-    border-color: var(--wp--preset--color--primary, #3b82f6);
+    border-color: var(--wp--preset--color--primary, #5a7b7c);
 }
 
 .btn-save.btn-primary:hover {
-    background: #2563eb;
-    border-color: #2563eb;
+    background: #3a5a59;
+    border-color: #3a5a59;
 }
 
 .btn-save.has-changes {
@@ -971,7 +971,7 @@ input[type="range"]::-moz-range-thumb:hover {
     appearance: none;
     width: 16px;
     height: 16px;
-    background: var(--wp--preset--color--primary, #3b82f6);
+    background: var(--wp--preset--color--primary, #5a7b7c);
     border-radius: 50%;
     cursor: pointer;
 }
@@ -979,7 +979,7 @@ input[type="range"]::-moz-range-thumb:hover {
 .preview-scale-slider::-moz-range-thumb {
     width: 16px;
     height: 16px;
-    background: var(--wp--preset--color--primary, #3b82f6);
+    background: var(--wp--preset--color--primary, #5a7b7c);
     border-radius: 50%;
     cursor: pointer;
     border: none;
@@ -995,6 +995,29 @@ input[type="range"]::-moz-range-thumb:hover {
 /* Font Family Name Styling */
 .font-name {
     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* Font Family Sample Display */
+.font-family-sample {
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+/* Ensure font family previews use the CSS variables */
+.typography-preview[class*="preview-montserrat"] .font-family-sample {
+    font-family: var(--typography-font-families-montserrat) !important;
+}
+
+.typography-preview[class*="preview-inter"] .font-family-sample {
+    font-family: var(--typography-font-families-inter) !important;
+}
+
+.typography-preview[class*="preview-playfair"] .font-family-sample {
+    font-family: var(--typography-font-families-playfair-display) !important;
+}
+
+.typography-preview[class*="preview-roboto"] .font-family-sample {
+    font-family: var(--typography-font-families-roboto) !important;
 }
 
 /* =========================================
@@ -1030,6 +1053,8 @@ input[type="range"]::-moz-range-thumb:hover {
     padding: 2rem;
     background: var(--color-base-dark);
     min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* Token Groups */
@@ -1320,7 +1345,7 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .notification-info {
-    background: #3b82f6;
+    background: #5a7b7c;
     color: white;
 }
 
@@ -1371,4 +1396,194 @@ input[type="range"]::-moz-range-thumb:hover {
     .spacing-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* =========================================
+   SHADOWS EDITOR STYLES
+   ========================================= */
+
+/* Ensure shadow editor maintains dark background */
+.shadows-editor {
+    background: var(--color-base-dark);
+    min-height: 100vh;
+}
+
+.shadows-editor .editor-content {
+    background: var(--color-base-dark);
+    padding: 2rem;
+}
+
+/* Ensure header stays dark with light text */
+.shadows-editor .editor-header h1 {
+    color: var(--color-extreme-light);
+}
+
+/* Ensure action buttons are visible */
+.shadows-editor .editor-actions .btn-save,
+.shadows-editor .editor-actions .btn-sync,
+.shadows-editor .editor-actions .btn-reset {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.shadows-editor .editor-actions .btn-save:hover,
+.shadows-editor .editor-actions .btn-sync:hover,
+.shadows-editor .editor-actions .btn-reset:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Shadow editor specific styles */
+.shadows-editor .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Shadow editor cards - use extreme-light background */
+.shadows-editor .token-item {
+    background: var(--color-extreme-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shadows-editor .token-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Labels and text in light cards */
+.shadows-editor .token-item label {
+    color: var(--color-base-darkest);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Input fields in light cards */
+.shadows-editor .token-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--color-base-darkest);
+    font-size: 0.875rem;
+    font-family: var(--primitive-font-mono);
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.shadows-editor .token-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(90, 123, 124, 0.1);
+}
+
+/* Copy buttons in light cards */
+.shadows-editor .copy-button {
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    color: var(--color-base-dark);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.shadows-editor .copy-button:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-base-darkest);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.shadows-editor .shadow-preview {
+    margin-bottom: 1rem;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-extreme-light);
+    border-radius: 8px;
+}
+
+.shadows-editor .shadow-preview-box {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.shadows-editor .inset-preview {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.shadows-editor .inset-box {
+    background: #e5e5e5;
+}
+
+.shadows-editor .text-shadow-preview {
+    color: var(--color-base-darkest);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Section titles in shadow editor */
+.shadows-editor .token-group h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-extreme-light);
+}
+
+/* Section descriptions in shadow editor */
+.shadows-editor .section-description {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 1.5rem 0;
+    font-size: 0.875rem;
+}
+
+/* Shadow Live preview specific */
+.shadows-editor #shadow-preview-element {
+    width: 200px;
+    height: 150px;
+    background: white;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.shadows-editor #shadow-preview-element .preview-content {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Ensure live preview container has light background */
+.shadows-editor .live-preview-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 8px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Preview section styling */
+.shadows-editor .preview-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    color: var(--color-extreme-light);
 }

@@ -24,7 +24,9 @@ function migv_generate_primitive_css_variables() {
         'colors'     => get_template_directory() . '/primitives/colors.json',
         'typography' => get_template_directory() . '/primitives/typography.json',
         'spacing'    => get_template_directory() . '/primitives/spacing.json',
-        // Add other primitive files here as needed, e.g., 'borders', 'shadows'
+        'borders'    => get_template_directory() . '/primitives/borders.json',
+        'shadows'    => get_template_directory() . '/primitives/shadows.json',
+        // Add other primitive files here as needed
     ];
 
     $css_variables = [];

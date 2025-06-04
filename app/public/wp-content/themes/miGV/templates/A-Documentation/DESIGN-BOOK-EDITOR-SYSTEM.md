@@ -317,15 +317,7 @@ design-book-editor/
 ```php
 // Register custom primitive type
 add_filter('design_book_primitive_types', function($types) {
-    $types['animations'] = [
-        'label' => 'Animations',
-        'icon' => 'dashicons-video-alt2',
-        'schema' => [
-            'durations' => 'array',
-            'easings' => 'array',
-            'delays' => 'array'
-        ]
-    ];
+    // Custom primitive types can be registered here
     return $types;
 });
 
@@ -336,7 +328,7 @@ add_action('design_book_primitive_updated', function($type, $category, $slug, $v
 
 // Add custom control type
 add_filter('design_book_control_types', function($controls) {
-    $controls['gradient'] = 'path/to/gradient-control.php';
+    // Custom control types can be registered here
     return $controls;
 });
 ```

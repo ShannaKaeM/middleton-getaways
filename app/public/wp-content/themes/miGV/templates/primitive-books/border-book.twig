@@ -1,7 +1,7 @@
 {#
   Border Primitive Book - Self-Sufficient Design Tokens
   
-  This primitive contains actual border values, not CSS variable references.
+  This primitive loads actual border values from the borders.json file.
   It is the single source of truth for borders in the design system.
   
   Usage:
@@ -13,58 +13,11 @@
   } %}
 #}
 
-{% set border_tokens = {
-  widths: {
-    none: '0',
-    thin: '1px',
-    medium: '2px',
-    thick: '3px',
-    heavy: '4px'
-  },
-  radius: {
-    none: '0',
-    sm: '4px',
-    md: '6px',
-    lg: '8px',
-    xl: '12px',
-    '2xl': '16px',
-    '3xl': '24px',
-    full: '9999px'
-  },
-  styles: {
-    none: 'none',
-    solid: 'solid',
-    dashed: 'dashed',
-    dotted: 'dotted',
-    double: 'double',
-    groove: 'groove',
-    ridge: 'ridge',
-    inset: 'inset',
-    outset: 'outset'
-  }
-} %}
+{# Load border tokens from JSON #}
+{% set border_tokens = load_primitive('borders') %}
 
-{# Import color tokens for border colors #}
-{% set color_tokens = {
-  colors: {
-    'primary-light': '#d6dcd6',
-    'primary': '#5a7b7c',
-    'primary-dark': '#3a5a59',
-    'secondary-light': '#c38484',
-    'secondary': '#975d55',
-    'secondary-dark': '#853d2d',
-    'neutral-light': '#d1cfc2',
-    'neutral': '#b5b09f',
-    'neutral-dark': '#9e9983',
-    'base-lightest': '#e6e6e6',
-    'base-light': '#b3b3b3',
-    'base': '#808080',
-    'base-dark': '#676765',
-    'base-darkest': '#4d4d4d',
-    'extreme-light': '#ffffff',
-    'extreme-dark': '#000000'
-  }
-} %}
+{# Load color tokens for border colors #}
+{% set color_tokens = load_primitive('colors') %}
 
 {# Apply border styles based on parameters #}
 {% if border %}
@@ -72,83 +25,120 @@
 {% endif %}
 
 {% if border_width %}
-  border-width: {{ border_tokens.widths[border_width] ?? border_width }};
+  {% set width_value = border_tokens.widths[border_width] ?? border_width %}
+  border-width: {{ width_value }};
 {% endif %}
 
 {% if border_style %}
-  border-style: {{ border_tokens.styles[border_style] ?? border_style }};
+  {% set style_value = border_tokens.styles[border_style] ?? border_style %}
+  border-style: {{ style_value }};
 {% endif %}
 
 {% if border_color %}
-  border-color: {{ color_tokens.colors[border_color] ?? border_color }};
+  {# First check if it's a color token, then fall back to the raw value #}
+  {% set color_value = color_tokens[border_color] ?? color_tokens[border_color|replace({'-': '.'})]['default'] ?? border_color %}
+  border-color: {{ color_value }};
 {% endif %}
 
 {% if border_radius %}
-  border-radius: {{ border_tokens.radius[border_radius] ?? border_radius }};
+  {% set radius_value = border_tokens.radii[border_radius] ?? border_radius %}
+  border-radius: {{ radius_value }};
 {% endif %}
 
 {# Individual side properties #}
+{% if border_top %}
+  border-top: {{ border_top }};
+{% endif %}
+
 {% if border_top_width %}
-  border-top-width: {{ border_tokens.widths[border_top_width] ?? border_top_width }};
+  {% set top_width_value = border_tokens.widths[border_top_width] ?? border_top_width %}
+  border-top-width: {{ top_width_value }};
 {% endif %}
 
 {% if border_top_style %}
-  border-top-style: {{ border_tokens.styles[border_top_style] ?? border_top_style }};
+  {% set top_style_value = border_tokens.styles[border_top_style] ?? border_top_style %}
+  border-top-style: {{ top_style_value }};
 {% endif %}
 
 {% if border_top_color %}
-  border-top-color: {{ color_tokens.colors[border_top_color] ?? border_top_color }};
+  {% set top_color_value = color_tokens[border_top_color] ?? color_tokens[border_top_color|replace({'-': '.'})]['default'] ?? border_top_color %}
+  border-top-color: {{ top_color_value }};
+{% endif %}
+
+{% if border_right %}
+  border-right: {{ border_right }};
 {% endif %}
 
 {% if border_right_width %}
-  border-right-width: {{ border_tokens.widths[border_right_width] ?? border_right_width }};
+  {% set right_width_value = border_tokens.widths[border_right_width] ?? border_right_width %}
+  border-right-width: {{ right_width_value }};
 {% endif %}
 
 {% if border_right_style %}
-  border-right-style: {{ border_tokens.styles[border_right_style] ?? border_right_style }};
+  {% set right_style_value = border_tokens.styles[border_right_style] ?? border_right_style %}
+  border-right-style: {{ right_style_value }};
 {% endif %}
 
 {% if border_right_color %}
-  border-right-color: {{ color_tokens.colors[border_right_color] ?? border_right_color }};
+  {% set right_color_value = color_tokens[border_right_color] ?? color_tokens[border_right_color|replace({'-': '.'})]['default'] ?? border_right_color %}
+  border-right-color: {{ right_color_value }};
+{% endif %}
+
+{% if border_bottom %}
+  border-bottom: {{ border_bottom }};
 {% endif %}
 
 {% if border_bottom_width %}
-  border-bottom-width: {{ border_tokens.widths[border_bottom_width] ?? border_bottom_width }};
+  {% set bottom_width_value = border_tokens.widths[border_bottom_width] ?? border_bottom_width %}
+  border-bottom-width: {{ bottom_width_value }};
 {% endif %}
 
 {% if border_bottom_style %}
-  border-bottom-style: {{ border_tokens.styles[border_bottom_style] ?? border_bottom_style }};
+  {% set bottom_style_value = border_tokens.styles[border_bottom_style] ?? border_bottom_style %}
+  border-bottom-style: {{ bottom_style_value }};
 {% endif %}
 
 {% if border_bottom_color %}
-  border-bottom-color: {{ color_tokens.colors[border_bottom_color] ?? border_bottom_color }};
+  {% set bottom_color_value = color_tokens[border_bottom_color] ?? color_tokens[border_bottom_color|replace({'-': '.'})]['default'] ?? border_bottom_color %}
+  border-bottom-color: {{ bottom_color_value }};
+{% endif %}
+
+{% if border_left %}
+  border-left: {{ border_left }};
 {% endif %}
 
 {% if border_left_width %}
-  border-left-width: {{ border_tokens.widths[border_left_width] ?? border_left_width }};
+  {% set left_width_value = border_tokens.widths[border_left_width] ?? border_left_width %}
+  border-left-width: {{ left_width_value }};
 {% endif %}
 
 {% if border_left_style %}
-  border-left-style: {{ border_tokens.styles[border_left_style] ?? border_left_style }};
+  {% set left_style_value = border_tokens.styles[border_left_style] ?? border_left_style %}
+  border-left-style: {{ left_style_value }};
 {% endif %}
 
 {% if border_left_color %}
-  border-left-color: {{ color_tokens.colors[border_left_color] ?? border_left_color }};
+  {% set left_color_value = color_tokens[border_left_color] ?? color_tokens[border_left_color|replace({'-': '.'})]['default'] ?? border_left_color %}
+  border-left-color: {{ left_color_value }};
 {% endif %}
 
 {# Individual corner radius #}
 {% if border_top_left_radius %}
-  border-top-left-radius: {{ border_tokens.radius[border_top_left_radius] ?? border_top_left_radius }};
+  {% set tl_radius_value = border_tokens.radii[border_top_left_radius] ?? border_top_left_radius %}
+  border-top-left-radius: {{ tl_radius_value }};
 {% endif %}
 
 {% if border_top_right_radius %}
-  border-top-right-radius: {{ border_tokens.radius[border_top_right_radius] ?? border_top_right_radius }};
+  {% set tr_radius_value = border_tokens.radii[border_top_right_radius] ?? border_top_right_radius %}
+  border-top-right-radius: {{ tr_radius_value }};
 {% endif %}
 
 {% if border_bottom_right_radius %}
-  border-bottom-right-radius: {{ border_tokens.radius[border_bottom_right_radius] ?? border_bottom_right_radius }};
+  {% set br_radius_value = border_tokens.radii[border_bottom_right_radius] ?? border_bottom_right_radius %}
+  border-bottom-right-radius: {{ br_radius_value }};
 {% endif %}
 
 {% if border_bottom_left_radius %}
-  border-bottom-left-radius: {{ border_tokens.radius[border_bottom_left_radius] ?? border_bottom_left_radius }};
+  {% set bl_radius_value = border_tokens.radii[border_bottom_left_radius] ?? border_bottom_left_radius %}
+  border-bottom-left-radius: {{ bl_radius_value }};
 {% endif %}

@@ -17,7 +17,7 @@
         <section class="primitive-section">
             <h2>Font Sizes</h2>
             <div class="typography-grid">
-                {% for slug, size in typography_tokens.fontSizes %}
+                {% for slug, size in typography_tokens.font_sizes %}
                 <div class="typography-card">
                     <div class="typography-preview preview-{{ slug }}">
                         <p style="font-size: var(--typography-font-sizes-{{ slug }});">Text</p>
@@ -53,19 +53,18 @@
         <section class="primitive-section">
             <h2>Font Families</h2>
             <div class="typography-grid">
-                {% for slug, family in typography_tokens.fontFamilies %}
+                {% for slug, family in typography_tokens.font_families %}
                 <div class="typography-card">
                     <div class="typography-preview preview-{{ slug }}">
-                        <p style="font-family: {{ family }};">Text Sample</p>
+                        <p class="font-family-sample" style="font-family: var(--typography-font-families-{{ slug }}); font-weight: var(--typography-font-weights-semiBold, 600); font-size: 1.25rem;">{{ slug|replace({'_': ' ', '-': ' '})|title }}</p>
                     </div>
                     <div class="typography-controls">
-                        <label style="font-weight: 600;">{{ slug|upper }}</label>
+                        <label style="font-weight: 600;">Full Font Stack</label>
                         <div class="control-group">
                             <textarea class="font-stack-input" 
                                       data-slug="{{ slug }}" 
                                       rows="3">{{ family }}</textarea>
                         </div>
-                        <span class="value-display font-family-value" data-slug="{{ slug }}">{{ family }}</span>
                         <button class="copy-btn" data-copy="{{ family }}">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -82,7 +81,7 @@
         <section class="primitive-section">
             <h2>Font Weights</h2>
             <div class="typography-grid">
-                {% for slug, weight in typography_tokens.fontWeights %}
+                {% for slug, weight in typography_tokens.font_weights %}
                 <div class="typography-card">
                     <div class="typography-preview preview-{{ slug }}">
                         <p style="font-weight: {{ weight }};">Text Sample</p>
@@ -113,7 +112,7 @@
         <section class="primitive-section">
             <h2>Line Heights</h2>
             <div class="typography-grid">
-                {% for slug, height in typography_tokens.lineHeights %}
+                {% for slug, height in typography_tokens.line_heights %}
                 <div class="typography-card">
                     <div class="typography-preview preview-{{ slug }}">
                         <p style="line-height: {{ height }};">This is a sample text to demonstrate line height. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -144,7 +143,7 @@
         <section class="primitive-section">
             <h2>Letter Spacing</h2>
             <div class="typography-grid">
-                {% for slug, spacing in typography_tokens.letterSpacings %}
+                {% for slug, spacing in typography_tokens.letter_spacings %}
                 <div class="typography-card">
                     <div class="typography-preview preview-{{ slug }}">
                         <p style="letter-spacing: {{ spacing }};">LETTER SPACING</p>
@@ -176,7 +175,7 @@
         <section class="primitive-section">
             <h2>Text Transform</h2>
             <div class="typography-grid">
-                {% for slug, transform in typography_tokens.textTransforms %}
+                {% for slug, transform in typography_tokens.text_transforms %}
                 <div class="typography-card">
                     <div class="typography-preview preview-{{ slug }}">
                         <p style="text-transform: {{ transform }};">Sample Text Transform</p>

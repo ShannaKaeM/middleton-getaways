@@ -1396,3 +1396,267 @@ function render_spacing_editor_page() {
     // Render the template
     Timber::render('design-book-editors/spacing-editor.twig', $context);
 }
+
+// === BORDERS PRIMITIVE AJAX HANDLERS ===
+
+// Save borders primitive
+function save_borders_primitive() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get and validate data
+    $borders_data = isset($_POST['borders_data']) ? json_decode(stripslashes($_POST['borders_data']), true) : null;
+    
+    if (!$borders_data) {
+        wp_send_json_error('Invalid borders data');
+        return;
+    }
+    
+    // Validate expected structure
+    $expected_categories = ['widths', 'styles', 'radii'];
+    foreach ($expected_categories as $category) {
+        if (!isset($borders_data[$category]) || !is_array($borders_data[$category])) {
+            $borders_data[$category] = [];
+        }
+    }
+    
+    // Save to JSON file
+    $json_path = get_template_directory() . '/primitives/borders.json';
+    
+    // Create backup before saving
+    if (file_exists($json_path)) {
+        $backup_path = get_template_directory() . '/primitives/borders.backup.json';
+        copy($json_path, $backup_path);
+    }
+    
+    $result = file_put_contents($json_path, json_encode($borders_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if ($result !== false) {
+        // Trigger action for any additional processing
+        do_action('mi_borders_primitive_saved', $borders_data);
+        
+        wp_send_json_success('Borders primitive saved successfully');
+    } else {
+        wp_send_json_error('Failed to save borders primitive');
+    }
+}
+add_action('wp_ajax_save_borders_primitive', 'save_borders_primitive');
+
+// Sync borders to theme.json
+function sync_borders_to_theme_json() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get borders data
+    $borders_data = isset($_POST['borders_data']) ? json_decode(stripslashes($_POST['borders_data']), true) : null;
+    
+    if (!$borders_data) {
+        wp_send_json_error('Invalid borders data');
+        return;
+    }
+    
+    // Load existing theme.json
+    $theme_json_path = get_template_directory() . '/theme.json';
+    $theme_json = json_decode(file_get_contents($theme_json_path), true);
+    
+    if (!$theme_json) {
+        wp_send_json_error('Failed to load theme.json');
+        return;
+    }
+    
+    // Ensure settings structure exists
+    if (!isset($theme_json['settings'])) {
+        $theme_json['settings'] = [];
+    }
+    if (!isset($theme_json['settings']['custom'])) {
+        $theme_json['settings']['custom'] = [];
+    }
+    
+    // Add borders to custom settings
+    $theme_json['settings']['custom']['borders'] = [
+        'widths' => $borders_data['widths'] ?? [],
+        'styles' => $borders_data['styles'] ?? [],
+        'radii' => $borders_data['radii'] ?? []
+    ];
+    
+    // Enable border features
+    if (!isset($theme_json['settings']['border'])) {
+        $theme_json['settings']['border'] = [];
+    }
+    $theme_json['settings']['border']['color'] = true;
+    $theme_json['settings']['border']['radius'] = true;
+    $theme_json['settings']['border']['style'] = true;
+    $theme_json['settings']['border']['width'] = true;
+    
+    // Create backup before saving
+    $backup_path = get_template_directory() . '/theme.json.backup';
+    copy($theme_json_path, $backup_path);
+    
+    // Save updated theme.json
+    $result = file_put_contents($theme_json_path, json_encode($theme_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if ($result !== false) {
+        // Clear any caches
+        do_action('mi_theme_json_updated', 'borders');
+        
+        wp_send_json_success('Borders synced to theme.json');
+    } else {
+        wp_send_json_error('Failed to sync to theme.json');
+    }
+}
+add_action('wp_ajax_sync_borders_to_theme_json', 'sync_borders_to_theme_json');
+
+// === SHADOWS PRIMITIVE AJAX HANDLERS ===
+
+// Save shadows primitive
+function save_shadows_primitive() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get and validate data
+    $shadows_data = isset($_POST['shadows_data']) ? json_decode(stripslashes($_POST['shadows_data']), true) : null;
+    
+    if (!$shadows_data) {
+        wp_send_json_error('Invalid shadows data');
+        return;
+    }
+    
+    // Validate expected structure
+    $expected_categories = ['scale', 'elevation', 'inset', 'colored', 'special'];
+    foreach ($expected_categories as $category) {
+        if (!isset($shadows_data[$category]) || !is_array($shadows_data[$category])) {
+            $shadows_data[$category] = [];
+        }
+    }
+    
+    // Save to JSON file
+    $json_path = get_template_directory() . '/primitives/shadows.json';
+    
+    // Create backup before saving
+    if (file_exists($json_path)) {
+        $backup_path = get_template_directory() . '/primitives/shadows.backup.json';
+        copy($json_path, $backup_path);
+    }
+    
+    $result = file_put_contents($json_path, json_encode($shadows_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if ($result !== false) {
+        // Trigger action for any additional processing
+        do_action('mi_shadows_primitive_saved', $shadows_data);
+        
+        wp_send_json_success('Shadows primitive saved successfully');
+    } else {
+        wp_send_json_error('Failed to save shadows primitive');
+    }
+}
+add_action('wp_ajax_save_shadows_primitive', 'save_shadows_primitive');
+
+// Sync shadows to theme.json
+function sync_shadows_to_theme_json() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get shadows data
+    $shadows_data = isset($_POST['shadows_data']) ? json_decode(stripslashes($_POST['shadows_data']), true) : null;
+    
+    if (!$shadows_data) {
+        wp_send_json_error('Invalid shadows data');
+        return;
+    }
+    
+    // Load existing theme.json
+    $theme_json_path = get_template_directory() . '/theme.json';
+    $theme_json = json_decode(file_get_contents($theme_json_path), true);
+    
+    if (!$theme_json) {
+        wp_send_json_error('Failed to load theme.json');
+        return;
+    }
+    
+    // Ensure settings structure exists
+    if (!isset($theme_json['settings'])) {
+        $theme_json['settings'] = [];
+    }
+    if (!isset($theme_json['settings']['custom'])) {
+        $theme_json['settings']['custom'] = [];
+    }
+    
+    // Add shadows to custom settings
+    $theme_json['settings']['custom']['shadows'] = [
+        'scale' => $shadows_data['scale'] ?? [],
+        'elevation' => $shadows_data['elevation'] ?? [],
+        'inset' => $shadows_data['inset'] ?? [],
+        'colored' => $shadows_data['colored'] ?? [],
+        'special' => $shadows_data['special'] ?? []
+    ];
+    
+    // Enable shadow features
+    if (!isset($theme_json['settings']['shadow'])) {
+        $theme_json['settings']['shadow'] = [];
+    }
+    
+    // Convert scale shadows to WordPress shadow presets
+    $theme_json['settings']['shadow']['presets'] = [];
+    if (isset($shadows_data['scale'])) {
+        foreach ($shadows_data['scale'] as $slug => $value) {
+            $theme_json['settings']['shadow']['presets'][] = [
+                'slug' => $slug,
+                'shadow' => $value,
+                'name' => strtoupper(str_replace('-', ' ', $slug))
+            ];
+        }
+    }
+    
+    // Create backup before saving
+    $backup_path = get_template_directory() . '/theme.json.backup';
+    copy($theme_json_path, $backup_path);
+    
+    // Save updated theme.json
+    $result = file_put_contents($theme_json_path, json_encode($theme_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if ($result !== false) {
+        // Clear any caches
+        do_action('mi_theme_json_updated', 'shadows');
+        
+        wp_send_json_success('Shadows synced to theme.json');
+    } else {
+        wp_send_json_error('Failed to sync to theme.json');
+    }
+}
+add_action('wp_ajax_sync_shadows_to_theme_json', 'sync_shadows_to_theme_json');

@@ -1,0 +1,260 @@
+{#
+  Borders Primitive Editor
+  Following the established pattern from typography and spacing editors
+#}
+
+{% set borders_tokens = load_primitive('borders') %}
+
+<div class="primitive-editor" data-primitive-type="borders">
+    <header class="editor-header">
+        <h1>Borders Primitive Editor</h1>
+        <div class="editor-actions">
+            <button class="btn-save" data-action="save">Save to JSON</button>
+            <button class="btn-sync" data-action="sync">Sync to theme.json</button>
+            <button class="btn-reset" data-action="reset">Reset to Defaults</button>
+        </div>
+    </header>
+
+    <div class="editor-content">
+        <!-- Border Widths Section -->
+        <section class="token-group" data-token-type="widths">
+            <h2>Border Widths</h2>
+            <p class="section-description">Define the thickness of borders throughout the design system</p>
+            <div class="token-grid borders-grid">
+                {% for slug, value in borders_tokens.widths %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="border-preview">
+                            <div class="border-width-preview" style="border-bottom: {{ value }} solid var(--colors-primary, #5a7b7c);"></div>
+                        </div>
+                        <input type="text" 
+                               class="token-input width-input" 
+                               value="{{ value }}"
+                               data-category="widths"
+                               data-slug="{{ slug }}"
+                               name="data[widths][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Border Styles Section -->
+        <section class="token-group" data-token-type="styles">
+            <h2>Border Styles</h2>
+            <p class="section-description">Available border style patterns</p>
+            <div class="token-grid borders-grid">
+                {% for slug, value in borders_tokens.styles %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="border-preview">
+                            <div class="border-style-preview" style="border: 2px {{ value }} var(--colors-primary, #5a7b7c); height: 40px;"></div>
+                        </div>
+                        <select class="token-input style-input" 
+                                data-category="styles"
+                                data-slug="{{ slug }}"
+                                name="data[styles][{{ slug }}]">
+                            <option value="none" {% if value == 'none' %}selected{% endif %}>None</option>
+                            <option value="solid" {% if value == 'solid' %}selected{% endif %}>Solid</option>
+                            <option value="dashed" {% if value == 'dashed' %}selected{% endif %}>Dashed</option>
+                            <option value="dotted" {% if value == 'dotted' %}selected{% endif %}>Dotted</option>
+                            <option value="double" {% if value == 'double' %}selected{% endif %}>Double</option>
+                        </select>
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Border Radii Section -->
+        <section class="token-group" data-token-type="radii">
+            <h2>Border Radii</h2>
+            <p class="section-description">Corner radius values for rounded borders</p>
+            <div class="token-grid borders-grid">
+                {% for slug, value in borders_tokens.radii %}
+                    <div class="token-item" data-token-slug="{{ slug }}">
+                        <label>{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                        <div class="border-preview">
+                            <div class="border-radius-preview" style="border: 2px solid var(--colors-primary, #5a7b7c); border-radius: {{ value }}; width: 60px; height: 60px;"></div>
+                        </div>
+                        <input type="text" 
+                               class="token-input radius-input" 
+                               value="{{ value }}"
+                               data-category="radii"
+                               data-slug="{{ slug }}"
+                               name="data[radii][{{ slug }}]">
+                        <button class="copy-button" data-value="{{ value }}">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Live Preview Section -->
+        <section class="preview-section">
+            <h2>Live Preview</h2>
+            <div class="preview-controls">
+                <div class="control-item">
+                    <label>Width:</label>
+                    <select class="preview-width">
+                        {% for slug, value in borders_tokens.widths %}
+                            <option value="{{ slug }}">{{ slug|title }} ({{ value }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label>Style:</label>
+                    <select class="preview-style">
+                        {% for slug, value in borders_tokens.styles %}
+                            <option value="{{ slug }}">{{ slug|title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label>Radius:</label>
+                    <select class="preview-radius">
+                        {% for slug, value in borders_tokens.radii %}
+                            <option value="{{ slug }}">{{ slug|upper }} ({{ value }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label>Color:</label>
+                    <select class="preview-color">
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="base-dark">Base Dark</option>
+                    </select>
+                </div>
+            </div>
+            <div class="live-preview-container">
+                <div class="preview-element" id="border-preview-box">
+                    <div class="preview-content">
+                        Border Preview
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+/* Border-specific preview styles */
+.borders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.border-preview {
+    margin-bottom: 1rem;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.border-width-preview {
+    width: 100%;
+    height: 20px;
+    position: relative;
+}
+
+.border-style-preview {
+    width: 100%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.border-radius-preview {
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Live preview specific */
+.preview-controls {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.control-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-item label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.control-item select {
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
+    font-size: 0.875rem;
+}
+
+#border-preview-box {
+    width: 200px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#border-preview-box .preview-content {
+    font-weight: 500;
+    color: var(--color-extreme-light);
+}
+</style>
+
+<script>
+jQuery(document).ready(function($) {
+    // Initialize live preview when document is ready
+    function initBordersPreview() {
+        updateBorderPreview();
+        
+        // Bind change events to preview controls
+        $('.preview-width, .preview-style, .preview-radius, .preview-color').on('change', updateBorderPreview);
+    }
+    
+    // Update the live border preview
+    function updateBorderPreview() {
+        const $preview = $('#border-preview-box');
+        
+        // Get selected values
+        const widthSlug = $('.preview-width').val();
+        const styleSlug = $('.preview-style').val();
+        const radiusSlug = $('.preview-radius').val();
+        const colorSlug = $('.preview-color').val();
+        
+        // Get actual values from the JSON data
+        const borders_tokens = {{ borders_tokens|json_encode|raw }};
+        
+        const width = borders_tokens.widths[widthSlug] || '2px';
+        const style = borders_tokens.styles[styleSlug] || 'solid';
+        const radius = borders_tokens.radii[radiusSlug] || '0';
+        
+        // Apply styles to preview
+        $preview.css({
+            'border-width': width,
+            'border-style': style,
+            'border-radius': radius,
+            'border-color': `var(--colors-${colorSlug}, #5a7b7c)`
+        });
+    }
+    
+    // Initialize preview
+    initBordersPreview();
+});
+</script>

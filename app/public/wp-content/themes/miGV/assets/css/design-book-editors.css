@@ -1556,19 +1556,19 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .animations-editor {
     font-family: var(--primitive-font-primary), sans-serif;
-    background: var(--color-background-dark);
-    color: var(--color-text-light);
+    background: var(--color-base-dark);
+    color: var(--color-extreme-light);
     min-height: 100vh;
 }
 
 .animations-editor .editor-header {
-    background: var(--color-background-darker);
+    background: var(--color-base-dark);
     padding: 2rem;
     border-bottom: 1px solid var(--color-border-dark);
 }
 
 .animations-editor .editor-header h1 {
-    color: var(--color-text-light);
+    color: var(--color-extreme-light);
     margin: 0 0 1rem 0;
     font-size: 2rem;
     font-weight: 600;
@@ -1577,15 +1577,8 @@ input[type="range"]::-moz-range-thumb:hover {
     margin-right: auto;
 }
 
-.animations-editor .editor-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 .animations-editor .editor-content {
+    background: var(--color-base-dark);
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
@@ -1594,48 +1587,28 @@ input[type="range"]::-moz-range-thumb:hover {
 .animations-editor .token-group {
     margin-bottom: 3rem;
     padding: 2rem;
-    background: var(--color-background-dark);
+    background: var(--color-base-dark);
     border: 1px solid var(--color-border-dark);
     border-radius: 8px;
 }
 
-.animations-editor .token-group h2 {
-    color: var(--color-text-light);
-    margin: 0 0 0.5rem 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.animations-editor .section-description {
-    color: var(--color-text-muted);
-    margin: 0 0 1.5rem 0;
-    font-size: 0.9rem;
-}
-
-.animations-editor .animations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
 .animations-editor .token-item {
-    background: white;
-    border: 1px solid var(--color-border-light);
-    border-radius: 8px;
+    background: var(--color-extreme-light);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
     padding: 1.5rem;
     position: relative;
-    transition: all 300ms ease;
+    transition: box-shadow 0.2s;
 }
 
 .animations-editor .token-item:hover {
-    border-color: var(--color-primary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .animations-editor .token-item label {
     display: block;
     font-weight: 600;
-    color: var(--color-text-dark);
+    color: var(--color-base-darkest);
     margin-bottom: 1rem;
     font-size: 0.875rem;
     text-transform: uppercase;
@@ -1648,7 +1621,7 @@ input[type="range"]::-moz-range-thumb:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-background-light);
+    background: var(--color-base-light);
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -1676,19 +1649,19 @@ input[type="range"]::-moz-range-thumb:hover {
 .animations-editor .token-input {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid var(--color-border-light);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     font-family: var(--primitive-font-mono);
     font-size: 0.875rem;
     background: white;
-    color: var(--color-text-dark);
+    color: var(--color-base-darkest);
     margin-bottom: 0.75rem;
 }
 
 .animations-editor .token-input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.1);
+    box-shadow: 0 0 0 2px rgba(90, 123, 124, 0.1);
 }
 
 .animations-editor .copy-button {
@@ -1726,14 +1699,14 @@ input[type="range"]::-moz-range-thumb:hover {
 
 /* Live Preview Section */
 .animations-editor .preview-section {
-    background: var(--color-background-darker);
+    background: var(--color-base-dark);
     padding: 2rem;
     border-radius: 8px;
     margin-bottom: 2rem;
 }
 
 .animations-editor .preview-section h2 {
-    color: var(--color-text-light);
+    color: var(--color-extreme-light);
     margin: 0 0 1.5rem 0;
 }
 
@@ -1746,7 +1719,7 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .animations-editor .preview-controls label {
-    color: var(--color-text-light);
+    color: var(--color-extreme-light);
     font-size: 0.875rem;
     display: flex;
     flex-direction: column;
@@ -1757,14 +1730,14 @@ input[type="range"]::-moz-range-thumb:hover {
     padding: 0.5rem;
     border: 1px solid var(--color-border-dark);
     border-radius: 4px;
-    background: var(--color-background-dark);
-    color: var(--color-text-light);
+    background: var(--color-base-dark);
+    color: var(--color-extreme-light);
     font-size: 0.875rem;
 }
 
 .animations-editor .live-preview-container {
     height: 120px;
-    background: var(--color-background-light);
+    background: var(--color-base-light);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -1793,14 +1766,14 @@ input[type="range"]::-moz-range-thumb:hover {
 
 /* Usage Examples Section */
 .animations-editor .usage-section {
-    background: var(--color-background-darker);
+    background: var(--color-base-dark);
     padding: 2rem;
     border-radius: 8px;
     margin-bottom: 2rem;
 }
 
 .animations-editor .usage-section h2 {
-    color: var(--color-text-light);
+    color: var(--color-extreme-light);
     margin: 0 0 1.5rem 0;
 }
 
@@ -1811,20 +1784,20 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .animations-editor .example-item {
-    background: var(--color-background-dark);
+    background: var(--color-extreme-light);
     padding: 1.5rem;
     border-radius: 6px;
-    border: 1px solid var(--color-border-dark);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .animations-editor .example-item h3 {
-    color: var(--color-text-light);
+    color: var(--color-base-darkest);
     margin: 0 0 1rem 0;
     font-size: 1rem;
 }
 
 .animations-editor .example-item pre {
-    background: var(--color-background-darker);
+    background: rgba(0, 0, 0, 0.3);
     padding: 1rem;
     border-radius: 4px;
     overflow-x: auto;
@@ -1832,7 +1805,7 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .animations-editor .example-item code {
-    color: var(--color-text-light);
+    color: var(--color-base-darkest);
     font-family: var(--primitive-font-mono);
     font-size: 0.875rem;
     line-height: 1.4;
@@ -1910,4 +1883,38 @@ input[type="range"]::-moz-range-thumb:hover {
         justify-content: space-between;
         align-items: center;
     }
+}
+
+.animations-editor .editor-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.animations-editor .editor-content {
+    background: var(--color-base-dark);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.animations-editor .token-group h2 {
+    color: var(--color-extreme-light);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.animations-editor .section-description {
+    color: var(--color-text-muted);
+    margin: 0 0 1.5rem 0;
+    font-size: 0.9rem;
+}
+
+.animations-editor .animations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
 }

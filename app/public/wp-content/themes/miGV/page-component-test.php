@@ -75,7 +75,7 @@ $context = [
 ?>
 
 <div class="component-test-page" style="padding: 40px; max-width: 1200px; margin: 0 auto;">
-    <h1 style="font-family: var(--wp--preset--font-family--playfair-display); font-size: 3rem; margin-bottom: 2rem;">
+    <h1 style="font-family: var(--wp--preset--font-family--montserrat); font-size: 3rem; margin-bottom: 2rem;">
         🧪 Design Book Component Test
     </h1>
     
@@ -87,7 +87,7 @@ $context = [
     
     <?php foreach ($context['components'] as $key => $component): ?>
         <section style="margin-bottom: 60px;">
-            <h2 style="font-family: var(--wp--preset--font-family--playfair-display); font-size: 2rem; margin-bottom: 1rem;">
+            <h2 style="font-family: var(--wp--preset--font-family--montserrat); font-size: 2rem; margin-bottom: 1rem;">
                 <?php echo $component['name']; ?>
             </h2>
             <p style="color: #666; margin-bottom: 2rem;">Template: <code><?php echo $component['template']; ?></code></p>
@@ -103,7 +103,7 @@ $context = [
     <?php endforeach; ?>
     
     <section style="margin-bottom: 60px;">
-        <h2 style="font-family: var(--wp--preset--font-family--playfair-display); font-size: 2rem; margin-bottom: 1rem;">
+        <h2 style="font-family: var(--wp--preset--font-family--montserrat); font-size: 2rem; margin-bottom: 1rem;">
             Grid Component with Cards
         </h2>
         <p style="color: #666; margin-bottom: 2rem;">Template: <code>component-books/grid-book.twig</code></p>

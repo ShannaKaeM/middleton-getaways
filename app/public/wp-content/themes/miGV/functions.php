@@ -114,7 +114,7 @@ add_action('after_setup_theme', 'migv_setup');
  */
 function migv_scripts() {
     // Enqueue Google Fonts
-    wp_enqueue_style('migv-google-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500;700&display=swap', array(), null);
+    wp_enqueue_style('migv-google-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap', array(), null);
     
     // Enqueue main stylesheet (cleaned to only have WordPress required styles)
     wp_enqueue_style('migv-style', get_stylesheet_uri(), array('migv-google-fonts'), '1.0.0');
@@ -800,7 +800,7 @@ function mi_sync_primitive_to_theme_json() {
                 'token_value' => $token_value
             ]);
         } else {
-            wp_send_json_error('Failed to write theme.json');
+            wp_send_json_error('Could not write to theme.json');
         }
     } else {
         wp_send_json_error('Token not found');
@@ -814,7 +814,7 @@ add_action('wp_ajax_mi_sync_primitive_to_theme_json', 'mi_sync_primitive_to_them
 function mi_get_theme_json_tokens() {
     // Verify nonce
     if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
-        wp_die('Security check failed');
+        wp_send_json_error('Invalid nonce');
     }
     
     $theme_json = wp_get_global_settings();
@@ -1337,65 +1337,236 @@ function sync_spacing_to_theme_json() {
 }
 add_action('wp_ajax_sync_spacing_to_theme_json', 'sync_spacing_to_theme_json');
 
-// Register main Design Book menu
-function register_design_book_menu() {
-    add_menu_page(
-        'Design Book',
-        'Design Book',
-        'edit_theme_options',
-        'design-book',
-        'render_design_book_main_page',
-        'dashicons-art',
-        30
+// === LAYOUT PRIMITIVE AJAX HANDLERS ===
+
+/**
+ * AJAX handler for getting layout primitive data
+ */
+function mi_get_layout_primitive() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+
+    // Check user capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+
+    $layout_file = get_template_directory() . '/primitives/layout.json';
+    
+    if (file_exists($layout_file)) {
+        $layout_data = json_decode(file_get_contents($layout_file), true);
+        wp_send_json_success($layout_data);
+    } else {
+        wp_send_json_error('Layout primitive file not found');
+    }
+}
+add_action('wp_ajax_mi_get_layout_primitive', 'mi_get_layout_primitive');
+
+/**
+ * AJAX handler for saving layout primitive data
+ */
+function mi_save_layout_primitive() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+
+    // Check user capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+
+    if (!isset($_POST['layout_data'])) {
+        wp_send_json_error('No layout data provided');
+        return;
+    }
+
+    $layout_data = json_decode(stripslashes($_POST['layout_data']), true);
+    
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        wp_send_json_error('Invalid JSON data');
+        return;
+    }
+
+    $layout_file = get_template_directory() . '/primitives/layout.json';
+    $result = file_put_contents($layout_file, json_encode($layout_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if ($result !== false) {
+        // Clear any caches
+        do_action('mi_primitive_updated', 'layout');
+        
+        wp_send_json_success('Layout primitive saved successfully');
+    } else {
+        wp_send_json_error('Failed to save layout primitive');
+    }
+}
+add_action('wp_ajax_mi_save_layout_primitive', 'mi_save_layout_primitive');
+
+/**
+ * AJAX handler for syncing layout primitive to theme.json
+ */
+function mi_sync_layout_to_theme() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+
+    // Check user capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+
+    if (!isset($_POST['layout_data'])) {
+        wp_send_json_error('No layout data provided');
+        return;
+    }
+
+    $layout_data = json_decode(stripslashes($_POST['layout_data']), true);
+    
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        wp_send_json_error('Invalid JSON data');
+        return;
+    }
+
+    // Get current theme.json
+    $theme_json_path = get_template_directory() . '/theme.json';
+    $theme_json = json_decode(file_get_contents($theme_json_path), true);
+    
+    if (!$theme_json) {
+        wp_send_json_error('Could not read theme.json');
+        return;
+    }
+
+    // Initialize settings.layout if it doesn't exist
+    if (!isset($theme_json['settings'])) {
+        $theme_json['settings'] = array();
+    }
+    if (!isset($theme_json['settings']['layout'])) {
+        $theme_json['settings']['layout'] = array();
+    }
+
+    // Map layout primitive data to theme.json structure
+    if (isset($layout_data['containers'])) {
+        $theme_json['settings']['layout']['contentSize'] = $layout_data['containers']['lg'] ?? '1024px';
+        $theme_json['settings']['layout']['wideSize'] = $layout_data['containers']['xl'] ?? '1280px';
+    }
+
+    // Add custom layout tokens to custom section
+    if (!isset($theme_json['settings']['custom'])) {
+        $theme_json['settings']['custom'] = array();
+    }
+    $theme_json['settings']['custom']['layout'] = $layout_data;
+
+    // Save theme.json
+    $result = file_put_contents($theme_json_path, json_encode($theme_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    
+    if ($result !== false) {
+        // Clear any caches
+        do_action('mi_theme_json_updated', 'layout');
+        
+        wp_send_json_success('Layout synced to theme.json');
+    } else {
+        wp_send_json_error('Failed to sync to theme.json');
+    }
+}
+add_action('wp_ajax_mi_sync_layout_to_theme', 'mi_sync_layout_to_theme');
+
+/**
+ * AJAX handler for resetting layout primitive to defaults
+ */
+function mi_reset_layout_primitive() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+
+    // Check user capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+
+    // Default layout data
+    $default_layout = array(
+        'containers' => array(
+            'xs' => '480px',
+            'sm' => '640px',
+            'md' => '768px',
+            'lg' => '1024px',
+            'xl' => '1280px',
+            '2xl' => '1536px',
+            'full' => '100%'
+        ),
+        'breakpoints' => array(
+            'mobile' => '480px',
+            'tablet' => '768px',
+            'desktop' => '1024px',
+            'wide' => '1280px',
+            'ultrawide' => '1536px'
+        ),
+        'grid' => array(
+            'columns-2' => 'repeat(2, minmax(0, 1fr))',
+            'columns-3' => 'repeat(3, minmax(0, 1fr))',
+            'columns-4' => 'repeat(4, minmax(0, 1fr))',
+            'columns-6' => 'repeat(6, minmax(0, 1fr))',
+            'columns-12' => 'repeat(12, minmax(0, 1fr))',
+            'auto-fit' => 'repeat(auto-fit, minmax(250px, 1fr))',
+            'auto-fill' => 'repeat(auto-fill, minmax(200px, 1fr))'
+        ),
+        'flexbox' => array(
+            'center' => 'flex items-center justify-center',
+            'between' => 'flex items-center justify-between',
+            'around' => 'flex items-center justify-around',
+            'start' => 'flex items-start justify-start',
+            'end' => 'flex items-end justify-end',
+            'column' => 'flex flex-col',
+            'row' => 'flex flex-row',
+            'wrap' => 'flex flex-wrap'
+        ),
+        'aspectRatios' => array(
+            'square' => '1 / 1',
+            'video' => '16 / 9',
+            'golden' => '1.618 / 1',
+            'photo' => '4 / 3',
+            'portrait' => '3 / 4',
+            'wide' => '21 / 9',
+            'ultra-wide' => '32 / 9'
+        ),
+        'zIndex' => array(
+            'behind' => '-1',
+            'default' => '0',
+            'dropdown' => '10',
+            'sticky' => '20',
+            'fixed' => '30',
+            'modal' => '40',
+            'popover' => '50',
+            'tooltip' => '60',
+            'toast' => '70'
+        )
     );
-}
-add_action('admin_menu', 'register_design_book_menu');
 
-// Render main design book page
-function render_design_book_main_page() {
-    echo '<div class="wrap">';
-    echo '<h1>Design Book</h1>';
-    echo '<p>Welcome to the Design Book. Use the submenu to access different primitive editors.</p>';
-    echo '<ul>';
-    echo '<li><a href="' . admin_url('admin.php?page=spacing-primitive') . '">Spacing Editor</a></li>';
-    // Add links to other editors as they are created
-    echo '</ul>';
-    echo '</div>';
-}
-
-// Page registration for Spacing Editor
-function register_spacing_editor_page() {
-    add_submenu_page(
-        'design-book', // Parent menu slug
-        'Spacing Primitive',
-        'Spacing',
-        'edit_theme_options',
-        'spacing-primitive',
-        'render_spacing_editor_page'
-    );
-}
-add_action('admin_menu', 'register_spacing_editor_page');
-
-// Render the spacing editor page
-function render_spacing_editor_page() {
-    // Enqueue editor assets
-    wp_enqueue_style('design-book-editors', get_template_directory_uri() . '/assets/css/design-book-editors.css', array(), '1.0.0');
-    wp_enqueue_script('primitive-spacing', get_template_directory_uri() . '/assets/js/primitive-spacing.js', array('jquery'), '1.0.0', true);
+    $layout_file = get_template_directory() . '/primitives/layout.json';
+    $result = file_put_contents($layout_file, json_encode($default_layout, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     
-    // Localize script
-    wp_localize_script('primitive-spacing', 'primitiveSpacing', array(
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('mi_design_book_nonce'),
-        'primitiveType' => 'spacing'
-    ));
-    
-    // Prepare context for Timber
-    $context = Timber::context();
-    $context['page_title'] = 'Spacing Primitive Editor';
-    
-    // Render the template
-    Timber::render('design-book-editors/spacing-editor.twig', $context);
+    if ($result !== false) {
+        // Clear any caches
+        do_action('mi_primitive_updated', 'layout');
+        
+        wp_send_json_success($default_layout);
+    } else {
+        wp_send_json_error('Failed to reset layout primitive');
+    }
 }
+add_action('wp_ajax_mi_reset_layout_primitive', 'mi_reset_layout_primitive');
 
 // === BORDERS PRIMITIVE AJAX HANDLERS ===
 
@@ -1660,3 +1831,98 @@ function sync_shadows_to_theme_json() {
     }
 }
 add_action('wp_ajax_sync_shadows_to_theme_json', 'sync_shadows_to_theme_json');
+
+// Register main Design Book menu
+function register_design_book_menu() {
+    add_menu_page(
+        'Design Book',
+        'Design Book',
+        'edit_theme_options',
+        'design-book',
+        'render_design_book_main_page',
+        'dashicons-art',
+        30
+    );
+}
+add_action('admin_menu', 'register_design_book_menu');
+
+// Render main design book page
+function render_design_book_main_page() {
+    echo '<div class="wrap">';
+    echo '<h1>Design Book</h1>';
+    echo '<p>Welcome to the Design Book. Use the submenu to access different primitive editors.</p>';
+    echo '<ul>';
+    echo '<li><a href="' . admin_url('admin.php?page=spacing-primitive') . '">Spacing Editor</a></li>';
+    // Add links to other editors as they are created
+    echo '</ul>';
+    echo '</div>';
+}
+
+// Page registration for Spacing Editor
+function register_spacing_editor_page() {
+    add_submenu_page(
+        'design-book', // Parent menu slug
+        'Spacing Primitive',
+        'Spacing',
+        'edit_theme_options',
+        'spacing-primitive',
+        'render_spacing_editor_page'
+    );
+}
+add_action('admin_menu', 'register_spacing_editor_page');
+
+// Render the spacing editor page
+function render_spacing_editor_page() {
+    // Enqueue editor assets
+    wp_enqueue_style('design-book-editors', get_template_directory_uri() . '/assets/css/design-book-editors.css', array(), '1.0.0');
+    wp_enqueue_script('primitive-spacing', get_template_directory_uri() . '/assets/js/primitive-spacing.js', array('jquery'), '1.0.0', true);
+    
+    // Localize script
+    wp_localize_script('primitive-spacing', 'primitiveSpacing', array(
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('mi_design_book_nonce'),
+        'primitiveType' => 'spacing'
+    ));
+    
+    // Prepare context for Timber
+    $context = Timber::context();
+    $context['page_title'] = 'Spacing Primitive Editor';
+    
+    // Render the template
+    Timber::render('design-book-editors/spacing-editor.twig', $context);
+}
+
+// Page registration for Layout Editor
+function register_layout_editor_page() {
+    add_submenu_page(
+        'design-book', // Parent menu slug
+        'Layout Primitive',
+        'Layout',
+        'edit_theme_options',
+        'layout-primitive',
+        'render_layout_editor_page'
+    );
+}
+add_action('admin_menu', 'register_layout_editor_page');
+
+// Render the layout editor page
+function render_layout_editor_page() {
+    // Enqueue editor assets
+    wp_enqueue_style('design-book-editors', get_template_directory_uri() . '/assets/css/design-book-editors.css', array(), '1.0.0');
+    wp_enqueue_script('primitive-layout', get_template_directory_uri() . '/assets/js/primitive-layout.js', array('jquery'), '1.0.0', true);
+    
+    // Localize script
+    wp_localize_script('primitive-layout', 'primitiveLayout', array(
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('mi_design_book_nonce'),
+        'primitiveType' => 'layout',
+        'canEdit' => current_user_can('edit_theme_options')
+    ));
+    
+    // Prepare context for Timber
+    $context = Timber::context();
+    $context['page_title'] = 'Layout Primitive Editor';
+    
+    // Render the template
+    Timber::render('design-book-editors/layout-editor.twig', $context);
+}

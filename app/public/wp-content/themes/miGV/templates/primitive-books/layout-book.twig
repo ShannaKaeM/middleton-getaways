@@ -7,7 +7,7 @@
   Usage:
   {% include 'primitive-books/layout-book.twig' with {
     display: 'grid',
-    grid_template_columns: '3',
+    grid_template_columns: 'columns-3',
     gap: 'lg',
     justify_content: 'center',
     align_items: 'start'
@@ -15,82 +15,60 @@
 #}
 
 {% set layout_tokens = {
-  container: {
+  containers: {
+    xs: '480px',
     sm: '640px',
     md: '768px',
     lg: '1024px',
     xl: '1280px',
     '2xl': '1536px',
-    fluid: '100%'
+    full: '100%'
   },
-  grid_columns: {
-    '1': 'repeat(1, minmax(0, 1fr))',
-    '2': 'repeat(2, minmax(0, 1fr))',
-    '3': 'repeat(3, minmax(0, 1fr))',
-    '4': 'repeat(4, minmax(0, 1fr))',
-    '6': 'repeat(6, minmax(0, 1fr))',
-    '12': 'repeat(12, minmax(0, 1fr))',
+  breakpoints: {
+    mobile: '480px',
+    tablet: '768px',
+    desktop: '1024px',
+    wide: '1280px',
+    ultrawide: '1536px'
+  },
+  grid: {
+    'columns-2': 'repeat(2, minmax(0, 1fr))',
+    'columns-3': 'repeat(3, minmax(0, 1fr))',
+    'columns-4': 'repeat(4, minmax(0, 1fr))',
+    'columns-6': 'repeat(6, minmax(0, 1fr))',
+    'columns-12': 'repeat(12, minmax(0, 1fr))',
     'auto-fit': 'repeat(auto-fit, minmax(250px, 1fr))',
-    'auto-fill': 'repeat(auto-fill, minmax(250px, 1fr))'
+    'auto-fill': 'repeat(auto-fill, minmax(200px, 1fr))'
   },
-  gaps: {
-    none: '0',
-    xs: '0.25rem',
-    sm: '0.5rem',
-    md: '1rem',
-    lg: '1.5rem',
-    xl: '2rem',
-    '2xl': '3rem'
+  flexbox: {
+    center: 'flex items-center justify-center',
+    between: 'flex items-center justify-between',
+    around: 'flex items-center justify-around',
+    start: 'flex items-start justify-start',
+    end: 'flex items-end justify-end',
+    column: 'flex flex-col',
+    row: 'flex flex-row',
+    wrap: 'flex flex-wrap'
   },
-  flex_justify: {
-    start: 'flex-start',
-    end: 'flex-end',
-    center: 'center',
-    between: 'space-between',
-    around: 'space-around',
-    evenly: 'space-evenly'
-  },
-  flex_align: {
-    start: 'flex-start',
-    end: 'flex-end',
-    center: 'center',
-    baseline: 'baseline',
-    stretch: 'stretch'
-  },
-  flex_direction: {
-    row: 'row',
-    'row-reverse': 'row-reverse',
-    col: 'column',
-    'col-reverse': 'column-reverse'
-  },
-  flex_wrap: {
-    wrap: 'wrap',
-    nowrap: 'nowrap',
-    'wrap-reverse': 'wrap-reverse'
-  },
-  z_index: {
-    auto: 'auto',
-    '0': '0',
-    '10': '10',
-    '20': '20',
-    '30': '30',
-    '40': '40',
-    '50': '50',
-    dropdown: '1000',
-    sticky: '1020',
-    fixed: '1030',
-    'modal-backdrop': '1040',
-    modal: '1050',
-    popover: '1060',
-    tooltip: '1070'
-  },
-  aspect_ratio: {
+  aspectRatios: {
     square: '1 / 1',
     video: '16 / 9',
-    '4/3': '4 / 3',
-    '3/2': '3 / 2',
-    '5/4': '5 / 4',
-    golden: '1.618 / 1'
+    golden: '1.618 / 1',
+    photo: '4 / 3',
+    portrait: '3 / 4',
+    wide: '21 / 9',
+    'ultra-wide': '32 / 9'
+  },
+  zIndex: {
+    behind: '-1',
+    default: '0',
+    dropdown: '10',
+    sticky: '20',
+    fixed: '30',
+    modal: '40',
+    popover: '50',
+    tooltip: '60',
+    toast: '70'
   }
 } %}
 
@@ -104,11 +82,11 @@
 {% endif %}
 
 {% if max_width %}
-  max-width: {{ layout_tokens.container[max_width] ?? max_width }};
+  max-width: {{ layout_tokens.containers[max_width] ?? max_width }};
 {% endif %}
 
 {% if width %}
-  width: {{ layout_tokens.container[width] ?? width }};
+  width: {{ layout_tokens.containers[width] ?? width }};
 {% endif %}
 
 {% if height %}
@@ -116,7 +94,7 @@
 {% endif %}
 
 {% if grid_template_columns %}
-  grid-template-columns: {{ layout_tokens.grid_columns[grid_template_columns] ?? grid_template_columns }};
+  grid-template-columns: {{ layout_tokens.grid[grid_template_columns] ?? grid_template_columns }};
 {% endif %}
 
 {% if grid_template_rows %}
@@ -132,39 +110,39 @@
 {% endif %}
 
 {% if gap %}
-  gap: {{ layout_tokens.gaps[gap] ?? gap }};
+  gap: {{ gap }};
 {% endif %}
 
 {% if row_gap %}
-  row-gap: {{ layout_tokens.gaps[row_gap] ?? row_gap }};
+  row-gap: {{ row_gap }};
 {% endif %}
 
 {% if column_gap %}
-  column-gap: {{ layout_tokens.gaps[column_gap] ?? column_gap }};
+  column-gap: {{ column_gap }};
 {% endif %}
 
 {% if justify_content %}
-  justify-content: {{ layout_tokens.flex_justify[justify_content] ?? justify_content }};
+  justify-content: {{ layout_tokens.flexbox[justify_content] ?? justify_content }};
 {% endif %}
 
 {% if align_items %}
-  align-items: {{ layout_tokens.flex_align[align_items] ?? align_items }};
+  align-items: {{ layout_tokens.flexbox[align_items] ?? align_items }};
 {% endif %}
 
 {% if align_content %}
-  align-content: {{ layout_tokens.flex_align[align_content] ?? align_content }};
+  align-content: {{ layout_tokens.flexbox[align_content] ?? align_content }};
 {% endif %}
 
 {% if justify_items %}
-  justify-items: {{ layout_tokens.flex_justify[justify_items] ?? justify_items }};
+  justify-items: {{ layout_tokens.flexbox[justify_items] ?? justify_items }};
 {% endif %}
 
 {% if flex_direction %}
-  flex-direction: {{ layout_tokens.flex_direction[flex_direction] ?? flex_direction }};
+  flex-direction: {{ layout_tokens.flexbox[flex_direction] ?? flex_direction }};
 {% endif %}
 
 {% if flex_wrap %}
-  flex-wrap: {{ layout_tokens.flex_wrap[flex_wrap] ?? flex_wrap }};
+  flex-wrap: {{ layout_tokens.flexbox[flex_wrap] ?? flex_wrap }};
 {% endif %}
 
 {% if flex_grow %}
@@ -180,11 +158,11 @@
 {% endif %}
 
 {% if z_index %}
-  z-index: {{ layout_tokens.z_index[z_index] ?? z_index }};
+  z-index: {{ layout_tokens.zIndex[z_index] ?? z_index }};
 {% endif %}
 
 {% if aspect_ratio %}
-  aspect-ratio: {{ layout_tokens.aspect_ratio[aspect_ratio] ?? aspect_ratio }};
+  aspect-ratio: {{ layout_tokens.aspectRatios[aspect_ratio] ?? aspect_ratio }};
 {% endif %}
 
 {% if overflow %}

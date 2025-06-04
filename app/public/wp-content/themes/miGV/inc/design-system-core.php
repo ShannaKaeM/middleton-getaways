@@ -26,6 +26,7 @@ function migv_generate_primitive_css_variables() {
         'spacing'    => get_template_directory() . '/primitives/spacing.json',
         'borders'    => get_template_directory() . '/primitives/borders.json',
         'shadows'    => get_template_directory() . '/primitives/shadows.json',
+        'layout'     => get_template_directory() . '/primitives/layout.json',
         // Add other primitive files here as needed
     ];
 
@@ -80,4 +81,3 @@ function migv_generate_primitive_css_variables() {
 // if ( ! empty( $generated_css ) ) {
 //     echo "<style id='migv-primitive-variables'>\n" . $generated_css . "</style>\n";
 // }
-

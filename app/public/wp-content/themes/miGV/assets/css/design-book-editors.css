@@ -552,7 +552,7 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .css-example code {
-    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-family: var(--primitive-font-mono) !important;
     font-size: var(--wp--preset--font-size--small);
     color: var(--wp--preset--color--primary);
     background: none;
@@ -928,445 +928,6 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .btn-save.btn-primary:hover {
     background: #3a5a59;
-    border-color: #3a5a59;
-}
-
-.btn-save.has-changes {
-    background: #fbbf24;
-    color: #78350f;
-    border-color: #f59e0b;
-    animation: pulse 2s infinite;
-}
-
-.btn-save.has-changes:hover {
-    background: #f59e0b;
-    border-color: #d97706;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(251, 191, 36, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
-    }
-}
-
-/* Preview Scale Slider */
-.preview-scale-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 150px;
-    height: 6px;
-    background: #e5e7eb;
-    border-radius: 3px;
-    outline: none;
-}
-
-.preview-scale-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    background: var(--wp--preset--color--primary, #5a7b7c);
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.preview-scale-slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    background: var(--wp--preset--color--primary, #5a7b7c);
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-}
-
-.preview-scale-value {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-    min-width: 45px;
-    text-align: right;
-}
-
-/* Font Family Name Styling */
-.font-name {
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-}
-
-/* Font Family Sample Display */
-.font-family-sample {
-    margin: 0;
-    transition: all 0.3s ease;
-}
-
-/* Ensure font family previews use the CSS variables */
-.typography-preview[class*="preview-montserrat"] .font-family-sample {
-    font-family: var(--typography-font-families-montserrat) !important;
-}
-
-.typography-preview[class*="preview-inter"] .font-family-sample {
-    font-family: var(--typography-font-families-inter) !important;
-}
-
-.typography-preview[class*="preview-playfair"] .font-family-sample {
-    font-family: var(--typography-font-families-playfair-display) !important;
-}
-
-.typography-preview[class*="preview-roboto"] .font-family-sample {
-    font-family: var(--typography-font-families-roboto) !important;
-}
-
-/* =========================================
-   SPACING EDITOR STYLES
-   ========================================= */
-
-/* Editor Header */
-.editor-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-    background: rgba(30, 30, 30, 1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.editor-header h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0;
-    color: var(--color-extreme-light);
-}
-
-.editor-actions {
-    display: flex;
-    gap: 1rem;
-}
-
-.editor-content {
-    padding: 2rem;
-    background: var(--color-base-dark);
-    min-height: 100vh;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Token Groups */
-.token-group {
-    margin-bottom: 3rem;
-}
-
-.token-group h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem 0;
-    color: var(--color-extreme-light);
-}
-
-.section-description {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin: 0 0 1.5rem 0;
-}
-
-/* Token Grid */
-.token-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.spacing-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
-
-/* Token Items */
-.token-item {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: box-shadow 0.2s;
-}
-
-.token-item:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.token-item label {
-    display: block;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--color-extreme-light);
-}
-
-.token-input {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-extreme-light);
-    font-size: 0.875rem;
-    font-family: var(--primitive-font-mono);
-    transition: all 0.2s;
-}
-
-.token-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    background: rgba(255, 255, 255, 0.08);
-}
-
-/* Spacing Previews */
-.spacing-preview {
-    margin-bottom: 1rem;
-}
-
-.spacing-box {
-    background: var(--color-primary);
-    transition: all 0.3s ease;
-}
-
-.spacing-ruler {
-    height: 4px;
-    background: var(--color-neutral);
-    margin-top: 8px;
-    transition: width 0.3s ease;
-}
-
-/* Padding Preview */
-.padding-preview {
-    margin-bottom: 1rem;
-}
-
-.padding-container {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px dashed rgba(255, 255, 255, 0.2);
-    position: relative;
-    transition: padding 0.3s ease;
-}
-
-.padding-content {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px;
-    text-align: center;
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Margin Preview */
-.margin-preview {
-    margin-bottom: 1rem;
-    background: rgba(255, 255, 255, 0.02);
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.margin-container {
-    background: rgba(255, 255, 255, 0.05);
-    display: inline-block;
-}
-
-.margin-element {
-    background: rgba(255, 255, 255, 0.08);
-    transition: margin 0.3s ease;
-}
-
-.margin-content {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 12px;
-    text-align: center;
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Gap Preview */
-.gap-preview {
-    margin-bottom: 1rem;
-}
-
-.gap-container {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 12px;
-    border-radius: 8px;
-    transition: gap 0.3s ease;
-}
-
-.gap-item {
-    background: var(--color-primary);
-    color: var(--color-extreme-light);
-    padding: 12px 20px;
-    text-align: center;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-radius: 4px;
-}
-
-/* Layout Preview */
-.layout-preview {
-    margin-bottom: 1rem;
-}
-
-.width-preview {
-    background: var(--color-secondary);
-    transition: width 0.3s ease;
-    border-radius: 4px;
-}
-
-.layout-spacing-preview {
-    background: rgba(255, 255, 255, 0.05);
-    display: inline-block;
-    border-radius: 8px;
-    transition: padding 0.3s ease;
-}
-
-.layout-content {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px;
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-    border-radius: 4px;
-}
-
-/* Live Preview Section */
-.preview-section {
-    margin-top: 3rem;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-}
-
-.preview-section h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0 0 1.5rem 0;
-    color: var(--color-extreme-light);
-}
-
-.preview-controls {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
-.preview-controls label {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-right: 0.5rem;
-}
-
-.preview-controls select {
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-extreme-light);
-    font-size: 0.875rem;
-}
-
-.live-preview-container {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 2rem;
-    border-radius: 8px;
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#spacing-preview {
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    min-width: 200px;
-}
-
-#spacing-preview .preview-content {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    text-align: center;
-    color: var(--color-extreme-light);
-    font-weight: 500;
-}
-
-/* Copy Button */
-.copy-button {
-    margin-top: 0.5rem;
-    padding: 0.25rem 0.75rem;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.copy-button:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-extreme-light);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Editor Notifications */
-.editor-notification {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    transform: translateX(400px);
-    transition: transform 0.3s ease;
-    z-index: 1000;
-}
-
-.editor-notification.show {
-    transform: translateX(0);
-}
-
-.notification-success {
-    background: #10b981;
-    color: white;
-}
-
-.notification-error {
-    background: #ef4444;
-    color: white;
-}
-
-.notification-info {
-    background: #5a7b7c;
-    color: white;
-}
-
-/* Buttons */
-.btn-sync,
-.btn-reset {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-extreme-light);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.875rem;
-}
-
-.btn-sync:hover,
-.btn-reset:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive Spacing Editor */
@@ -1586,4 +1147,396 @@ input[type="range"]::-moz-range-thumb:hover {
     font-weight: 600;
     margin: 0 0 1.5rem 0;
     color: var(--color-extreme-light);
+}
+
+/* =========================================
+   LAYOUT EDITOR STYLES
+   ========================================= */
+
+/* Layout editor maintains dark background like other editors */
+.layout-editor {
+    background: var(--color-base-dark);
+    min-height: 100vh;
+    font-family: var(--primitive-font-primary) !important;
+}
+
+/* Ensure all child elements inherit the font */
+.layout-editor * {
+    font-family: inherit;
+}
+
+/* Override for monospace elements */
+.layout-editor code,
+.layout-editor pre,
+.layout-editor .layout-input {
+    font-family: var(--primitive-font-mono) !important;
+}
+
+.layout-editor .design-book-header {
+    background: var(--color-base-dark);
+    padding: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.layout-editor .design-book-header h1 {
+    color: var(--color-extreme-light);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.layout-editor .design-book-header p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.125rem;
+    margin: 0 0 2rem 0;
+}
+
+/* Layout editor action buttons */
+.layout-editor .editor-actions .btn-save,
+.layout-editor .editor-actions .btn-primary,
+.layout-editor .editor-actions .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-extreme-light);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.layout-editor .editor-actions .btn-primary {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.layout-editor .editor-actions .btn-save:hover,
+.layout-editor .editor-actions .btn-primary:hover,
+.layout-editor .editor-actions .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.layout-editor .editor-actions .btn-primary:hover {
+    background: color-mix(in srgb, var(--color-primary) 80%, white 20%);
+}
+
+/* Layout primitive content */
+.layout-editor .primitive-content {
+    background: var(--color-base-dark);
+    padding: 2rem;
+}
+
+/* Layout primitive sections */
+.layout-editor .primitive-section {
+    margin-bottom: 3rem;
+}
+
+.layout-editor .primitive-section h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-extreme-light);
+}
+
+.layout-editor .primitive-section p {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 2rem 0;
+    font-size: 1rem;
+}
+
+/* Layout tokens grid */
+.layout-editor .tokens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Layout token items - white cards on dark background */
+.layout-editor .token-item {
+    background: var(--color-extreme-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.layout-editor .token-item:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Container previews */
+.layout-editor .container-preview {
+    background: var(--color-base-light);
+    border: 2px dashed var(--color-base-medium);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.layout-editor .container-content {
+    background: var(--color-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+/* Grid previews */
+.layout-editor .grid-preview {
+    background: var(--color-base-light);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    min-height: 80px;
+}
+
+.layout-editor .grid-item {
+    background: var(--color-primary);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Aspect ratio previews */
+.layout-editor .aspect-preview {
+    background: var(--color-primary);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    width: 120px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* Z-index previews */
+.layout-editor .z-index-preview {
+    position: relative;
+    height: 60px;
+    margin-bottom: 1rem;
+    background: var(--color-base-light);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.layout-editor .z-layer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+/* Layout demo section */
+.layout-editor .layout-demo {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.layout-editor .demo-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    position: relative;
+}
+
+.layout-editor .demo-container h3 {
+    color: var(--color-extreme-light);
+    margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.layout-editor .demo-item {
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+/* Usage examples section */
+.layout-editor .usage-examples {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.layout-editor .example-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.layout-editor .example-item h4 {
+    color: var(--color-extreme-light);
+    margin: 0 0 1rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.layout-editor .example-item pre {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.layout-editor .example-item code {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--primitive-font-mono) !important;
+}
+
+.layout-editor .example-item .copy-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-extreme-light);
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.layout-editor .example-item .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Token controls styling */
+.layout-editor .token-controls {
+    margin-top: 1rem;
+}
+
+.layout-editor .token-controls label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-base-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.layout-editor .input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.layout-editor .layout-input {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-family: var(--primitive-font-mono) !important;
+    background: white;
+}
+
+.layout-editor .layout-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(90, 123, 124, 0.1);
+}
+
+.layout-editor .copy-btn {
+    background: var(--color-base-light);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: var(--color-base-dark);
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    min-width: 2.5rem;
+    text-align: center;
+}
+
+.layout-editor .copy-btn:hover {
+    background: var(--color-base-medium);
+    color: white;
+}
+
+/* Status message styling */
+.layout-editor #layout-status {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    z-index: 1000;
+    max-width: 400px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.layout-editor #layout-status.success {
+    background: var(--color-success);
+    color: white;
+}
+
+.layout-editor #layout-status.error {
+    background: var(--color-error);
+    color: white;
+}
+
+/* Responsive design for layout editor */
+@media (max-width: 768px) {
+    .layout-editor .tokens-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .layout-editor .usage-examples {
+        grid-template-columns: 1fr;
+    }
+    
+    .layout-editor .design-book-header {
+        padding: 1.5rem;
+    }
+    
+    .layout-editor .primitive-content {
+        padding: 1.5rem;
+    }
+    
+    .layout-editor .editor-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .layout-editor .editor-actions .btn-save,
+    .layout-editor .editor-actions .btn-primary,
+    .layout-editor .editor-actions .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
 }

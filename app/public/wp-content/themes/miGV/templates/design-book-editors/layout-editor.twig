@@ -1,0 +1,423 @@
+<div class="layout-editor design-book-container">
+    <div class="design-book-header">
+        <h1>Layout Primitive Editor</h1>
+        <p>Design and manage layout tokens for containers, grids, flexbox, and responsive design.</p>
+        
+        <div class="editor-actions">
+            <button class="btn-save btn-primary" id="save-layout">Save</button>
+            <button class="btn-save" id="sync-layout">Save to Theme</button>
+            <button class="btn-save btn-secondary" id="reset-layout">Reset</button>
+            <button class="btn-save btn-secondary" id="export-layout">Export</button>
+        </div>
+    </div>
+
+    <div class="primitive-content">
+        <!-- Container Sizes Section -->
+        <div class="primitive-section">
+            <h2>Container Sizes</h2>
+            <p>Maximum widths for responsive containers</p>
+            
+            <div class="tokens-grid">
+                <div class="token-item" data-category="containers" data-key="xs">
+                    <div class="token-preview">
+                        <div class="container-preview" style="max-width: 480px;">
+                            <div class="container-content">xs: 480px</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Extra Small (xs)</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="480px" data-category="containers" data-key="xs">
+                            <button class="copy-btn" data-value="480px">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="containers" data-key="sm">
+                    <div class="token-preview">
+                        <div class="container-preview" style="max-width: 640px;">
+                            <div class="container-content">sm: 640px</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Small (sm)</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="640px" data-category="containers" data-key="sm">
+                            <button class="copy-btn" data-value="640px">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="containers" data-key="md">
+                    <div class="token-preview">
+                        <div class="container-preview" style="max-width: 768px;">
+                            <div class="container-content">md: 768px</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Medium (md)</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="768px" data-category="containers" data-key="md">
+                            <button class="copy-btn" data-value="768px">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="containers" data-key="lg">
+                    <div class="token-preview">
+                        <div class="container-preview" style="max-width: 1024px;">
+                            <div class="container-content">lg: 1024px</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Large (lg)</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="1024px" data-category="containers" data-key="lg">
+                            <button class="copy-btn" data-value="1024px">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="containers" data-key="xl">
+                    <div class="token-preview">
+                        <div class="container-preview" style="max-width: 1280px;">
+                            <div class="container-content">xl: 1280px</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Extra Large (xl)</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="1280px" data-category="containers" data-key="xl">
+                            <button class="copy-btn" data-value="1280px">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="containers" data-key="2xl">
+                    <div class="token-preview">
+                        <div class="container-preview" style="max-width: 1536px;">
+                            <div class="container-content">2xl: 1536px</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>2X Large (2xl)</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="1536px" data-category="containers" data-key="2xl">
+                            <button class="copy-btn" data-value="1536px">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="containers" data-key="full">
+                    <div class="token-preview">
+                        <div class="container-preview" style="max-width: 100%;">
+                            <div class="container-content">full: 100%</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Full Width</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="100%" data-category="containers" data-key="full">
+                            <button class="copy-btn" data-value="100%">📋</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Systems Section -->
+        <div class="primitive-section">
+            <h2>Grid Systems</h2>
+            <p>CSS Grid template columns for responsive layouts</p>
+            
+            <div class="tokens-grid">
+                <div class="token-item" data-category="grid" data-key="columns-2">
+                    <div class="token-preview">
+                        <div class="grid-preview" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+                            <div class="grid-item">1</div>
+                            <div class="grid-item">2</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>2 Columns</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="repeat(2, minmax(0, 1fr))" data-category="grid" data-key="columns-2">
+                            <button class="copy-btn" data-value="repeat(2, minmax(0, 1fr))">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="grid" data-key="columns-3">
+                    <div class="token-preview">
+                        <div class="grid-preview" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+                            <div class="grid-item">1</div>
+                            <div class="grid-item">2</div>
+                            <div class="grid-item">3</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>3 Columns</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="repeat(3, minmax(0, 1fr))" data-category="grid" data-key="columns-3">
+                            <button class="copy-btn" data-value="repeat(3, minmax(0, 1fr))">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="grid" data-key="columns-4">
+                    <div class="token-preview">
+                        <div class="grid-preview" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;">
+                            <div class="grid-item">1</div>
+                            <div class="grid-item">2</div>
+                            <div class="grid-item">3</div>
+                            <div class="grid-item">4</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>4 Columns</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="repeat(4, minmax(0, 1fr))" data-category="grid" data-key="columns-4">
+                            <button class="copy-btn" data-value="repeat(4, minmax(0, 1fr))">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="grid" data-key="auto-fit">
+                    <div class="token-preview">
+                        <div class="grid-preview" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px;">
+                            <div class="grid-item">Auto</div>
+                            <div class="grid-item">Fit</div>
+                            <div class="grid-item">Grid</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Auto Fit</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="repeat(auto-fit, minmax(250px, 1fr))" data-category="grid" data-key="auto-fit">
+                            <button class="copy-btn" data-value="repeat(auto-fit, minmax(250px, 1fr))">📋</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aspect Ratios Section -->
+        <div class="primitive-section">
+            <h2>Aspect Ratios</h2>
+            <p>Common aspect ratios for responsive media and containers</p>
+            
+            <div class="tokens-grid">
+                <div class="token-item" data-category="aspectRatios" data-key="square">
+                    <div class="token-preview">
+                        <div class="aspect-preview" style="aspect-ratio: 1 / 1; background: var(--color-primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            1:1
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Square</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="1 / 1" data-category="aspectRatios" data-key="square">
+                            <button class="copy-btn" data-value="1 / 1">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="aspectRatios" data-key="video">
+                    <div class="token-preview">
+                        <div class="aspect-preview" style="aspect-ratio: 16 / 9; background: var(--color-primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            16:9
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Video</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="16 / 9" data-category="aspectRatios" data-key="video">
+                            <button class="copy-btn" data-value="16 / 9">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="aspectRatios" data-key="photo">
+                    <div class="token-preview">
+                        <div class="aspect-preview" style="aspect-ratio: 4 / 3; background: var(--color-primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            4:3
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Photo</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="4 / 3" data-category="aspectRatios" data-key="photo">
+                            <button class="copy-btn" data-value="4 / 3">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="aspectRatios" data-key="golden">
+                    <div class="token-preview">
+                        <div class="aspect-preview" style="aspect-ratio: 1.618 / 1; background: var(--color-primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            Golden
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Golden Ratio</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="1.618 / 1" data-category="aspectRatios" data-key="golden">
+                            <button class="copy-btn" data-value="1.618 / 1">📋</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Z-Index Section -->
+        <div class="primitive-section">
+            <h2>Z-Index Scale</h2>
+            <p>Layering system for managing element stacking order</p>
+            
+            <div class="tokens-grid">
+                <div class="token-item" data-category="zIndex" data-key="behind">
+                    <div class="token-preview">
+                        <div class="z-index-preview">
+                            <div class="z-layer" style="z-index: -1; background: var(--color-base-light);">Behind (-1)</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Behind</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="-1" data-category="zIndex" data-key="behind">
+                            <button class="copy-btn" data-value="-1">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="zIndex" data-key="default">
+                    <div class="token-preview">
+                        <div class="z-index-preview">
+                            <div class="z-layer" style="z-index: 0; background: var(--color-base-medium);">Default (0)</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Default</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="0" data-category="zIndex" data-key="default">
+                            <button class="copy-btn" data-value="0">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="zIndex" data-key="dropdown">
+                    <div class="token-preview">
+                        <div class="z-index-preview">
+                            <div class="z-layer" style="z-index: 10; background: var(--color-primary);">Dropdown (10)</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Dropdown</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="10" data-category="zIndex" data-key="dropdown">
+                            <button class="copy-btn" data-value="10">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="zIndex" data-key="modal">
+                    <div class="token-preview">
+                        <div class="z-index-preview">
+                            <div class="z-layer" style="z-index: 40; background: var(--color-secondary);">Modal (40)</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Modal</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="40" data-category="zIndex" data-key="modal">
+                            <button class="copy-btn" data-value="40">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-item" data-category="zIndex" data-key="toast">
+                    <div class="token-preview">
+                        <div class="z-index-preview">
+                            <div class="z-layer" style="z-index: 70; background: var(--color-tertiary);">Toast (70)</div>
+                        </div>
+                    </div>
+                    <div class="token-controls">
+                        <label>Toast</label>
+                        <div class="input-group">
+                            <input type="text" class="layout-input" value="70" data-category="zIndex" data-key="toast">
+                            <button class="copy-btn" data-value="70">📋</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Preview Section -->
+        <div class="primitive-section">
+            <h2>Live Layout Preview</h2>
+            <p>Interactive demonstration of layout tokens in use</p>
+            
+            <div class="layout-demo">
+                <div class="demo-container" style="max-width: 1024px; margin: 0 auto; padding: 2rem; border: 2px dashed var(--color-base-medium);">
+                    <h3>Container (lg: 1024px)</h3>
+                    <div class="demo-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div class="demo-item" style="background: var(--color-primary); color: white; padding: 1rem; text-align: center; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center;">
+                            Grid Item 1<br>
+                            <small>16:9 Aspect</small>
+                        </div>
+                        <div class="demo-item" style="background: var(--color-secondary); color: white; padding: 1rem; text-align: center; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center;">
+                            Grid Item 2<br>
+                            <small>16:9 Aspect</small>
+                        </div>
+                        <div class="demo-item" style="background: var(--color-tertiary); color: white; padding: 1rem; text-align: center; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center;">
+                            Grid Item 3<br>
+                            <small>16:9 Aspect</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Examples Section -->
+        <div class="primitive-section">
+            <h2>Usage Examples</h2>
+            <p>Copy these examples to use layout tokens in your templates</p>
+            
+            <div class="usage-examples">
+                <div class="example-item">
+                    <h4>Container with Grid</h4>
+                    <pre><code>{% include 'primitive-books/layout-book.twig' with {
+  max_width: 'lg',
+  display: 'grid',
+  grid_template_columns: 'columns-3',
+  gap: '1rem'
+} %}</code></pre>
+                    <button class="copy-btn" data-value="{% include 'primitive-books/layout-book.twig' with { max_width: 'lg', display: 'grid', grid_template_columns: 'columns-3', gap: '1rem' } %}">📋</button>
+                </div>
+
+                <div class="example-item">
+                    <h4>Aspect Ratio Container</h4>
+                    <pre><code>{% include 'primitive-books/layout-book.twig' with {
+  aspect_ratio: 'video',
+  width: '100%'
+} %}</code></pre>
+                    <button class="copy-btn" data-value="{% include 'primitive-books/layout-book.twig' with { aspect_ratio: 'video', width: '100%' } %}">📋</button>
+                </div>
+
+                <div class="example-item">
+                    <h4>Modal with Z-Index</h4>
+                    <pre><code>{% include 'primitive-books/layout-book.twig' with {
+  position: 'fixed',
+  z_index: 'modal',
+  width: 'full',
+  height: '100vh'
+} %}</code></pre>
+                    <button class="copy-btn" data-value="{% include 'primitive-books/layout-book.twig' with { position: 'fixed', z_index: 'modal', width: 'full', height: '100vh' } %}">📋</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="layout-status" class="status-message" style="display: none;"></div>
+</div>

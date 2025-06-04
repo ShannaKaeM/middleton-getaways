@@ -1572,12 +1572,23 @@ input[type="range"]::-moz-range-thumb:hover {
     margin: 0 0 1rem 0;
     font-size: 2rem;
     font-weight: 600;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .animations-editor .editor-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.animations-editor .editor-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 .animations-editor .token-group {

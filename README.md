@@ -153,10 +153,13 @@ Currently, there's no build process required. All assets are ready to use.
 
 ## Deployment
 
-### Kinsta Deployment
-See [KINSTA-DEPLOYMENT-GUIDE.md](KINSTA-DEPLOYMENT-GUIDE.md)
+### Local Development
+1. Clone repository
+2. Run `composer install`
+3. Set up local WordPress environment
+4. Activate miGV theme
 
-### General Deployment
+### Production Deployment
 1. Push to git repository
 2. Pull on production server
 3. Run `composer install --no-dev`

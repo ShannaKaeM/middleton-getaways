@@ -392,7 +392,6 @@ add_action('mi_after_primitive_load', 'end_timer');
 
 ### Internal Documentation
 - [Design Book Overview](../DesignBook/DESIGN-BOOK-OVERVIEW.md)
-- [Theme Structure](./VILLA-FILE-STRUCTURE-OVERVIEW.md)
 - [Development Roadmap](../DesignBook/Roadmap)
 
 ### External Resources

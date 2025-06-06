@@ -1,6 +1,6 @@
 <?php
 /**
- * Villa Design Book Router
+ * miGV Design Book Router
  * Handles dynamic routing for design book pages
  */
 
@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class VillaDesignBookRouter {
+class MiGVDesignBookRouter {
     
     private $sections = [
         'typography' => [
@@ -142,8 +142,8 @@ class VillaDesignBookRouter {
      */
     private function render_design_book_section($section) {
         // Enqueue design book assets
-        wp_enqueue_style('villa-design-book', get_template_directory_uri() . '/assets/css/design-book.css', [], '1.0.0');
-        wp_enqueue_script('villa-design-book', get_template_directory_uri() . '/assets/js/design-book.js', ['jquery'], '1.0.0', true);
+        wp_enqueue_style('miGV-design-book', get_template_directory_uri() . '/assets/css/design-book.css', [], '1.0.0');
+        wp_enqueue_script('miGV-design-book', get_template_directory_uri() . '/assets/js/design-book.js', ['jquery'], '1.0.0', true);
 
         // Enqueue section-specific assets
         if ($section === 'colors') {
@@ -169,7 +169,7 @@ class VillaDesignBookRouter {
         }
 
         // Localize script for AJAX
-        wp_localize_script('villa-design-book', 'villaDesignBook', [
+        wp_localize_script('miGV-design-book', 'miGVDesignBook', [
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('migv_nonce'),
             'themeUrl' => get_template_directory_uri(),
@@ -324,8 +324,8 @@ class VillaDesignBookRouter {
             'font_weights' => $font_weights,
             'line_heights' => $line_heights,
             'letter_spacings' => $letter_spacings,
-            'current_scale' => get_theme_mod('villa_typography_scale', 1.25),
-            'base_font_size' => get_theme_mod('villa_base_font_size', 16)
+            'current_scale' => get_theme_mod('miGV_typography_scale', 1.25),
+            'base_font_size' => get_theme_mod('miGV_base_font_size', 16)
         ];
     }
 
@@ -442,9 +442,9 @@ class VillaDesignBookRouter {
      */
     private function get_layout_data() {
         return [
-            'spacing_scale' => get_theme_mod('villa_spacing_scale', []),
-            'breakpoints' => get_theme_mod('villa_breakpoints', []),
-            'container_widths' => get_theme_mod('villa_container_widths', [])
+            'spacing_scale' => get_theme_mod('miGV_spacing_scale', []),
+            'breakpoints' => get_theme_mod('miGV_breakpoints', []),
+            'container_widths' => get_theme_mod('miGV_container_widths', [])
         ];
     }
 
@@ -453,9 +453,9 @@ class VillaDesignBookRouter {
      */
     private function get_components_data() {
         return [
-            'button_styles' => get_theme_mod('villa_button_styles', []),
-            'form_styles' => get_theme_mod('villa_form_styles', []),
-            'card_styles' => get_theme_mod('villa_card_styles', [])
+            'button_styles' => get_theme_mod('miGV_button_styles', []),
+            'form_styles' => get_theme_mod('miGV_form_styles', []),
+            'card_styles' => get_theme_mod('miGV_card_styles', [])
         ];
     }
 
@@ -507,9 +507,9 @@ class VillaDesignBookRouter {
      * Flush rewrite rules if needed
      */
     public function flush_rewrite_rules_maybe() {
-        if (get_option('villa_design_book_rewrite_rules_flushed') !== '2') {
+        if (get_option('miGV_design_book_rewrite_rules_flushed') !== '2') {
             flush_rewrite_rules();
-            update_option('villa_design_book_rewrite_rules_flushed', '2');
+            update_option('miGV_design_book_rewrite_rules_flushed', '2');
         }
     }
 
@@ -522,4 +522,4 @@ class VillaDesignBookRouter {
 }
 
 // Initialize the router
-new VillaDesignBookRouter();
+new MiGVDesignBookRouter();

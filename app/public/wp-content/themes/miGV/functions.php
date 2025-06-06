@@ -285,8 +285,6 @@ function migv_add_to_twig($twig) {
     return $twig;
 }
 
-// Custom post types are now registered in mu-plugins/villa-cpt-registration.php
-
 /**
  * Register custom taxonomies
  */
@@ -2232,4 +2230,3 @@ add_action('wp_enqueue_scripts', 'migv_enqueue_color_book_styles');
 /**
  * Enqueue scripts for the text editor component.
  */
-

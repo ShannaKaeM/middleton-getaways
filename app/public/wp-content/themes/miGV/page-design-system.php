@@ -10,11 +10,11 @@ if (!defined('ABSPATH')) {
 }
 
 // Enqueue design book assets
-wp_enqueue_style('villa-design-book', get_template_directory_uri() . '/assets/css/design-book.css', [], '1.0.0');
-wp_enqueue_script('villa-design-book', get_template_directory_uri() . '/assets/js/design-book.js', ['jquery'], '1.0.0', true);
+wp_enqueue_style('migv-design-book', get_template_directory_uri() . '/assets/css/design-book.css', [], '1.0.0');
+wp_enqueue_script('migv-design-book', get_template_directory_uri() . '/assets/js/design-book.js', ['jquery'], '1.0.0', true);
 
 // Localize script for AJAX
-wp_localize_script('villa-design-book', 'villaDesignBook', [
+wp_localize_script('migv-design-book', 'miGVDesignBook', [
     'ajaxurl' => admin_url('admin-ajax.php'),
     'nonce' => wp_create_nonce('migv_nonce'),
     'themeUrl' => get_template_directory_uri()
@@ -27,7 +27,7 @@ $context['post'] = Timber::get_post();
 // Simulate user for Design Book (since it's a design tool, not user-specific)
 $context['user'] = (object) [
     'display_name' => 'Design Book User',
-    'user_email' => 'designer@villa.com'
+    'user_email' => 'designer@middleton-getaways.com'
 ];
 
 // Add design book specific context

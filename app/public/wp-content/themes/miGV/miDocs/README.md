@@ -16,22 +16,18 @@ The comprehensive design token management system for the theme.
 Technical documentation for various theme systems.
 
 - **[Design Book Technical](./SYSTEMS/DESIGN-BOOK-TECHNICAL.md)** - Technical implementation of Design Book
-- **[Villa File Structure](./SYSTEMS/VILLA-FILE-STRUCTURE-OVERVIEW.md)** - Theme file organization
-- **[GVibes Villa](./SYSTEMS/GVibes-Villa)** - Additional system documentation
 
 ### Project Information
 General project documentation and guides.
 
 - **[Middleton Getaways](./Middleton%20Getaways/)** - Project-specific documentation
 - **[Site Data](./SITE%20DATA/)** - Site configuration and data
-- **[Villa Roadmaps](./VILLA-ROADMAPS/)** - Development roadmaps
 
 ## 🚀 Quick Links
 
 ### For Developers
 1. Start with the [Quick Reference](./DesignBook/QUICK-REFERENCE.md)
 2. Review [Technical Documentation](./SYSTEMS/DESIGN-BOOK-TECHNICAL.md)
-3. Check [File Structure](./SYSTEMS/VILLA-FILE-STRUCTURE-OVERVIEW.md)
 
 ### For Designers
 1. Read [Design Book Overview](./DesignBook/DESIGN-BOOK-OVERVIEW.md)

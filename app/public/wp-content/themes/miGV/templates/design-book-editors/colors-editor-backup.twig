@@ -1,0 +1,289 @@
+{# Colors Editor - Load tokens from JSON #}
+{% set color_tokens = load_primitive('colors') %}
+
+<div class="primitive-editor colors-editor" data-primitive-type="colors">
+    <header class="editor-header">
+        <h1>Colors Primitive Editor</h1>
+        <div class="editor-actions">
+            <button class="btn-save" data-action="save">Save to JSON</button>
+            <button class="btn-sync" data-action="sync">Sync to theme.json</button>
+            <button class="btn-reset" data-action="reset">Reset to Defaults</button>
+            <button class="btn-export" data-action="export">Export</button>
+        </div>
+    </header>
+
+    <div class="editor-content">
+        {% if color_tokens %}
+            {# Group colors by prefix #}
+            {% set color_groups = {
+                'primary': [],
+                'secondary': [],
+                'neutral': [],
+                'base': [],
+                'extreme': []
+            } %}
+            
+            {# Sort colors into groups #}
+            {% for slug, value in color_tokens %}
+                {% for group_name in color_groups|keys %}
+                    {% if slug starts with group_name %}
+                        {% set color_groups = color_groups|merge({(group_name): color_groups[group_name]|merge({(slug): value})}) %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+            {# Display each group #}
+            {% for group_name, colors in color_groups %}
+                {% if colors|length > 0 %}
+                    <section class="token-group" data-token-type="{{ group_name }}">
+                        <h2>{{ group_name|title }} Colors</h2>
+                        <p class="section-description">
+                            {% if group_name == 'primary' %}
+                                Primary brand colors for main UI elements and accents
+                            {% elseif group_name == 'secondary' %}
+                                Secondary colors for supporting elements and highlights
+                            {% elseif group_name == 'neutral' %}
+                                Neutral colors for text, borders, and backgrounds
+                            {% elseif group_name == 'base' %}
+                                Base colors for page backgrounds and subtle elements
+                            {% elseif group_name == 'extreme' %}
+                                Extreme values for maximum contrast
+                            {% endif %}
+                        </p>
+                        
+                        <div class="token-grid color-grid {% if group_name == 'base' %}base-grid{% elseif group_name == 'extreme' %}extreme-grid{% endif %}">
+                            {% for slug, value in colors %}
+                                <div class="token-item color-token" data-token="{{ slug }}" data-group="{{ group_name }}">
+                                    <div class="color-preview-wrapper">
+                                        <div class="color-preview" style="background-color: {{ value }};">
+                                            <div class="color-actions">
+                                                <button class="copy-button icon-button" data-copy="{{ value }}" title="Copy hex value">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="color-controls">
+                                        <label class="color-label">{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                                        
+                                        <div class="input-group">
+                                            <input type="text" 
+                                                   class="hex-input token-input" 
+                                                   data-token="{{ slug }}"
+                                                   data-category="{{ group_name }}"
+                                                   value="{{ value }}"
+                                                   placeholder="#000000"
+                                                   pattern="^#[0-9A-Fa-f]{6}$"
+                                                   name="data[{{ group_name }}][{{ slug }}]">
+                                            <input type="color" 
+                                                   class="color-picker" 
+                                                   data-token="{{ slug }}" 
+                                                   value="{{ value }}"
+                                                   title="Pick a color">
+                                        </div>
+                                        
+                                        <div class="variable-display">
+                                            <code class="css-variable">--colors-{{ slug }}</code>
+                                            <button class="copy-button text-button" data-copy="var(--colors-{{ slug }})" title="Copy CSS variable">
+                                                Copy var
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+            {% endfor %}
+
+            {# Live Preview Section #}
+            <section class="preview-section">
+                <h2>Live Preview</h2>
+                <div class="preview-controls">
+                    <label>Preview Type:</label>
+                    <select class="preview-type" id="color-preview-type">
+                        <option value="palette">Color Palette</option>
+                        <option value="contrast">Contrast Check</option>
+                        <option value="components">Component Preview</option>
+                    </select>
+                </div>
+                
+                <div class="live-preview-container">
+                    {# Palette Preview #}
+                    <div class="preview-panel" id="palette-preview">
+                        <div class="palette-grid">
+                            {% for group_name, colors in color_groups %}
+                                {% if colors|length > 0 %}
+                                    <div class="palette-group">
+                                        <h3>{{ group_name|title }}</h3>
+                                        <div class="palette-swatches">
+                                            {% for slug, value in colors %}
+                                                <div class="palette-swatch" style="background-color: var(--colors-{{ slug }});" title="{{ slug }}">
+                                                    <span class="swatch-label">{{ slug|split('-')|last }}</span>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {# Contrast Preview #}
+                    <div class="preview-panel" id="contrast-preview" style="display: none;">
+                        <div class="contrast-grid">
+                            <div class="contrast-item">
+                                <div class="contrast-demo" style="background: var(--colors-base-light); color: var(--colors-neutral-dark);">
+                                    <h3>Light Background</h3>
+                                    <p>This is sample text on a light background using neutral dark text color.</p>
+                                </div>
+                            </div>
+                            <div class="contrast-item">
+                                <div class="contrast-demo" style="background: var(--colors-primary); color: var(--colors-extreme-light);">
+                                    <h3>Primary Background</h3>
+                                    <p>This is sample text on a primary background using white text color.</p>
+                                </div>
+                            </div>
+                            <div class="contrast-item">
+                                <div class="contrast-demo" style="background: var(--colors-neutral-dark); color: var(--colors-base-lightest);">
+                                    <h3>Dark Background</h3>
+                                    <p>This is sample text on a dark background using light text color.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Component Preview #}
+                    <div class="preview-panel" id="components-preview" style="display: none;">
+                        <div class="component-examples">
+                            <button class="preview-button" style="background: var(--colors-primary); color: var(--colors-extreme-light);">Primary Button</button>
+                            <button class="preview-button" style="background: var(--colors-secondary); color: var(--colors-extreme-light);">Secondary Button</button>
+                            <button class="preview-button ghost" style="border-color: var(--colors-neutral); color: var(--colors-neutral-dark);">Ghost Button</button>
+                            
+                            <div class="preview-card" style="background: var(--colors-base-lightest); border-color: var(--colors-neutral-light);">
+                                <h4 style="color: var(--colors-primary-dark);">Card Title</h4>
+                                <p style="color: var(--colors-neutral-dark);">This is a sample card component using the color system.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        {% else %}
+            <div class="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <h3>No Color Tokens Found</h3>
+                <p>Please check your colors.json file in the primitives directory.</p>
+                <button class="btn-primary" onclick="location.reload()">Reload Page</button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{# Pass data to JavaScript #}
+<script>
+window.primitiveColors = {
+    ajaxUrl: '{{ function('admin_url', 'admin-ajax.php') }}',
+    nonce: '{{ function('wp_create_nonce', 'mi_design_book_nonce') }}',
+    canEdit: {{ function('current_user_can', 'edit_theme_options') ? 'true' : 'false' }},
+    colorTokens: {{ color_tokens|json_encode|raw }}
+};
+</script>
+
+{# Preview-specific styles #}
+<style>
+/* Dynamic color preview styles */
+.palette-swatch {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.palette-swatch .swatch-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 0.75rem;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.2s ease;
+}
+
+.palette-swatch:hover .swatch-label {
+    transform: translateY(0);
+}
+
+.contrast-demo {
+    padding: 24px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.preview-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 8px;
+}
+
+.preview-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.preview-button.ghost {
+    background: transparent !important;
+    border: 2px solid;
+}
+
+.preview-card {
+    padding: 24px;
+    border: 1px solid;
+    border-radius: 8px;
+    margin: 16px 8px;
+    transition: all 0.2s ease;
+}
+
+.preview-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Color-specific grid adjustments */
+.color-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.color-grid.base-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.color-grid.extreme-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+}
+
+@media (max-width: 768px) {
+    .color-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .color-grid.extreme-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

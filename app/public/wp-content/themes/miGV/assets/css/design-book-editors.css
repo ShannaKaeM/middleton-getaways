@@ -1026,14 +1026,14 @@ input[type="range"]::-moz-range-thumb:hover {
 /* Input fields in light cards */
 .shadows-editor .token-input {
     width: 100%;
-    padding: 0.5rem 0.75rem;
-    background: rgba(0, 0, 0, 0.05);
+    padding: 0.75rem;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    color: var(--color-base-darkest);
-    font-size: 0.875rem;
+    border-radius: 4px;
     font-family: var(--primitive-font-mono);
-    border-radius: 6px;
-    transition: all 0.2s;
+    font-size: 0.875rem;
+    background: white;
+    color: var(--color-base-darkest);
+    margin-bottom: 0.75rem;
 }
 
 .shadows-editor .token-input:focus {
@@ -1732,7 +1732,7 @@ input[type="range"]::-moz-range-thumb:hover {
     border-radius: 4px;
     background: var(--color-base-dark);
     color: var(--color-extreme-light);
-    font-size: 0.875rem;
+    cursor: pointer;
 }
 
 .animations-editor .live-preview-container {
@@ -1917,4 +1917,1140 @@ input[type="range"]::-moz-range-thumb:hover {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
+}
+
+/* ===== COLORS EDITOR ===== */
+.colors-editor {
+    background: #2d3748;
+    min-height: 100vh;
+}
+
+.colors-editor .primitive-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.colors-editor .primitive-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.colors-editor .primitive-header h1 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.colors-editor .primitive-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.colors-editor .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.colors-editor .btn-primary {
+    background: #4299e1;
+    color: #ffffff;
+}
+
+.colors-editor .btn-primary:hover {
+    background: #3182ce;
+}
+
+.colors-editor .btn-primary-active {
+    background: #2b6cb0;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+}
+
+.colors-editor .btn-secondary {
+    background: #718096;
+    color: #ffffff;
+}
+
+.colors-editor .btn-secondary:hover {
+    background: #4a5568;
+}
+
+.colors-editor .btn-ghost {
+    background: transparent;
+    color: #e2e8f0;
+    border: 1px solid #4a5568;
+}
+
+.colors-editor .btn-ghost:hover {
+    background: #4a5568;
+    color: #ffffff;
+}
+
+.colors-editor .token-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.colors-editor .token-group {
+    margin-bottom: 3rem;
+}
+
+.colors-editor .token-group h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #4a5568;
+}
+
+.colors-editor .token-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+}
+
+.colors-editor .token-item {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 0;
+    border: 1px solid #e2e8f0;
+    transition: box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.colors-editor .token-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.colors-editor .color-preview-container {
+    margin-bottom: 1rem;
+}
+
+.colors-editor .color-preview {
+    width: 100%;
+    height: 80px;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid #e2e8f0;
+    /* Background color uses dynamic CSS variable for preview */
+}
+
+.colors-editor .color-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.colors-editor .color-preview:hover .color-overlay {
+    opacity: 1;
+}
+
+.colors-editor .token-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.colors-editor .token-label {
+    color: #2d3748;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.colors-editor .control-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.colors-editor .hex-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.875rem;
+    background: #ffffff;
+    color: #2d3748;
+}
+
+.colors-editor .hex-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.colors-editor .color-picker {
+    width: 50px;
+    height: 38px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+.colors-editor .css-variable {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: #f7fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.colors-editor .css-variable code {
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.75rem;
+    color: #4a5568;
+    background: none;
+}
+
+.colors-editor .copy-btn {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: #718096;
+    border-radius: 4px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.colors-editor .copy-btn:hover {
+    background: #edf2f7;
+    color: #4a5568;
+}
+
+.colors-editor .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #a0aec0;
+}
+
+.colors-editor .empty-state p {
+    font-size: 1.125rem;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .colors-editor .primitive-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .colors-editor .primitive-actions {
+        justify-content: center;
+    }
+    
+    .colors-editor .token-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    animation: slideIn 0.3s ease-out;
+}
+
+.notification-success {
+    background: #c6f6d5;
+    color: #22543d;
+    border-left: 4px solid #38a169;
+}
+
+.notification-error {
+    background: #fed7d7;
+    color: #c53030;
+    border-left: 4px solid #e53e3e;
+}
+
+.notification-info {
+    background: #bee3f8;
+    color: #2a4365;
+    border-left: 4px solid #3182ce;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.notification-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Editor Header - Consistent with other editors */
+.colors-editor .editor-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.colors-editor .editor-header h1 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.colors-editor .editor-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Button Styles - Consistent with other editors */
+.colors-editor .btn-save,
+.colors-editor .btn-sync,
+.colors-editor .btn-reset,
+.colors-editor .btn-export {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.colors-editor .btn-save {
+    background: #4299e1;
+    color: #ffffff;
+}
+
+.colors-editor .btn-save:hover {
+    background: #3182ce;
+}
+
+.colors-editor .btn-save.has-changes {
+    background: #2b6cb0;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+}
+
+.colors-editor .btn-sync {
+    background: #718096;
+    color: #ffffff;
+}
+
+.colors-editor .btn-sync:hover {
+    background: #4a5568;
+}
+
+.colors-editor .btn-reset,
+.colors-editor .btn-export {
+    background: transparent;
+    color: #e2e8f0;
+    border: 1px solid #4a5568;
+}
+
+.colors-editor .btn-reset:hover,
+.colors-editor .btn-export:hover {
+    background: #4a5568;
+    color: #ffffff;
+}
+
+/* Editor Content */
+.colors-editor .editor-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Token Groups */
+.colors-editor .token-group {
+    margin-bottom: 3rem;
+}
+
+.colors-editor .token-group h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.colors-editor .section-description {
+    color: #a0aec0;
+    margin: 0 0 1.5rem 0;
+    font-size: 0.9rem;
+}
+
+/* Color Grid Layouts */
+.colors-editor .color-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+}
+
+.colors-editor .color-grid.base-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.colors-editor .color-grid.extreme-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+}
+
+/* Color Token Items */
+.colors-editor .color-token {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 0;
+    border: 1px solid #e2e8f0;
+    transition: box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.colors-editor .color-token:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Color Preview */
+.colors-editor .color-preview-wrapper {
+    position: relative;
+}
+
+.colors-editor .color-preview {
+    width: 100%;
+    height: 120px;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.colors-editor .color-actions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.colors-editor .color-preview:hover .color-actions {
+    opacity: 1;
+}
+
+/* Color Controls */
+.colors-editor .color-controls {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.colors-editor .color-label {
+    color: #2d3748;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.colors-editor .input-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.colors-editor .hex-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.875rem;
+    background: #ffffff;
+    color: #2d3748;
+}
+
+.colors-editor .hex-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.colors-editor .color-picker {
+    width: 50px;
+    height: 38px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+.colors-editor .variable-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: #f7fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.colors-editor .css-variable {
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.75rem;
+    color: #4a5568;
+    background: none;
+    margin: 0;
+}
+
+/* Copy Buttons */
+.colors-editor .copy-button {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: #718096;
+    border-radius: 4px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.colors-editor .copy-button.icon-button {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.colors-editor .copy-button.icon-button:hover {
+    background: #ffffff;
+    transform: scale(1.1);
+}
+
+.colors-editor .copy-button.icon-button.copied {
+    background: #48bb78;
+    color: #ffffff;
+}
+
+.colors-editor .copy-button.text-button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.colors-editor .copy-button.text-button:hover {
+    background: #edf2f7;
+    color: #4a5568;
+}
+
+/* Preview Section */
+.colors-editor .preview-section {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid #4a5568;
+}
+
+.colors-editor .preview-section h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.colors-editor .preview-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.colors-editor .preview-controls label {
+    color: #a0aec0;
+    font-weight: 500;
+}
+
+.colors-editor .preview-controls select {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #4a5568;
+    background: #374151;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.colors-editor .live-preview-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    min-height: 300px;
+}
+
+/* Palette Preview */
+.colors-editor .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.colors-editor .palette-group h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #2d3748;
+}
+
+.colors-editor .palette-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.5rem;
+}
+
+.colors-editor .palette-swatch {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+}
+
+/* Contrast Preview */
+.colors-editor .contrast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.colors-editor .contrast-item {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Component Preview */
+.colors-editor .component-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+/* Empty State */
+.colors-editor .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #a0aec0;
+}
+
+.colors-editor .empty-state svg {
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.colors-editor .empty-state h3 {
+    color: #e2e8f0;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.colors-editor .empty-state p {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+}
+
+.colors-editor .empty-state .btn-primary {
+    background: #4299e1;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Notifications */
+.colors-editor .editor-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    max-width: 400px;
+    transform: translateX(450px);
+    transition: transform 0.3s ease-out;
+}
+
+.colors-editor .editor-notification.show {
+    transform: translateX(0);
+}
+
+.colors-editor .notification-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.colors-editor .notification-success .notification-content {
+    background: #c6f6d5;
+    color: #22543d;
+    border-left: 4px solid #38a169;
+}
+
+.colors-editor .notification-error .notification-content {
+    background: #fed7d7;
+    color: #742a2a;
+    border-left: 4px solid #e53e3e;
+}
+
+.colors-editor .notification-info .notification-content {
+    background: #bee3f8;
+    color: #2a4365;
+    border-left: 4px solid #3182ce;
+}
+
+.colors-editor .notification-message {
+    flex: 1;
+    font-weight: 500;
+}
+
+.colors-editor .notification-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.colors-editor .notification-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .colors-editor .editor-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .colors-editor .editor-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .colors-editor .color-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .colors-editor .color-grid.extreme-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .colors-editor .preview-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+/* Colors Editor Dark Theme Fixes - Apply to design-book-editors.css */
+/* Replace the existing .colors-editor .token-label and related styles starting around line 2078 */
+
+.colors-editor .token-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.colors-editor .control-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.colors-editor .hex-input {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #ffffff;
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.875rem;
+}
+
+.colors-editor .hex-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.3);
+}
+
+.colors-editor .color-picker {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.colors-editor .css-variable {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.colors-editor .css-variable code {
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    background: none;
+}
+
+.colors-editor .copy-btn {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.2s;
+}
+
+.colors-editor .copy-btn:hover {
+    color: #ffffff;
+}
+
+/* Preview section styles */
+.colors-editor .preview-section {
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.colors-editor .preview-section h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.colors-editor .preview-controls {
+    margin-bottom: 2rem;
+}
+
+.colors-editor .preview-controls label {
+    color: rgba(255, 255, 255, 0.7);
+    margin-right: 1rem;
+}
+
+.colors-editor .preview-select {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}
+
+.colors-editor .preview-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    min-height: 300px;
+}
+
+/* Palette preview styles */
+.colors-editor .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.colors-editor .palette-group h3 {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.colors-editor .palette-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.5rem;
+}
+
+.colors-editor .palette-swatch {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Contrast preview styles */
+.colors-editor .contrast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.colors-editor .contrast-item {
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+/* Component preview styles */
+.colors-editor .component-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.colors-editor .preview-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.colors-editor .preview-button.primary {
+    background: var(--colors-primary);
+    color: var(--colors-extreme-light);
+}
+
+.colors-editor .preview-button.secondary {
+    background: var(--colors-secondary);
+    color: var(--colors-extreme-light);
+}
+
+.colors-editor .preview-card {
+    background: var(--colors-base-light);
+    color: var(--colors-base-darkest);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--colors-neutral);
+}
+
+.colors-editor .preview-card h4 {
+    margin: 0 0 0.5rem 0;
+}
+
+.colors-editor .preview-card p {
+    margin: 0;
+}
+/* Colors Editor Main Background and Card Fixes */
+
+.colors-editor {
+    background-color: #1a1a1a; /* Dark background to match other editors */
+}
+
+.colors-editor .color-token {
+    background-color: #ffffff; /* Solid white cards */
+    color: #333333; /* Dark text for white cards */
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+}
+
+.colors-editor .color-token:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Adjust text colors within the white cards */
+.colors-editor .color-token .token-label,
+.colors-editor .color-token .hex-input,
+.colors-editor .color-token .css-variable code,
+.colors-editor .color-token .copy-btn {
+    color: #333333; /* Dark text for elements inside white cards */
+}
+
+.colors-editor .color-token .hex-input {
+    background: #f0f0f0; /* Light background for input on white card */
+    border-color: #cccccc;
+}
+
+.colors-editor .color-token .hex-input:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.3);
+}
+
+.colors-editor .color-token .color-picker {
+    border-color: #cccccc;
+}
+
+.colors-editor .color-token .css-variable {
+    background: #f0f0f0; /* Light background for css variable display on white card */
+    border-color: #cccccc;
+}
+
+.colors-editor .color-token .copy-btn {
+    color: #666666; /* Darker copy button icon */
+}
+
+.colors-editor .color-token .copy-btn:hover {
+    color: #333333;
+}
+
+/* Grid structure adjustments */
+.colors-editor .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust minmax for better card sizing */
+    gap: 1.5rem;
+}
+/* Colors Editor Font and Card Styling Fixes */
+
+.colors-editor {
+    font-family: var(--primitive-font-primary), sans-serif; /* Ensure Montserrat font is applied */
+}
+
+.colors-editor .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust minmax for better card sizing */
+    gap: 1.5rem; /* Consistent gap */
+}
+
+.colors-editor .token-item {
+    background-color: #ffffff; /* Solid white cards */
+    color: #333333; /* Dark text for white cards */
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+}
+
+.colors-editor .token-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Adjust text colors within the white cards */
+.colors-editor .token-item .token-label,
+.colors-editor .token-item .hex-input,
+.colors-editor .token-item .css-variable code,
+.colors-editor .token-item .copy-btn {
+    color: #333333; /* Dark text for elements inside white cards */
+}
+
+.colors-editor .token-item .hex-input {
+    background: #f0f0f0; /* Light background for input on white card */
+    border-color: #cccccc;
+}
+
+.colors-editor .token-item .hex-input:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.3);
+}
+
+.colors-editor .token-item .color-picker {
+    border-color: #cccccc;
+}
+
+.colors-editor .token-item .css-variable {
+    background: #f0f0f0; /* Light background for css variable display on white card */
+    border-color: #cccccc;
+}
+
+.colors-editor .token-item .copy-btn {
+    color: #666666; /* Darker copy button icon */
+}
+
+.colors-editor .token-item .copy-btn:hover {
+    color: #333333;
+}
+
+/* Ensure preview elements also use the primary font if needed */
+.colors-editor .preview-section h2,
+.colors-editor .preview-controls label,
+.colors-editor .palette-group h3,
+.colors-editor .contrast-item h4,
+.colors-editor .preview-card h4,
+.colors-editor .preview-card p {
+    font-family: var(--primitive-font-primary), sans-serif;
 }

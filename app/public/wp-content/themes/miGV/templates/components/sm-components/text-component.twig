@@ -1,0 +1,37 @@
+{#
+    Text Component
+    This component applies predefined text styles based on the 'text-style' parameter.
+    It consumes the 'text.json' data and uses primitive books for styling.
+
+    Parameters:
+    - text_style (string): The key from text.json (e.g., 'pretitle', 'title', 'body', 'button-text')
+    - content (string): The actual text content to display.
+    - tag (string, optional): The HTML tag to use for the text (e.g., 'h1', 'p', 'span'). Defaults to 'span'.
+    - class (string, optional): Additional CSS classes to apply.
+#}
+
+{% set text_styles = load_component('sm-components/text') %}
+
+{% set style_data = text_styles[text_style] %}
+
+{% if style_data %}
+    {% set tag = tag ?? 'span' %}
+    <{{ tag }} class="text-component {{ class }}" style="
+        {% include 'primitive-books/typography-book.twig' with {
+            font_family: style_data.font_family,
+            font_size: style_data.font_size,
+            font_weight: style_data.font_weight,
+            line_height: style_data.line_height,
+            letter_spacing: style_data.letter_spacing,
+            text_transform: style_data.text_transform
+        } %}
+        {% include 'primitive-books/color-book.twig' with {
+            color: style_data.color,
+            background_color: style_data.background_color
+        } %}
+    ">
+        {{ content|raw }}
+    </{{ tag }}>
+{% else %}
+    <span class="text-component-error" style="color: red;">Error: Text style '{{ text_style }}' not found.</span>
+{% endif %}

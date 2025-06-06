@@ -1,85 +1,405 @@
 jQuery(document).ready(function($) {
-    // Color manipulation utilities
-    function hexToHSL(hex) {
-        // Remove # if present
-        hex = hex.replace('#', '');
+    'use strict';
+    
+    // Initialize the colors editor
+    initColorsEditor();
+    
+    // Initialize colors editor
+    function initColorsEditor() {
+        // Only initialize if we're on the colors editor page
+        if (!$('.colors-editor').length) return;
         
-        // Convert to RGB
-        const r = parseInt(hex.substr(0, 2), 16) / 255;
-        const g = parseInt(hex.substr(2, 2), 16) / 255;
-        const b = parseInt(hex.substr(4, 2), 16) / 255;
+        bindEventHandlers();
+        updatePreviewColors();
+        initializePreviewPanels();
+        updateAllColorInputs(); // New function to initialize HSL/CMYK
+    }
+    
+    // Bind all event handlers
+    function bindEventHandlers() {
+        // Preview type switcher
+        $('#color-preview-type').on('change', function() {
+            var selectedType = $(this).val();
+            $('.preview-panel').hide();
+            $('#' + selectedType + '-preview').show();
+        });
         
-        const max = Math.max(r, g, b);
-        const min = Math.min(r, g, b);
+        // Color picker changes
+        $(document).on('input', '.color-picker', function() {
+            const token = $(this).data('token');
+            const value = $(this).val();
+            updateColorValue(token, value);
+        });
+        
+        // Hex input changes
+        $(document).on('input', '.hex-input', function() {
+            const token = $(this).data('token');
+            const value = $(this).val();
+            
+            // Validate hex color
+            if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                updateColorValue(token, value);
+            }
+        });
+
+        // HSL input changes
+        $(document).on('input', '.hsl-input', function() {
+            const token = $(this).data('token');
+            const hslString = $(this).val();
+            const hexValue = hslToHex(hslString);
+            if (hexValue) {
+                updateColorValue(token, hexValue);
+            }
+        });
+
+        // CMYK input changes
+        $(document).on('input', '.cmyk-input', function() {
+            const token = $(this).data('token');
+            const cmykString = $(this).val();
+            const hexValue = cmykToHex(cmykString);
+            if (hexValue) {
+                updateColorValue(token, hexValue);
+            }
+        });
+        
+        // Copy buttons
+        $(document).on('click', '.copy-btn', function(e) { // Changed to .copy-btn
+            e.preventDefault();
+            const value = $(this).data('copy');
+            copyToClipboard(value);
+            showCopyFeedback($(this));
+        });
+        
+        // Action buttons
+        $('.btn-save, #save-colors').on('click', function() {
+            saveColors();
+        });
+        
+        $('.btn-sync, #sync-colors').on('click', function() {
+            syncColors();
+        });
+        
+        $('.btn-reset, #reset-colors').on('click', function() {
+            if (confirm('Are you sure you want to reset all colors to defaults?')) {
+                resetColors();
+            }
+        });
+        
+        $('.btn-export, #export-colors').on('click', function() {
+            exportColors();
+        });
+        
+        // Update button selectors to match the new template IDs
+    }
+    
+    // Update color value across all related inputs
+    function updateColorValue(token, hexValue) {
+        const tokenItem = $(`.token-item[data-token="${token}"]`);
+        
+        // Update color picker
+        tokenItem.find('.color-picker').val(hexValue);
+        
+        // Update hex input
+        tokenItem.find('.hex-input').val(hexValue);
+
+        // Update HSL input
+        const hsl = hexToHsl(hexValue);
+        tokenItem.find('.hsl-input').val(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`);
+
+        // Update CMYK input
+        const cmyk = hexToCmyk(hexValue);
+        tokenItem.find('.cmyk-input').val(`${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%`);
+        
+        // Update preview background
+        tokenItem.find('.color-preview').css('background-color', hexValue);
+        
+        // Update copy button data
+        tokenItem.find('.copy-btn[data-copy^="#"]').attr('data-copy', hexValue); // Changed to .copy-btn
+        
+        // Update CSS variable in document
+        document.documentElement.style.setProperty(`--colors-${token}`, hexValue);
+        
+        // Mark as changed
+        markAsChanged();
+    }
+
+    // Initialize all color inputs (HSL/CMYK) on load
+    function updateAllColorInputs() {
+        $('.token-item').each(function() {
+            const token = $(this).data('token');
+            const hexValue = $(this).find('.hex-input').val();
+            updateColorValue(token, hexValue); // This will populate HSL/CMYK
+        });
+    }
+    
+    // Update all preview colors on page load
+    function updatePreviewColors() {
+        $('.token-item').each(function() {
+            const token = $(this).data('token');
+            const colorValue = $(this).find('.hex-input').val();
+            $(this).find('.color-preview').css('background-color', colorValue);
+            document.documentElement.style.setProperty(`--colors-${token}`, colorValue);
+        });
+    }
+
+    function initializePreviewPanels() {
+        // Show palette preview by default
+        $('#palette-preview').show();
+        $('#color-preview-type').val('palette');
+    }
+
+    // Helper function to copy text to clipboard
+    function copyToClipboard(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    }
+
+    // Show feedback after copying
+    function showCopyFeedback(button) {
+        const originalText = button.html();
+        button.html('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>');
+        setTimeout(() => {
+            button.html(originalText);
+        }, 1500);
+    }
+
+    // Mark editor as changed
+    function markAsChanged() {
+        // Implement visual feedback for changes, e.g., enable save button
+    }
+
+    // AJAX Save Colors
+    function saveColors() {
+        const colorsData = {};
+        $('.token-item').each(function() {
+            const token = $(this).data('token');
+            colorsData[token] = $(this).find('.hex-input').val();
+        });
+
+        $.ajax({
+            url: miGV.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'migv_save_primitive_colors',
+                nonce: miGV.nonce,
+                colors: colorsData
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Colors saved successfully!');
+                } else {
+                    alert('Error saving colors: ' + response.data);
+                }
+            },
+            error: function() {
+                alert('AJAX error saving colors.');
+            }
+        });
+    }
+
+    // AJAX Sync Colors
+    function syncColors() {
+        const colorsData = {};
+        $('.token-item').each(function() {
+            const token = $(this).data('token');
+            colorsData[token] = $(this).find('.hex-input').val();
+        });
+
+        $.ajax({
+            url: miGV.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'migv_sync_primitive_colors',
+                nonce: miGV.nonce,
+                colors: colorsData
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Colors synced to theme successfully!');
+                } else {
+                    alert('Error syncing colors: ' + response.data);
+                }
+            },
+            error: function() {
+                alert('AJAX error syncing colors.');
+            }
+        });
+    }
+
+    // AJAX Reset Colors
+    function resetColors() {
+        $.ajax({
+            url: miGV.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'migv_reset_primitive_colors',
+                nonce: miGV.nonce
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Colors reset to defaults!');
+                    location.reload(); // Reload page to reflect changes
+                } else {
+                    alert('Error resetting colors: ' + response.data);
+                }
+            },
+            error: function() {
+                alert('AJAX error resetting colors.');
+            }
+        });
+    }
+
+    // AJAX Export Colors
+    function exportColors() {
+        $.ajax({
+            url: miGV.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'migv_export_primitive_colors',
+                nonce: miGV.nonce
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Assuming response.data contains the JSON string
+                    const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'colors.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    alert('Colors exported successfully!');
+                } else {
+                    alert('Error exporting colors: ' + response.data);
+                }
+            },
+            error: function() {
+                alert('AJAX error exporting colors.');
+            }
+        });
+    }
+
+    // Color Conversion Functions
+    // Hex to HSL
+    function hexToHsl(hex) {
+        if (!hex || typeof hex !== 'string') return { h: 0, s: 0, l: 0 };
+        let r = 0, g = 0, b = 0;
+        // Handle 3-digit hex
+        if (hex.length === 4) {
+            r = parseInt(hex[1] + hex[1], 16);
+            g = parseInt(hex[2] + hex[2], 16);
+            b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length === 7) {
+            r = parseInt(hex.substring(1, 3), 16);
+            g = parseInt(hex.substring(3, 5), 16);
+            b = parseInt(hex.substring(5, 7), 16);
+        } else {
+            return { h: 0, s: 0, l: 0 }; // Invalid hex
+        }
+
+        r /= 255;
+        g /= 255;
+        b /= 255;
+
+        let max = Math.max(r, g, b), min = Math.min(r, g, b);
         let h, s, l = (max + min) / 2;
-        
+
         if (max === min) {
             h = s = 0; // achromatic
         } else {
-            const d = max - min;
+            let d = max - min;
             s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-            
             switch (max) {
-                case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
-                case g: h = ((b - r) / d + 2) / 6; break;
-                case b: h = ((r - g) / d + 4) / 6; break;
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
             }
+            h /= 6;
         }
-        
+
         return {
             h: Math.round(h * 360),
             s: Math.round(s * 100),
             l: Math.round(l * 100)
         };
     }
-    
-    function hslToHex(h, s, l) {
-        h = h / 360;
-        s = s / 100;
-        l = l / 100;
-        
-        let r, g, b;
-        
-        if (s === 0) {
-            r = g = b = l; // achromatic
-        } else {
-            const hue2rgb = (p, q, t) => {
-                if (t < 0) t += 1;
-                if (t > 1) t -= 1;
-                if (t < 1/6) return p + (q - p) * 6 * t;
-                if (t < 1/2) return q;
-                if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-                return p;
-            };
-            
-            const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-            const p = 2 * l - q;
-            
-            r = hue2rgb(p, q, h + 1/3);
-            g = hue2rgb(p, q, h);
-            b = hue2rgb(p, q, h - 1/3);
+
+    // HSL to Hex
+    function hslToHex(hslString) {
+        const match = hslString.match(/(\d+),\s*(\d+)%,\s*(\d+)%/);
+        if (!match) return null;
+        let h = parseInt(match[1]);
+        let s = parseInt(match[2]) / 100;
+        let l = parseInt(match[3]) / 100;
+
+        let c = (1 - Math.abs(2 * l - 1)) * s,
+            x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+            m = l - c / 2,
+            r = 0, g = 0, b = 0;
+
+        if (0 <= h && h < 60) {
+            r = c; g = x; b = 0;
+        } else if (60 <= h && h < 120) {
+            r = x; g = c; b = 0;
+        } else if (120 <= h && h < 180) {
+            r = 0; g = c; b = x;
+        } else if (180 <= h && h < 240) {
+            r = 0; g = x; b = c;
+        } else if (240 <= h && h < 300) {
+            r = x; g = 0; b = c;
+        } else if (300 <= h && h < 360) {
+            r = c; g = 0; b = x;
         }
-        
-        const toHex = x => {
-            const hex = Math.round(x * 255).toString(16);
-            return hex.length === 1 ? '0' + hex : hex;
-        };
-        
-        return '#' + toHex(r) + toHex(g) + toHex(b);
+        r = Math.round((r + m) * 255).toString(16);
+        g = Math.round((g + m) * 255).toString(16);
+        b = Math.round((b + m) * 255).toString(16);
+
+        if (r.length === 1) r = '0' + r;
+        if (g.length === 1) g = '0' + g;
+        if (b.length === 1) b = '0' + b;
+
+        return '#' + r + g + b;
     }
 
-    // CMYK conversion utilities
-    function hexToCMYK(hex) {
-        hex = hex.replace('#', '');
-        const r = parseInt(hex.substr(0, 2), 16) / 255;
-        const g = parseInt(hex.substr(2, 2), 16) / 255;
-        const b = parseInt(hex.substr(4, 2), 16) / 255;
-        
-        const k = 1 - Math.max(r, g, b);
-        const c = k === 1 ? 0 : (1 - r - k) / (1 - k);
-        const m = k === 1 ? 0 : (1 - g - k) / (1 - k);
-        const y = k === 1 ? 0 : (1 - b - k) / (1 - k);
-        
+    // Hex to CMYK
+    function hexToCmyk(hex) {
+        if (!hex || typeof hex !== 'string') return { c: 0, m: 0, y: 0, k: 0 };
+        let r = 0, g = 0, b = 0;
+        // Handle 3-digit hex
+        if (hex.length === 4) {
+            r = parseInt(hex[1] + hex[1], 16);
+            g = parseInt(hex[2] + hex[2], 16);
+            b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length === 7) {
+            r = parseInt(hex.substring(1, 3), 16);
+            g = parseInt(hex.substring(3, 5), 16);
+            b = parseInt(hex.substring(5, 7), 16);
+        } else {
+            return { c: 0, m: 0, y: 0, k: 0 }; // Invalid hex
+        }
+
+        r /= 255;
+        g /= 255;
+        b /= 255;
+
+        let k = 1 - Math.max(r, g, b);
+        let c = (1 - r - k) / (1 - k);
+        let m = (1 - g - k) / (1 - k);
+        let y = (1 - b - k) / (1 - k);
+
+        // Handle black (k=1) case to avoid NaN
+        if (k === 1) {
+            c = 0;
+            m = 0;
+            y = 0;
+        }
+
         return {
             c: Math.round(c * 100),
             m: Math.round(m * 100),
@@ -88,321 +408,28 @@ jQuery(document).ready(function($) {
         };
     }
 
-    function cmykToHex(c, m, y, k) {
-        c = c / 100;
-        m = m / 100;
-        y = y / 100;
-        k = k / 100;
-        
-        const r = 255 * (1 - c) * (1 - k);
-        const g = 255 * (1 - m) * (1 - k);
-        const b = 255 * (1 - y) * (1 - k);
-        
-        const toHex = x => {
-            const hex = Math.round(x).toString(16);
-            return hex.length === 1 ? '0' + hex : hex;
-        };
-        
-        return '#' + toHex(r) + toHex(g) + toHex(b);
-    }
-    
-    // Save indicator
-    function showSaveIndicator(status, message) {
-        const $indicator = $('#save-indicator');
-        const $status = $indicator.find('.save-status');
-        
-        $indicator.removeClass('success error saving').addClass(status + ' show');
-        $status.text(message);
-        
-        setTimeout(() => {
-            $indicator.removeClass('show');
-        }, 3000);
-    }
-    
-    // Sync color to theme.json
-    function syncColor(slug, color) {
-        if (!primitiveColors.canEdit) {
-            showSaveIndicator('error', 'You do not have permission to edit colors');
-            return;
-        }
-        
-        showSaveIndicator('saving', 'Saving color...');
-        
-        $.ajax({
-            url: primitiveColors.ajaxUrl,
-            type: 'POST',
-            data: {
-                action: 'mi_sync_primitive_to_theme_json',
-                nonce: primitiveColors.nonce,
-                type: 'color',
-                slug: slug,
-                value: color
-            },
-            success: function(response) {
-                if (response.success) {
-                    showSaveIndicator('success', 'Color saved successfully');
-                    // Update CSS variable
-                    document.documentElement.style.setProperty('--wp--preset--color--' + slug, color);
-                } else {
-                    showSaveIndicator('error', response.data || 'Failed to save color');
-                }
-            },
-            error: function() {
-                showSaveIndicator('error', 'Network error occurred');
-            }
-        });
+    // CMYK to Hex
+    function cmykToHex(cmykString) {
+        const match = cmykString.match(/(\d+)%,\s*(\d+)%,\s*(\d+)%,\s*(\d+)%/);
+        if (!match) return null;
+        let c = parseInt(match[1]) / 100;
+        let m = parseInt(match[2]) / 100;
+        let y = parseInt(match[3]) / 100;
+        let k = parseInt(match[4]) / 100;
+
+        let r = 255 * (1 - c) * (1 - k);
+        let g = 255 * (1 - m) * (1 - k);
+        let b = 255 * (1 - y) * (1 - k);
+
+        r = Math.round(r).toString(16);
+        g = Math.round(g).toString(16);
+        b = Math.round(b).toString(16);
+
+        if (r.length === 1) r = '0' + r;
+        if (g.length === 1) g = '0' + g;
+        if (b.length === 1) b = '0' + b;
+
+        return '#' + r + g + b;
     }
 
-    // Tab switching for HSL/CMYK
-    $('.tab-btn').on('click', function() {
-        const $panel = $(this).closest('.adjustment-panel');
-        const tab = $(this).data('tab');
-        
-        // Update tab buttons
-        $panel.find('.tab-btn').removeClass('active');
-        $(this).addClass('active');
-        
-        // Update tab content
-        $panel.find('.tab-content').removeClass('active');
-        $panel.find(`.tab-content[data-tab="${tab}"]`).addClass('active');
-    });
-    
-    // Color picker trigger
-    $('.color-picker-trigger').on('click', function(e) {
-        e.preventDefault();
-        const $card = $(this).closest('.color-card');
-        $card.find('.color-picker-input').click();
-    });
-    
-    // Color picker change
-    $('.color-picker-input').on('change', function() {
-        const color = $(this).val();
-        const slug = $(this).data('slug');
-        const $card = $(this).closest('.color-card');
-        
-        // Update preview
-        $card.find('.color-preview').css('background-color', color);
-        
-        // Update hex input
-        $card.find('.color-hex-input').val(color);
-        
-        // Reset adjustment sliders
-        $card.find('.hue-slider, .saturation-slider, .lightness-slider').val(0);
-        $card.find('.cyan-slider, .magenta-slider, .yellow-slider, .black-slider').val(0);
-        
-        // Sync to theme.json
-        syncColor(slug, color);
-    });
-    
-    // Hex input change
-    $('.color-hex-input').on('change', function() {
-        const color = $(this).val();
-        const slug = $(this).data('slug');
-        const $card = $(this).closest('.color-card');
-        
-        // Validate hex
-        if (!/^#[0-9A-F]{6}$/i.test(color)) {
-            showSaveIndicator('error', 'Invalid hex color format');
-            return;
-        }
-        
-        // Update preview
-        $card.find('.color-preview').css('background-color', color);
-        
-        // Update color picker
-        $card.find('.color-picker-input').val(color);
-        
-        // Reset adjustment sliders
-        $card.find('.hue-slider, .saturation-slider, .lightness-slider').val(0);
-        $card.find('.cyan-slider, .magenta-slider, .yellow-slider, .black-slider').val(0);
-        
-        // Sync to theme.json
-        syncColor(slug, color);
-    });
-    
-    // Opacity slider
-    $('.color-opacity-slider').on('input', function() {
-        const opacity = $(this).val();
-        const $card = $(this).closest('.color-card');
-        const $preview = $card.find('.color-preview');
-        
-        // Update slider value display
-        $(this).siblings('.slider-value').text(opacity + '%');
-        
-        // Apply opacity to preview
-        $preview.css('opacity', opacity / 100);
-    });
-    
-    // HSL adjustment sliders - FIXED lightness issue
-    $('.hue-slider, .saturation-slider, .lightness-slider').on('input', function() {
-        const $card = $(this).closest('.color-card');
-        const baseColor = $card.find('.color-hex-input').val();
-        const hsl = hexToHSL(baseColor);
-        
-        // Apply adjustments
-        const hueAdjust = parseInt($card.find('.hue-slider').val());
-        const satAdjust = parseInt($card.find('.saturation-slider').val());
-        const lightAdjust = parseInt($card.find('.lightness-slider').val());
-        
-        let h = (hsl.h + hueAdjust + 360) % 360;
-        let s = Math.max(0, Math.min(100, hsl.s + satAdjust));
-        // Fixed: Use percentage-based lightness adjustment instead of absolute
-        let l = Math.max(0, Math.min(100, hsl.l * (1 + lightAdjust / 100)));
-        
-        const newColor = hslToHex(h, s, l);
-        
-        // Update preview only (don't save until slider is released)
-        $card.find('.color-preview').css('background-color', newColor);
-    });
-
-    // CMYK adjustment sliders
-    $('.cyan-slider, .magenta-slider, .yellow-slider, .black-slider').on('input', function() {
-        const $card = $(this).closest('.color-card');
-        const baseColor = $card.find('.color-hex-input').val();
-        const cmyk = hexToCMYK(baseColor);
-        
-        // Apply adjustments
-        const cyanAdjust = parseInt($card.find('.cyan-slider').val());
-        const magentaAdjust = parseInt($card.find('.magenta-slider').val());
-        const yellowAdjust = parseInt($card.find('.yellow-slider').val());
-        const blackAdjust = parseInt($card.find('.black-slider').val());
-        
-        let c = Math.max(0, Math.min(100, cmyk.c + cyanAdjust));
-        let m = Math.max(0, Math.min(100, cmyk.m + magentaAdjust));
-        let y = Math.max(0, Math.min(100, cmyk.y + yellowAdjust));
-        let k = Math.max(0, Math.min(100, cmyk.k + blackAdjust));
-        
-        const newColor = cmykToHex(c, m, y, k);
-        
-        // Update preview only (don't save until slider is released)
-        $card.find('.color-preview').css('background-color', newColor);
-    });
-    
-    // Save on HSL slider release
-    $('.hue-slider, .saturation-slider, .lightness-slider').on('change', function() {
-        const $card = $(this).closest('.color-card');
-        const slug = $card.find('.color-hex-input').data('slug');
-        const baseColor = $card.find('.color-hex-input').val();
-        const hsl = hexToHSL(baseColor);
-        
-        // Apply adjustments
-        const hueAdjust = parseInt($card.find('.hue-slider').val());
-        const satAdjust = parseInt($card.find('.saturation-slider').val());
-        const lightAdjust = parseInt($card.find('.lightness-slider').val());
-        
-        let h = (hsl.h + hueAdjust + 360) % 360;
-        let s = Math.max(0, Math.min(100, hsl.s + satAdjust));
-        let l = Math.max(0, Math.min(100, hsl.l * (1 + lightAdjust / 100)));
-        
-        const newColor = hslToHex(h, s, l);
-        
-        // Update inputs
-        $card.find('.color-hex-input').val(newColor);
-        $card.find('.color-picker-input').val(newColor);
-        
-        // Sync to theme.json
-        syncColor(slug, newColor);
-    });
-
-    // Save on CMYK slider release
-    $('.cyan-slider, .magenta-slider, .yellow-slider, .black-slider').on('change', function() {
-        const $card = $(this).closest('.color-card');
-        const slug = $card.find('.color-hex-input').data('slug');
-        const baseColor = $card.find('.color-hex-input').val();
-        const cmyk = hexToCMYK(baseColor);
-        
-        // Apply adjustments
-        const cyanAdjust = parseInt($card.find('.cyan-slider').val());
-        const magentaAdjust = parseInt($card.find('.magenta-slider').val());
-        const yellowAdjust = parseInt($card.find('.yellow-slider').val());
-        const blackAdjust = parseInt($card.find('.black-slider').val());
-        
-        let c = Math.max(0, Math.min(100, cmyk.c + cyanAdjust));
-        let m = Math.max(0, Math.min(100, cmyk.m + magentaAdjust));
-        let y = Math.max(0, Math.min(100, cmyk.y + yellowAdjust));
-        let k = Math.max(0, Math.min(100, cmyk.k + blackAdjust));
-        
-        const newColor = cmykToHex(c, m, y, k);
-        
-        // Update inputs
-        $card.find('.color-hex-input').val(newColor);
-        $card.find('.color-picker-input').val(newColor);
-        
-        // Sync to theme.json
-        syncColor(slug, newColor);
-    });
-    
-    // CSS variable preview button
-    $('.css-variable-preview').on('click', function() {
-        const variable = $(this).data('variable');
-        const $card = $(this).closest('.color-card');
-        const currentColor = $card.find('.color-hex-input').val();
-        
-        // Create a preview modal or tooltip showing how the variable would look
-        const $preview = $(`
-            <div class="css-preview-modal">
-                <div class="css-preview-content">
-                    <h4>CSS Variable Preview</h4>
-                    <div class="css-example">
-                        <code>color: ${variable};</code>
-                        <div class="color-sample" style="background-color: ${currentColor}"></div>
-                    </div>
-                    <div class="css-example">
-                        <code>background: ${variable};</code>
-                        <div class="color-sample" style="background-color: ${currentColor}; color: white; padding: 8px;">Sample Text</div>
-                    </div>
-                    <button class="close-preview">Close</button>
-                </div>
-            </div>
-        `);
-        
-        $('body').append($preview);
-        
-        // Close preview
-        $preview.on('click', '.close-preview, .css-preview-modal', function(e) {
-            if (e.target === this) {
-                $preview.remove();
-            }
-        });
-    });
-    
-    // Export colors
-    $('#export-colors').on('click', function() {
-        const colors = {};
-        
-        $('.color-card').each(function() {
-            const slug = $(this).data('slug');
-            const color = $(this).find('.color-hex-input').val();
-            colors[slug] = color;
-        });
-        
-        // Create download
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(colors, null, 2));
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", "theme-colors.json");
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-        
-        showSaveIndicator('success', 'Colors exported successfully');
-    });
-    
-    // Reset colors (would need default values stored)
-    $('#reset-colors').on('click', function() {
-        if (confirm('Are you sure you want to reset all colors to their default values?')) {
-            // This would need to be implemented with default values
-            showSaveIndicator('error', 'Reset functionality not yet implemented');
-        }
-    });
-    
-    // CSS variable preview
-    $('.color-card').on('input', '.color-hex-input', function() {
-        const $card = $(this).closest('.color-card');
-        const slug = $card.data('slug');
-        const color = $(this).val();
-        
-        // Update CSS variable preview
-        $card.find('.css-variable-preview').text(`--wp--preset--color--${slug}: ${color};`);
-    });
-});
+}); // End jQuery(document).ready

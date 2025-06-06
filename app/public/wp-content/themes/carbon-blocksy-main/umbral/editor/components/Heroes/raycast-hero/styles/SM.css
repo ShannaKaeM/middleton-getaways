@@ -1,0 +1,26 @@
+/* Raycast Hero - Small Tablet Variable Overrides (≥ 576px) */
+
+/* Override component variables for small tablets - all CSS rules are in LG.css */
+#{{ component_id }} {
+    /* Small tablet typography scale */
+    --hero-font-size-4xl: 2.75rem;      /* Slightly larger hero title */
+    --hero-font-size-xl: 1.25rem;       /* Slightly larger subtitle */
+    
+    /* Small tablet spacing adjustments */
+    --hero-spacing-3xl: calc(var(--theme-content-spacing) * 2.5); /* Moderate top/bottom padding */
+    
+    /* Container adjustments */
+    --hero-content-max-width: 550px;    /* Slightly wider content */
+}
+
+/* Small tablet layout adjustments */
+.umbral-raycast-hero .hero-container {
+    grid-template-columns: 1fr;          /* Still single column */
+    gap: var(--hero-spacing-xl);
+    padding: 0 var(--hero-spacing-lg);   /* Slightly more side padding */
+}
+
+/* Show feature cards in grid below layout only */
+.umbral-raycast-hero[data-cards-layout="grid_below"] .feature-cards-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on small tablets */
+}

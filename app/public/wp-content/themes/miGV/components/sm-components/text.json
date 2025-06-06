@@ -1,0 +1,42 @@
+{
+  "pretitle": {
+    "font_family": "montserrat",
+    "font_size": "small",
+    "font_weight": "bold",
+    "line_height": "tight",
+    "letter_spacing": "normal",
+    "text_transform": "uppercase",
+    "color": "primary-default",
+    "background_color": "transparent"
+  },
+  "title": {
+    "font_family": "montserrat",
+    "font_size": "x-large",
+    "font_weight": "extraBold",
+    "line_height": "tight",
+    "letter_spacing": "normal",
+    "text_transform": "none",
+    "color": "base-dark",
+    "background_color": "transparent"
+  },
+  "body": {
+    "font_family": "montserrat",
+    "font_size": "medium",
+    "font_weight": "normal",
+    "line_height": "normal",
+    "letter_spacing": "normal",
+    "text_transform": "none",
+    "color": "base-dark",
+    "background_color": "transparent"
+  },
+  "button-text": {
+    "font_family": "montserrat",
+    "font_size": "medium",
+    "font_weight": "semiBold",
+    "line_height": "normal",
+    "letter_spacing": "wide",
+    "text_transform": "uppercase",
+    "color": "extreme-light",
+    "background_color": "transparent"
+  }
+}

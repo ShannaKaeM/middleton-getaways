@@ -1,0 +1,81 @@
+<div class="text-editor-component">
+    <h2>Text Component Editor</h2>
+
+    <div class="editor-section">
+        <h3>Text Style Selection</h3>
+        <div class="control-group">
+            <label for="text-style-select">Predefined Text Style:</label>
+            <select id="text-style-select" class="primitive-select" data-primitive-type="text-component" data-primitive-key="text-styles">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+    </div>
+
+    <div class="editor-section">
+        <h3>Text Content</h3>
+        <textarea class="text-content-input" rows="5" placeholder="Enter your text here..."></textarea>
+    </div>
+
+    <div class="editor-section">
+        <h3>Individual Typography Primitives (Overrides)</h3>
+        <div class="control-group">
+            <label for="font-family-select">Font Family:</label>
+            <select id="font-family-select" class="primitive-select" data-primitive-type="typography" data-primitive-key="font_families">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="font-size-select">Font Size:</label>
+            <select id="font-size-select" class="primitive-select" data-primitive-type="typography" data-primitive-key="font_sizes">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="font-weight-select">Font Weight:</label>
+            <select id="font-weight-select" class="primitive-select" data-primitive-type="typography" data-primitive-key="font_weights">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="line-height-select">Line Height:</label>
+            <select id="line-height-select" class="primitive-select" data-primitive-type="typography" data-primitive-key="line_heights">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="letter-spacing-select">Letter Spacing:</label>
+            <select id="letter-spacing-select" class="primitive-select" data-primitive-type="typography" data-primitive-key="letter_spacings">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="text-transform-select">Text Transform:</label>
+            <select id="text-transform-select" class="primitive-select" data-primitive-type="typography" data-primitive-key="text_transforms">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+    </div>
+
+    <div class="editor-section">
+        <h3>Individual Color Primitives (Overrides)</h3>
+        <div class="control-group">
+            <label for="text-color-select">Text Color:</label>
+            <select id="text-color-select" class="primitive-select" data-primitive-type="colors" data-primitive-key="colors">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="background-color-select">Background Color:</label>
+            <select id="background-color-select" class="primitive-select" data-primitive-type="colors" data-primitive-key="colors">
+                {# Options will be dynamically loaded by JavaScript #}
+            </select>
+        </div>
+    </div>
+
+    <div class="editor-section">
+        <h3>Preview</h3>
+        <div class="text-preview">
+            <p class="preview-text">This is a preview of your text.</p>
+        </div>
+    </div>
+</div>

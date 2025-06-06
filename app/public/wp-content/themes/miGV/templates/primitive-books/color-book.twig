@@ -24,29 +24,29 @@
 
 {# Apply color styles based on parameters #}
 {% if color %}
-  color: {{ color_tokens.colors[color] ?? color }};
+  color: {{ color_tokens[color] ?? color }};
 {% endif %}
 
 {% if background_color %}
-  background-color: {{ color_tokens.colors[background_color] ?? background_color }};
+  background-color: {{ color_tokens[background_color] ?? background_color }};
 {% endif %}
 
 {% if border_color %}
-  border-color: {{ color_tokens.colors[border_color] ?? border_color }};
+  border-color: {{ color_tokens[border_color] ?? border_color }};
 {% endif %}
 
 {% if outline_color %}
-  outline-color: {{ color_tokens.colors[outline_color] ?? outline_color }};
+  outline-color: {{ color_tokens[outline_color] ?? outline_color }};
 {% endif %}
 
 {% if text_decoration_color %}
-  text-decoration-color: {{ color_tokens.colors[text_decoration_color] ?? text_decoration_color }};
+  text-decoration-color: {{ color_tokens[text_decoration_color] ?? text_decoration_color }};
 {% endif %}
 
 {% if fill %}
-  fill: {{ color_tokens.colors[fill] ?? fill }};
+  fill: {{ color_tokens[fill] ?? fill }};
 {% endif %}
 
 {% if stroke %}
-  stroke: {{ color_tokens.colors[stroke] ?? stroke }};
+  stroke: {{ color_tokens[stroke] ?? stroke }};
 {% endif %}

@@ -39,6 +39,13 @@ class VillaDesignBookRouter {
             'template' => 'design-book-editors/components.twig',
             'capabilities' => ['edit_theme_options']
         ],
+        'text-component' => [
+            'name' => 'Text Component',
+            'description' => 'Manage text styles and components',
+            'icon' => 'text',
+            'template' => 'design-book-editors/sm-components/text-component-editor.twig',
+            'capabilities' => ['edit_theme_options']
+        ],
         'tokens' => [
             'name' => 'Design Tokens',
             'description' => 'CSS custom properties and variables',
@@ -183,6 +190,17 @@ class VillaDesignBookRouter {
 
         // Add section-specific data
         $context = $this->add_section_data($context, $section);
+
+        // Conditionally enqueue scripts based on section
+        if ($section === 'text-component') {
+            wp_enqueue_script('migv-text-component-editor-scripts', get_template_directory_uri() . '/assets/js/sm-components/text-component-editor.js', array('jquery'), null, true);
+            // Localize script for AJAX if needed
+            wp_localize_script('migv-text-component-editor-scripts', 'miGV', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('migv_design_book_nonce'),
+                'theme_uri' => get_template_directory_uri()
+            ));
+        }
 
         // Get header
         get_header();

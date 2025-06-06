@@ -1,0 +1,302 @@
+/* ==========================================================================
+   BLOCKSY-INSPIRED DESIGN SYSTEM FOR UMBRAL COMPONENTS
+   ========================================================================== */
+
+/* Blocksy Design System Variables - Modern WordPress theme approach */
+:root {
+  /* Blocksy Color Palette - Light Theme */
+  --blocksy-color-text: #2c3e50;
+  --blocksy-color-text-light: #5a6c7d;
+  --blocksy-color-text-lighter: #8a9ba8;
+  --blocksy-color-background: #ffffff;
+  --blocksy-color-background-alt: #f8f9fa;
+  --blocksy-color-background-secondary: #e9ecef;
+  
+  /* Blocksy Brand Colors */
+  --blocksy-color-primary: #3498db;
+  --blocksy-color-primary-hover: #2980b9;
+  --blocksy-color-primary-light: rgba(52, 152, 219, 0.1);
+  --blocksy-color-secondary: #95a5a6;
+  --blocksy-color-success: #27ae60;
+  --blocksy-color-warning: #f39c12;
+  --blocksy-color-error: #e74c3c;
+  
+  /* Blocksy Typography Scale */
+  --blocksy-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --blocksy-font-secondary: Georgia, 'Times New Roman', serif;
+  --blocksy-font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  
+  /* Blocksy Font Sizes */
+  --blocksy-text-xs: 0.75rem;    /* 12px */
+  --blocksy-text-sm: 0.875rem;   /* 14px */
+  --blocksy-text-base: 1rem;     /* 16px */
+  --blocksy-text-lg: 1.125rem;   /* 18px */
+  --blocksy-text-xl: 1.25rem;    /* 20px */
+  --blocksy-text-2xl: 1.5rem;    /* 24px */
+  --blocksy-text-3xl: 1.875rem;  /* 30px */
+  --blocksy-text-4xl: 2.25rem;   /* 36px */
+  --blocksy-text-5xl: 3rem;      /* 48px */
+  
+  /* Blocksy Spacing Scale */
+  --blocksy-space-xs: 0.25rem;   /* 4px */
+  --blocksy-space-sm: 0.5rem;    /* 8px */
+  --blocksy-space-md: 1rem;      /* 16px */
+  --blocksy-space-lg: 1.5rem;    /* 24px */
+  --blocksy-space-xl: 2rem;      /* 32px */
+  --blocksy-space-2xl: 3rem;     /* 48px */
+  --blocksy-space-3xl: 4rem;     /* 64px */
+  --blocksy-space-4xl: 6rem;     /* 96px */
+  
+  /* Blocksy Border Radius */
+  --blocksy-radius-none: 0;
+  --blocksy-radius-sm: 0.125rem;  /* 2px */
+  --blocksy-radius: 0.25rem;      /* 4px */
+  --blocksy-radius-md: 0.375rem;  /* 6px */
+  --blocksy-radius-lg: 0.5rem;    /* 8px */
+  --blocksy-radius-xl: 0.75rem;   /* 12px */
+  --blocksy-radius-2xl: 1rem;     /* 16px */
+  --blocksy-radius-full: 9999px;
+  
+  /* Blocksy Shadows */
+  --blocksy-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --blocksy-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --blocksy-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --blocksy-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --blocksy-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Blocksy Transitions */
+  --blocksy-transition: all 0.15s ease-in-out;
+  --blocksy-transition-fast: all 0.1s ease-in-out;
+  --blocksy-transition-slow: all 0.3s ease-in-out;
+  
+  /* Blocksy Breakpoints (matching component system) */
+  --blocksy-breakpoint-xs: 0px;      /* < 576px */
+  --blocksy-breakpoint-sm: 576px;    /* e 576px */
+  --blocksy-breakpoint-md: 768px;    /* e 768px */
+  --blocksy-breakpoint-lg: 992px;    /* e 992px */
+  --blocksy-breakpoint-xl: 1200px;   /* e 1200px */
+  --blocksy-breakpoint-2xl: 1400px;  /* e 1400px */
+  
+  /* Blocksy Grid System */
+  --blocksy-container-sm: 540px;
+  --blocksy-container-md: 720px;
+  --blocksy-container-lg: 960px;
+  --blocksy-container-xl: 1140px;
+  --blocksy-container-2xl: 1320px;
+  
+  /* Blocksy Z-Index Scale */
+  --blocksy-z-auto: auto;
+  --blocksy-z-0: 0;
+  --blocksy-z-10: 10;
+  --blocksy-z-20: 20;
+  --blocksy-z-30: 30;
+  --blocksy-z-40: 40;
+  --blocksy-z-50: 50;
+  --blocksy-z-modal: 1000;
+  --blocksy-z-popover: 1010;
+  --blocksy-z-tooltip: 1020;
+  --blocksy-z-overlay: 1030;
+}
+
+/* Dark Mode Variables (Blocksy-style) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --blocksy-color-text: #f8f9fa;
+    --blocksy-color-text-light: #ced4da;
+    --blocksy-color-text-lighter: #adb5bd;
+    --blocksy-color-background: #212529;
+    --blocksy-color-background-alt: #343a40;
+    --blocksy-color-background-secondary: #495057;
+  }
+}
+
+/* ==========================================================================
+   BLOCKSY UTILITY CLASSES
+   ========================================================================== */
+
+/* Blocksy Typography */
+.blocksy-text-xs { font-size: var(--blocksy-text-xs); }
+.blocksy-text-sm { font-size: var(--blocksy-text-sm); }
+.blocksy-text-base { font-size: var(--blocksy-text-base); }
+.blocksy-text-lg { font-size: var(--blocksy-text-lg); }
+.blocksy-text-xl { font-size: var(--blocksy-text-xl); }
+.blocksy-text-2xl { font-size: var(--blocksy-text-2xl); }
+.blocksy-text-3xl { font-size: var(--blocksy-text-3xl); }
+.blocksy-text-4xl { font-size: var(--blocksy-text-4xl); }
+.blocksy-text-5xl { font-size: var(--blocksy-text-5xl); }
+
+.blocksy-font-primary { font-family: var(--blocksy-font-primary); }
+.blocksy-font-secondary { font-family: var(--blocksy-font-secondary); }
+.blocksy-font-mono { font-family: var(--blocksy-font-mono); }
+
+/* Blocksy Colors */
+.blocksy-text-primary { color: var(--blocksy-color-text); }
+.blocksy-text-secondary { color: var(--blocksy-color-text-light); }
+.blocksy-text-tertiary { color: var(--blocksy-color-text-lighter); }
+.blocksy-bg-primary { background-color: var(--blocksy-color-background); }
+.blocksy-bg-secondary { background-color: var(--blocksy-color-background-alt); }
+
+/* Blocksy Spacing */
+.blocksy-p-xs { padding: var(--blocksy-space-xs); }
+.blocksy-p-sm { padding: var(--blocksy-space-sm); }
+.blocksy-p-md { padding: var(--blocksy-space-md); }
+.blocksy-p-lg { padding: var(--blocksy-space-lg); }
+.blocksy-p-xl { padding: var(--blocksy-space-xl); }
+
+.blocksy-m-xs { margin: var(--blocksy-space-xs); }
+.blocksy-m-sm { margin: var(--blocksy-space-sm); }
+.blocksy-m-md { margin: var(--blocksy-space-md); }
+.blocksy-m-lg { margin: var(--blocksy-space-lg); }
+.blocksy-m-xl { margin: var(--blocksy-space-xl); }
+
+/* Blocksy Borders */
+.blocksy-rounded { border-radius: var(--blocksy-radius); }
+.blocksy-rounded-sm { border-radius: var(--blocksy-radius-sm); }
+.blocksy-rounded-lg { border-radius: var(--blocksy-radius-lg); }
+.blocksy-rounded-xl { border-radius: var(--blocksy-radius-xl); }
+.blocksy-rounded-full { border-radius: var(--blocksy-radius-full); }
+
+/* Blocksy Shadows */
+.blocksy-shadow { box-shadow: var(--blocksy-shadow); }
+.blocksy-shadow-sm { box-shadow: var(--blocksy-shadow-sm); }
+.blocksy-shadow-md { box-shadow: var(--blocksy-shadow-md); }
+.blocksy-shadow-lg { box-shadow: var(--blocksy-shadow-lg); }
+.blocksy-shadow-xl { box-shadow: var(--blocksy-shadow-xl); }
+
+/* ==========================================================================
+   BLOCKSY COMPONENT PATTERNS
+   ========================================================================== */
+
+/* Blocksy Card Pattern */
+.blocksy-card {
+  background: var(--blocksy-color-background);
+  border: 1px solid var(--blocksy-color-background-secondary);
+  border-radius: var(--blocksy-radius-lg);
+  box-shadow: var(--blocksy-shadow);
+  padding: var(--blocksy-space-lg);
+  transition: var(--blocksy-transition);
+}
+
+.blocksy-card:hover {
+  box-shadow: var(--blocksy-shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Blocksy Button Pattern */
+.blocksy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--blocksy-space-sm) var(--blocksy-space-md);
+  font-family: var(--blocksy-font-primary);
+  font-size: var(--blocksy-text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--blocksy-radius);
+  cursor: pointer;
+  transition: var(--blocksy-transition);
+  background: var(--blocksy-color-primary);
+  color: white;
+}
+
+.blocksy-button:hover {
+  background: var(--blocksy-color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--blocksy-shadow-md);
+}
+
+/* Blocksy Grid Pattern */
+.blocksy-grid {
+  display: grid;
+  gap: var(--blocksy-space-lg);
+}
+
+.blocksy-grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+.blocksy-grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.blocksy-grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.blocksy-grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Blocksy Container Pattern */
+.blocksy-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--blocksy-space-md);
+  padding-right: var(--blocksy-space-md);
+}
+
+@media (min-width: 576px) {
+  .blocksy-container { max-width: var(--blocksy-container-sm); }
+}
+
+@media (min-width: 768px) {
+  .blocksy-container { max-width: var(--blocksy-container-md); }
+}
+
+@media (min-width: 992px) {
+  .blocksy-container { max-width: var(--blocksy-container-lg); }
+}
+
+@media (min-width: 1200px) {
+  .blocksy-container { max-width: var(--blocksy-container-xl); }
+}
+
+@media (min-width: 1400px) {
+  .blocksy-container { max-width: var(--blocksy-container-2xl); }
+}
+
+/* ==========================================================================
+   EXAMPLE COMPONENT USING BLOCKSY SYSTEM
+   ========================================================================== */
+
+/* Example: Feature Card Component with Blocksy styling */
+.example-feature-card {
+  /* Use Blocksy base styles */
+  background: var(--blocksy-color-background);
+  border: 1px solid var(--blocksy-color-background-secondary);
+  border-radius: var(--blocksy-radius-lg);
+  box-shadow: var(--blocksy-shadow);
+  padding: var(--blocksy-space-xl);
+  transition: var(--blocksy-transition);
+  
+  /* Component-specific enhancements */
+  position: relative;
+  overflow: hidden;
+}
+
+.example-feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blocksy-color-primary), var(--blocksy-color-success));
+}
+
+.example-feature-card:hover {
+  box-shadow: var(--blocksy-shadow-lg);
+  transform: translateY(-4px);
+}
+
+.example-feature-card .icon {
+  font-size: var(--blocksy-text-3xl);
+  margin-bottom: var(--blocksy-space-md);
+  color: var(--blocksy-color-primary);
+}
+
+.example-feature-card .title {
+  font-size: var(--blocksy-text-xl);
+  font-weight: 600;
+  color: var(--blocksy-color-text);
+  margin-bottom: var(--blocksy-space-sm);
+  font-family: var(--blocksy-font-primary);
+}
+
+.example-feature-card .description {
+  font-size: var(--blocksy-text-base);
+  color: var(--blocksy-color-text-light);
+  line-height: 1.6;
+  font-family: var(--blocksy-font-primary);
+}

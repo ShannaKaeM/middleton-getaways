@@ -1,0 +1,90 @@
+.text-editor-component {
+    background-color: #2d3748; /* Dark background for the editor UI */
+    color: rgba(255, 255, 255, 0.9); /* Light text color */
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif; /* Consistent font */
+    max-width: 900px;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 1.8em;
+    }
+
+    .editor-section {
+        background-color: rgba(255, 255, 255, 0.05); /* Slightly lighter dark background for sections */
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+
+        h3 {
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+    }
+
+    .control-group {
+        margin-bottom: 15px;
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1); /* Dark input background */
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1em;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+
+            &:focus {
+                outline: none;
+                border-color: #8b5cf6; /* Accent color on focus */
+                box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5);
+            }
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        option {
+            background-color: #2d3748; /* Dark background for dropdown options */
+            color: #ffffff;
+        }
+    }
+
+    .text-preview {
+        min-height: 150px;
+        border: 1px dashed rgba(255, 255, 255, 0.3);
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 6px;
+        background-color: rgba(0, 0, 0, 0.2); /* Slightly darker background for preview */
+
+        .preview-text {
+            margin: 0;
+            padding: 0;
+            /* Styles will be applied dynamically by JS */
+        }
+    }
+}

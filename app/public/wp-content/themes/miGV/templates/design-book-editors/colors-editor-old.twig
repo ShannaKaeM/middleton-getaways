@@ -1,0 +1,116 @@
+{# Colors Editor - Load tokens from JSON #}
+{% set color_tokens = load_primitive('colors') %}
+
+<div class="primitive-editor colors-editor" data-primitive-type="colors">
+    <header class="primitive-header">
+        <h1>Colors Primitive Editor</h1>
+        <div class="primitive-actions">
+            <button class="btn btn-primary" id="save-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                    <polyline points="17 21 17 13 7 13 7 21"/>
+                    <polyline points="7 3 7 8 15 8"/>
+                </svg>
+                Save to JSON
+            </button>
+            <button class="btn btn-secondary" id="sync-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"/>
+                    <polyline points="1 20 1 14 7 14"/>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                </svg>
+                Sync to theme.json
+            </button>
+            <button class="btn btn-ghost" id="reset-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                </svg>
+                Reset
+            </button>
+        </div>
+    </header>
+
+    <div class="primitive-content">
+        {% if color_tokens %}
+            {# Group colors by prefix #}
+            {% set color_groups = {
+                'primary': [],
+                'secondary': [],
+                'neutral': [],
+                'base': [],
+                'extreme': []
+            } %}
+            
+            {# Sort colors into groups #}
+            {% for slug, value in color_tokens %}
+                {% for group_name in color_groups|keys %}
+                    {% if slug starts with group_name %}
+                        {% set color_groups = color_groups|merge({(group_name): color_groups[group_name]|merge({(slug): value})}) %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+            {# Display each group #}
+            {% for group_name, colors in color_groups %}
+                {% if colors|length > 0 %}
+                    <section class="token-group" data-token-type="{{ group_name }}">
+                        <h2>{{ group_name|title }} Colors</h2>
+                        <div class="token-grid">
+                            {% for slug, value in colors %}
+                            <div class="token-item" data-token="{{ slug }}">
+                                <div class="color-preview-container">
+                                    <div class="color-preview" style="background-color: {{ value }};">
+                                        <div class="color-overlay">
+                                            <button class="copy-btn" data-copy="{{ value }}" title="Copy hex value">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="token-controls">
+                                    <label class="token-label">{{ slug|replace({'_': ' ', '-': ' '})|title }}</label>
+                                    <div class="control-group">
+                                        <input type="text" 
+                                               class="hex-input" 
+                                               value="{{ value }}" 
+                                               data-token="{{ slug }}"
+                                               pattern="^#[0-9A-Fa-f]{6}$"
+                                               placeholder="#000000">
+                                        <input type="color" 
+                                               class="color-picker" 
+                                               value="{{ value }}" 
+                                               data-token="{{ slug }}">
+                                    </div>
+                                    <div class="css-variable">
+                                        <code>--colors-{{ slug }}</code>
+                                        <button class="copy-btn" data-copy="var(--colors-{{ slug }})" title="Copy CSS variable">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <p>No color tokens found. Create a colors.json file in the primitives directory.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+// Pass color data to JavaScript
+window.primitiveColors = window.primitiveColors || {};
+window.primitiveColors.colorsData = {{ color_tokens|json_encode|raw }};
+</script>

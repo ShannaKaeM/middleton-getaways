@@ -1,0 +1,63 @@
+/* Raycast Hero - Mobile Variable Overrides (< 576px) */
+
+/* Override component variables for mobile - all CSS rules are in LG.css */
+#{{ component_id }} {
+    /* Mobile typography scale */
+    --hero-font-size-4xl: 2.25rem;      /* Smaller hero title */
+    --hero-font-size-xl: 1.125rem;      /* Smaller subtitle */
+    --hero-font-size-2xl: 1.5rem;       /* Smaller card icons */
+    
+    /* Mobile spacing adjustments */
+    --hero-spacing-3xl: calc(var(--theme-content-spacing) * 2);  /* Reduced top/bottom padding */
+    --hero-spacing-2xl: calc(var(--theme-content-spacing) * 1.5); /* Reduced large spacing */
+    
+    /* Mobile container adjustments */
+    --hero-container-max-width: 100%;
+    --hero-content-max-width: 100%;
+    --hero-card-max-width: 100%;
+    
+    /* Floating elements smaller on mobile */
+    --hero-floating-size: 20px;
+}
+
+/* Mobile-specific layout overrides */
+.umbral-raycast-hero .hero-container {
+    grid-template-columns: 1fr;          /* Single column layout */
+    gap: var(--hero-spacing-xl);         /* Smaller gaps */
+    padding: 0 var(--hero-spacing);      /* Side padding */
+}
+
+/* Hide feature cards on mobile for sides layout */
+.umbral-raycast-hero[data-cards-layout="sides"] .feature-cards-left,
+.umbral-raycast-hero[data-cards-layout="sides"] .feature-cards-right {
+    display: none;
+}
+
+/* Grid below layout adjustments for mobile */
+.umbral-raycast-hero[data-cards-layout="grid_below"] .feature-cards-grid {
+    grid-template-columns: 1fr;          /* Single column grid on mobile */
+    gap: var(--hero-spacing);            /* Smaller gaps */
+}
+
+/* Scattered layout - disable on mobile for better UX */
+.umbral-raycast-hero[data-cards-layout="scattered"] .feature-cards-scattered {
+    display: none;
+}
+
+/* Floating elements size override */
+.umbral-raycast-hero .floating-element {
+    width: var(--hero-floating-size);
+    height: var(--hero-floating-size);
+}
+
+/* Command palette mobile adjustments */
+.umbral-raycast-hero .command-palette {
+    max-width: 500px;                    /* Smaller max width */
+    padding: var(--hero-spacing-lg);     /* Reduced padding */
+}
+
+/* Always center text on mobile regardless of alignment setting */
+.umbral-raycast-hero .hero-main[data-alignment="left"],
+.umbral-raycast-hero .hero-main[data-alignment="right"] {
+    text-align: center;
+}

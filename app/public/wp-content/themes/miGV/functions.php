@@ -1955,6 +1955,156 @@ function sync_animations_to_theme_json() {
 add_action('wp_ajax_sync_animations_to_theme_json', 'sync_animations_to_theme_json');
 
 /**
+ * AJAX handler for saving colors primitive
+ */
+function migv_save_colors_primitive() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check user capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Get the colors data
+    $colors_data = isset($_POST['colors']) ? $_POST['colors'] : array();
+    
+    if (empty($colors_data)) {
+        wp_send_json_error('No colors data provided');
+        return;
+    }
+    
+    // Sanitize the colors data
+    $sanitized_colors = array();
+    foreach ($colors_data as $slug => $value) {
+        $sanitized_slug = sanitize_key($slug);
+        $sanitized_value = sanitize_hex_color($value);
+        
+        if ($sanitized_slug && $sanitized_value) {
+            $sanitized_colors[$sanitized_slug] = $sanitized_value;
+        }
+    }
+    
+    if (empty($sanitized_colors)) {
+        wp_send_json_error('No valid colors provided');
+        return;
+    }
+    
+    // Define file paths
+    $colors_file = get_template_directory() . '/primitives/colors.json';
+    $backup_file = get_template_directory() . '/primitives/colors.backup.json';
+    
+    // Create backup of existing file
+    if (file_exists($colors_file)) {
+        copy($colors_file, $backup_file);
+    }
+    
+    // Write the new colors file (flat structure)
+    $json_content = json_encode($sanitized_colors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    
+    if (file_put_contents($colors_file, $json_content) === false) {
+        wp_send_json_error('Failed to save colors file');
+        return;
+    }
+    
+    wp_send_json_success(array(
+        'message' => 'Colors saved successfully',
+        'colors' => $sanitized_colors
+    ));
+}
+add_action('wp_ajax_save_colors_primitive', 'migv_save_colors_primitive');
+
+/**
+ * AJAX handler for syncing colors primitive to theme.json
+ */
+function migv_sync_colors_primitive() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'mi_design_book_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Check user capabilities
+    if (!current_user_can('edit_theme_options')) {
+        wp_send_json_error('Insufficient permissions');
+        return;
+    }
+    
+    // Load colors from colors.json
+    $colors_file = get_template_directory() . '/primitives/colors.json';
+    
+    if (!file_exists($colors_file)) {
+        wp_send_json_error('Colors file not found');
+        return;
+    }
+    
+    $colors_data = json_decode(file_get_contents($colors_file), true);
+    
+    if (!$colors_data) {
+        wp_send_json_error('Invalid colors data');
+        return;
+    }
+    
+    // Load theme.json
+    $theme_json_file = get_template_directory() . '/theme.json';
+    
+    if (!file_exists($theme_json_file)) {
+        wp_send_json_error('theme.json not found');
+        return;
+    }
+    
+    $theme_json = json_decode(file_get_contents($theme_json_file), true);
+    
+    if (!$theme_json) {
+        wp_send_json_error('Invalid theme.json');
+        return;
+    }
+    
+    // Create backup
+    $backup_file = get_template_directory() . '/theme.backup.json';
+    copy($theme_json_file, $backup_file);
+    
+    // Update color palette in theme.json (flat structure)
+    $color_palette = array();
+    foreach ($colors_data as $slug => $value) {
+        $color_palette[] = array(
+            'slug' => $slug,
+            'name' => ucwords(str_replace('-', ' ', $slug)),
+            'color' => $value
+        );
+    }
+    
+    // Ensure the structure exists
+    if (!isset($theme_json['settings'])) {
+        $theme_json['settings'] = array();
+    }
+    if (!isset($theme_json['settings']['color'])) {
+        $theme_json['settings']['color'] = array();
+    }
+    
+    // Update the palette
+    $theme_json['settings']['color']['palette'] = $color_palette;
+    
+    // Save theme.json
+    $json_content = json_encode($theme_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    
+    if (file_put_contents($theme_json_file, $json_content) === false) {
+        wp_send_json_error('Failed to update theme.json');
+        return;
+    }
+    
+    wp_send_json_success(array(
+        'message' => 'Colors synced to theme.json successfully',
+        'colors_count' => count($color_palette)
+    ));
+}
+add_action('wp_ajax_sync_colors_primitive', 'migv_sync_colors_primitive');
+
+/**
  * Register main Design Book menu
  */
 function register_design_book_menu() {
@@ -2060,3 +2210,26 @@ function render_layout_editor_page() {
     // Render the template
     Timber::render('design-book-editors/layout-editor.twig', $context);
 }
+
+/**
+ * Enqueue design book editor styles for color book page
+ */
+function migv_enqueue_color_book_styles() {
+    if (is_page('color-book') || is_page_template('page-color-book.php')) {
+        wp_enqueue_style('design-book-editors', get_template_directory_uri() . '/assets/css/design-book-editors.css', array(), '1.0.1');
+        wp_enqueue_script('primitive-colors', get_template_directory_uri() . '/assets/js/primitive-colors.js', array('jquery'), '1.0.1', true);
+        
+        // Localize script for AJAX
+        wp_localize_script('primitive-colors', 'miGV', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('migv_ajax_nonce'),
+            'theme_uri' => get_template_directory_uri()
+        ));
+    }
+}
+add_action('wp_enqueue_scripts', 'migv_enqueue_color_book_styles');
+
+/**
+ * Enqueue scripts for the text editor component.
+ */
+

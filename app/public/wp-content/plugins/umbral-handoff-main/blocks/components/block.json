@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "umbral-editor/components-block",
+    "title": "Umbral Components",
+    "category": "design",
+    "icon": "layout",
+    "description": "Dynamic components block powered by Umbral Editor",
+    "keywords": [ "components", "flexible", "dynamic", "umbral" ],
+    "version": "1.0.0",
+    "textdomain": "umbral-editor",
+    "attributes": {
+        "components": {
+            "type": "array",
+            "default": []
+        },
+        "source_id": {
+            "type": "number",
+            "default": 0
+        },
+        "mode": {
+            "type": "string",
+            "default": "single"
+        },
+        "post_type": {
+            "type": "string",
+            "default": ""
+        },
+        "preview_post_id": {
+            "type": "number",
+            "default": 0
+        },
+        "core_page": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": true,
+        "spacing": {
+            "margin": true,
+            "padding": true
+        }
+    },
+    "example": {
+        "attributes": {
+            "components": []
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./index.php"
+}

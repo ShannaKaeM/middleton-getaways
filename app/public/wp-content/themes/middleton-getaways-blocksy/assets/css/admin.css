@@ -1,0 +1,375 @@
+/**
+ * Middleton Getaways - Admin Styles
+ * 
+ * @package MiddletonGetaways
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Admin Dashboard Customizations
+   ========================================================================== */
+
+/* Custom admin color scheme */
+.wp-admin {
+    --mg-admin-primary: #2c5530;
+    --mg-admin-secondary: #8fbc8f;
+    --mg-admin-accent: #d4a574;
+}
+
+/* Admin menu customizations */
+#adminmenu .wp-menu-image img {
+    opacity: 0.8;
+}
+
+#adminmenu .current .wp-menu-image img,
+#adminmenu .wp-has-current-submenu .wp-menu-image img,
+#adminmenu a.wp-has-current-submenu:focus .wp-menu-image img {
+    opacity: 1;
+}
+
+/* Custom post type icons */
+#adminmenu #menu-posts-property .wp-menu-image:before {
+    content: '\f102';
+    color: var(--mg-admin-primary);
+}
+
+#adminmenu #menu-posts-testimonial .wp-menu-image:before {
+    content: '\f122';
+    color: var(--mg-admin-accent);
+}
+
+/* ==========================================================================
+   Meta Box Styling
+   ========================================================================== */
+
+.cmb2-wrap {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.cmb2-wrap h2 {
+    color: var(--mg-admin-primary);
+    border-bottom: 2px solid var(--mg-admin-secondary);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.cmb-row {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cmb-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.cmb-th label {
+    font-weight: 600;
+    color: var(--mg-admin-primary);
+}
+
+.cmb-td input[type="text"],
+.cmb-td input[type="email"],
+.cmb-td input[type="url"],
+.cmb-td input[type="number"],
+.cmb-td textarea,
+.cmb-td select {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.cmb-td input[type="text"]:focus,
+.cmb-td input[type="email"]:focus,
+.cmb-td input[type="url"]:focus,
+.cmb-td input[type="number"]:focus,
+.cmb-td textarea:focus,
+.cmb-td select:focus {
+    border-color: var(--mg-admin-primary);
+    box-shadow: 0 0 0 1px var(--mg-admin-primary);
+    outline: none;
+}
+
+/* ==========================================================================
+   Property Meta Box Styling
+   ========================================================================== */
+
+.property-meta-box .cmb-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.property-meta-box .cmb-th {
+    flex: 0 0 150px;
+}
+
+.property-meta-box .cmb-td {
+    flex: 1;
+}
+
+.property-gallery-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.property-gallery-item {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.property-gallery-item img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+}
+
+.property-gallery-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Testimonial Meta Box Styling
+   ========================================================================== */
+
+.testimonial-meta-box .rating-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.star-rating {
+    display: flex;
+    gap: 2px;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 20px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input[type="radio"]:checked ~ label {
+    color: #ffc107;
+}
+
+/* ==========================================================================
+   Theme Options Page
+   ========================================================================== */
+
+.theme-options-page .form-table th {
+    color: var(--mg-admin-primary);
+    font-weight: 600;
+}
+
+.theme-options-page .form-table td {
+    padding: 15px 10px;
+}
+
+.theme-options-section {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.theme-options-section h3 {
+    background: var(--mg-admin-primary);
+    color: white;
+    margin: 0;
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+.theme-options-section .form-table {
+    margin: 0;
+}
+
+/* ==========================================================================
+   Custom Buttons
+   ========================================================================== */
+
+.button-mg-primary {
+    background: var(--mg-admin-primary) !important;
+    border-color: var(--mg-admin-primary) !important;
+    color: white !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.button-mg-primary:hover,
+.button-mg-primary:focus {
+    background: #1e3a21 !important;
+    border-color: #1e3a21 !important;
+}
+
+.button-mg-secondary {
+    background: var(--mg-admin-secondary) !important;
+    border-color: var(--mg-admin-secondary) !important;
+    color: white !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.button-mg-secondary:hover,
+.button-mg-secondary:focus {
+    background: #7aa87a !important;
+    border-color: #7aa87a !important;
+}
+
+/* ==========================================================================
+   Media Library Customizations
+   ========================================================================== */
+
+.media-modal .media-frame-title h1 {
+    color: var(--mg-admin-primary);
+}
+
+.media-modal .media-menu-item.active {
+    color: var(--mg-admin-primary);
+    border-bottom-color: var(--mg-admin-primary);
+}
+
+/* ==========================================================================
+   Post List Table Customizations
+   ========================================================================== */
+
+.wp-list-table .property-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.wp-list-table .property-status.available {
+    background: #d4edda;
+    color: #155724;
+}
+
+.wp-list-table .property-status.booked {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.wp-list-table .property-status.maintenance {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* ==========================================================================
+   Dashboard Widgets
+   ========================================================================== */
+
+.mg-dashboard-widget {
+    background: linear-gradient(135deg, var(--mg-admin-primary) 0%, var(--mg-admin-secondary) 100%);
+    color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.mg-dashboard-widget h3 {
+    color: white;
+    margin-top: 0;
+}
+
+.mg-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.mg-stat-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 15px;
+    text-align: center;
+}
+
+.mg-stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
+}
+
+.mg-stat-label {
+    font-size: 12px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .property-meta-box .cmb-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .property-meta-box .cmb-th {
+        flex: none;
+        width: 100%;
+    }
+    
+    .property-gallery-preview {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    
+    .mg-dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .mg-dashboard-widget {
+        background: white !important;
+        color: black !important;
+        border: 1px solid #ddd !important;
+    }
+    
+    .button-mg-primary,
+    .button-mg-secondary {
+        background: white !important;
+        color: black !important;
+        border: 1px solid #ddd !important;
+    }
+}

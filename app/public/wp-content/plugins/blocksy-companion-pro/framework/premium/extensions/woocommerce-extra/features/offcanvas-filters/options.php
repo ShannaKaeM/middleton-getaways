@@ -502,13 +502,23 @@ $options = [
 			'condition' => [ 'woocommerce_filter_type' => 'type-1' ],
 			'options' => [
 
-				'filter_panel_close_on_select' => [
-					'label' => __('Auto Close Panel', 'blocksy-companion'),
-					'desc' => __('Automatically close the panel when a filter option is selected.', 'blocksy-companion'),
-					'type' => 'ct-switch',
-					'value' => 'no',
-					'divider' => 'top',
-				],
+				blocksy_rand_md5() => [
+					'type' => 'ct-condition',
+					'condition' => ['woo_filters_ajax' => 'yes'],
+					'values_source' => 'global',
+					'options' => [
+
+						'filter_panel_close_on_select' => [
+							'label' => __('Auto Close Panel', 'blocksy-companion'),
+							'desc' => __('Automatically close the panel when a filter option is selected.', 'blocksy-companion'),
+							'type' => 'ct-switch',
+							'value' => 'no',
+							'divider' => 'top',
+						],
+
+					]
+				]
+				
 			]
 		],
 

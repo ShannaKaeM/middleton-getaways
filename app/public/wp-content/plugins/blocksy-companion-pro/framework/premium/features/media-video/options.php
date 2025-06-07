@@ -62,13 +62,45 @@ $options = [
 		],
 	],
 
-	'media_video_autoplay' => [
-		'type'  => 'ct-switch',
-		'label' => __( 'Autoplay Video', 'blocksy-companion' ),
-		'value' => 'no',
+	'media_video_event' => [
+		'label' => __( 'Playback Trigger', 'blocksy-companion' ),
+		'desc' => __( 'Select when the video thumbnail should start playing - on click, on hover, or as soon as the page loads.', 'blocksy-companion' ),
+		'type' => 'ct-radio',
+		'value' => blc_theme_functions()->blocksy_get_theme_mod('media_video_autoplay', 'no') === 'yes' ? 'autoplay' : 'click',
+		'view' => 'text',
+		'design' => 'block',
 		'divider' => 'top',
-		'desc' => __( 'Automatically start video playback after the gallery is loaded.', 'blocksy-companion' ),
+		'setting' => [ 'transport' => 'postMessage' ],
+		'choices' => [
+			'click' => __( 'Click', 'blocksy-companion' ),
+			'hover' => __( 'Hover', 'blocksy-companion' ),
+			'autoplay' => __( 'Autoplay', 'blocksy-companion' ),
+		],
 	],
+
+	blocksy_rand_md5() => [
+		'type' => 'ct-condition',
+		'condition' => [ 'media_video_event' => 'hover' ],
+		'options' => [
+
+			'media_video_hover_revert' => [
+				'type'  => 'ct-switch',
+				'label' => __( 'Pause on Hover Out', 'blocksy-companion' ),
+				'value' => 'yes',
+				'divider' => 'top',
+				'desc' => __( 'Automatically pauses the video when the user stops hovering.', 'blocksy-companion' ),
+			],
+
+		],
+	],
+
+	// 'media_video_autoplay' => [
+	// 	'type'  => 'ct-switch',
+	// 	'label' => __( 'Autoplay Video', 'blocksy-companion' ),
+	// 	'value' => 'no',
+	// 	'divider' => 'top',
+	// 	'desc' => __( 'Automatically start video playback after the gallery is loaded.', 'blocksy-companion' ),
+	// ],
 
 	'media_video_loop' => [
 		'type'  => 'ct-switch',

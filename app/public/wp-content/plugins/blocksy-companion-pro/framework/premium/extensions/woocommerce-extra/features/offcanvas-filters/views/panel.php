@@ -49,7 +49,9 @@ echo blocksy_html_tag(
 			'id' => 'woo-filters-panel',
 			'class' => $class,
 			'data-behaviour' => $behavior,
+			'role' => 'dialog',
 			'aria-label' => __('Filters panel', 'blocksy-companion'),
+			'tabindex' => '-1',
 			'inert' => ''
 		],
 		$close_on_select === 'yes' ? ['data-close-on-select' => ''] : []

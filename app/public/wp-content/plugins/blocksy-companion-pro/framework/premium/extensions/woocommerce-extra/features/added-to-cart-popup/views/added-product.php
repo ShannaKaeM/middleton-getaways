@@ -216,6 +216,23 @@ if (
 	||
 	$display_descriptor['show_total']
 ) {
+
+	$shipping_total = wc_price(WC()->cart->get_shipping_total());
+
+	if (
+		(float) WC()->cart->get_shipping_tax() > 0
+		&&
+		WC()->cart->display_prices_including_tax()
+	) {
+		$shipping_total = blocksy_html_tag(
+			'span',
+			[],
+			wc_price(
+				WC()->cart->get_shipping_total() + WC()->cart->get_shipping_tax()
+			) . ' ' . WC()->countries->inc_tax_or_vat()
+		);
+	}
+
 	$product_totals = blocksy_html_tag(
 		'ul',
 		[
@@ -227,7 +244,7 @@ if (
 				[
 					'class' => 'ct-added-to-cart-popup-shipping',
 				],
-				__('Shipping Cost', 'blocksy-companion') . ' ' . wc_price(WC()->cart->get_shipping_total())
+				__('Shipping Cost', 'blocksy-companion') . ' ' . $shipping_total
 			) : ''
 		) .
 		(

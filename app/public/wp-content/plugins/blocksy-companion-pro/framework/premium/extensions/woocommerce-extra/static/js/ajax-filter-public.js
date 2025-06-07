@@ -11,7 +11,7 @@ const makeSilentRedirect = (url) => {
 
 	newUrl.searchParams.delete('blocksy_ajax')
 
-	window.history.replaceState({}, '', newUrl.toString())
+	window.history.replaceState(null, '', newUrl.toString())
 }
 
 export const cachedFetch = (url, silent_redirect = false) =>
@@ -158,7 +158,7 @@ const updateQueryParams = (uri) => {
 	// 	? decodeURIComponent(searchParams.toString())
 	// 	: window.location.pathname
 
-	window.history.pushState({}, document.title, uri)
+	window.history.pushState(null, document.title, uri)
 }
 
 export const fetchData = (uri, silent_redirect) =>
@@ -185,6 +185,11 @@ export const fetchDataFor = (url, silent_redirect) => {
 
 registerDynamicChunk('blocksy_ext_woo_extra_ajax_filters', {
 	mount: (el, { event }) => {
+		if (event.type === 'popstate') {
+			fetchDataFor(window.location.href)
+			return
+		}
+
 		const isAjax = document.querySelector('[data-ajax-filters*="yes"]')
 
 		if (
@@ -294,16 +299,6 @@ registerDynamicChunk('blocksy_ext_woo_extra_ajax_filters', {
 		fetchDataFor(requestUrl, silent_redirect)
 	},
 })
-
-window.addEventListener(
-	'popstate',
-	function (event) {
-		if (event.state) {
-			fetchDataFor(window.location.href)
-		}
-	},
-	false
-)
 
 function whenTransitionEnds(el, cb) {
 	const end = () => {

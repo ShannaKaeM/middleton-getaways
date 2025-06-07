@@ -275,7 +275,10 @@ class CompareView {
 			'id' => 'ct-compare-modal',
 			'class' => 'ct-panel',
 			'data-behaviour' => 'modal',
-			'aria-label' => __('Compare products modal', 'blocksy-companion')
+			'role' => 'dialog',
+			'aria-label' => __('Compare products modal', 'blocksy-companion'),
+			'tabindex' => '-1',
+			'inert' => ''
 		];
 
 		$panel_heading = blocksy_html_tag(

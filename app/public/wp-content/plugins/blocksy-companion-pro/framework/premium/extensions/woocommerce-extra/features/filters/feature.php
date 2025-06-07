@@ -199,21 +199,24 @@ class Filters {
 
 						[
 							'trigger' => 'submit',
-							'selector' =>
-							'[data-ajax-filters*="yes"] .woocommerce-ordering',
+							'selector' => '[data-ajax-filters*="yes"] .woocommerce-ordering'
 						],
 
 						[
 							'trigger' => 'change',
-							'selector' =>
-							'[data-ajax-filters*="yes"] .woocommerce-ordering select',
+							'selector' => '[data-ajax-filters*="yes"] .woocommerce-ordering select',
 						],
 
 						[
 							'trigger' => 'change',
-							'selector' =>
-							'[data-ajax-filters*="yes"] .ct-filter-item [type="checkbox"]',
+							'selector' => '[data-ajax-filters*="yes"] .ct-filter-item [type="checkbox"]',
 						],
+
+						[
+							'trigger' => 'window-event',
+							'eventName' => 'popstate',
+							'selector' => '[data-ajax-filters*="yes"]',
+						]
 					],
 					'url' => blocksy_cdn_url(
 						BLOCKSY_URL .

@@ -10,7 +10,11 @@ $close_button_type = blc_theme_functions()->blocksy_get_theme_mod(
 $panel_attr = [
 	'id' => 'ct-size-guide-modal',
 	'class' => 'ct-panel',
-	'data-behaviour' => 'modal'
+	'data-behaviour' => 'modal',
+	'role' => 'dialog',
+	'aria-label' => __('Size guide modal', 'blocksy-companion'),
+	'tabindex' => '-1',
+	'inert' => ''
 ];
 
 $panel_heading = blocksy_html_tag(

@@ -373,34 +373,42 @@ $options = [
 
 						'compare_modal_background' => [
 							'label' => __( 'Popup Background', 'blocksy-companion' ),
-							'type'  => 'ct-background',
-							'design' => 'block:right',
-							'responsive' => true,
+							'type'  => 'ct-color-picker',
 							'divider' => 'top',
+							'responsive' => true,
 							'setting' => [ 'transport' => 'postMessage' ],
-							'value' => blocksy_background_default_value([
-								'backgroundColor' => [
-									'default' => [
-										'color' => 'var(--theme-palette-color-8)'
-									],
+							'value' => [
+								'default' => [
+									'color' => 'var(--theme-palette-color-8)'
 								],
-							])
+							],
+
+							'pickers' => [
+								[
+									'title' => __( 'Initial', 'blocksy-companion' ),
+									'id' => 'default',
+								],
+							],
 						],
 
 						'compare_modal_backdrop' => [
 							'label' => __( 'Popup Backdrop', 'blocksy-companion' ),
-							'type'  => 'ct-background',
-							'design' => 'block:right',
-							'responsive' => true,
+							'type'  => 'ct-color-picker',
 							'divider' => 'top',
+							'responsive' => true,
 							'setting' => [ 'transport' => 'postMessage' ],
-							'value' => blocksy_background_default_value([
-								'backgroundColor' => [
-									'default' => [
-										'color' => 'rgba(18, 21, 25, 0.8)'
-									],
+							'value' => [
+								'default' => [
+									'color' => 'rgba(18, 21, 25, 0.8)'
 								],
-							])
+							],
+
+							'pickers' => [
+								[
+									'title' => __( 'Initial', 'blocksy-companion' ),
+									'id' => 'default',
+								],
+							],
 						],
 
 						'compare_modal_shadow' => [
@@ -600,18 +608,23 @@ $options = [
 
 						'product_compare_bar_background' => [
 							'label' => __( 'Container Background', 'blocksy-companion' ),
-							'type' => 'ct-background',
-							'design' => 'block:right',
-							'responsive' => true,
+							'type'  => 'ct-color-picker',
 							'divider' => 'top',
-							'sync' => 'live',
-							'value' => blocksy_background_default_value([
-								'backgroundColor' => [
-									'default' => [
-										'color' => 'var(--theme-palette-color-4)',
-									],
+							'responsive' => true,
+							'setting' => [ 'transport' => 'postMessage' ],
+							'value' => [
+								'default' => [
+									'color' => Blocksy_Css_Injector::get_skip_rule_keyword('DEFAULT'),
 								],
-							])
+							],
+
+							'pickers' => [
+								[
+									'title' => __( 'Initial', 'blocksy-companion' ),
+									'id' => 'default',
+									'inherit' => 'var(--theme-palette-color-4)'
+								],
+							],
 						],
 
 					],

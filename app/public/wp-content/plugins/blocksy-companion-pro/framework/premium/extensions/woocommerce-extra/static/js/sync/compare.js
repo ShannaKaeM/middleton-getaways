@@ -1,7 +1,6 @@
 import {
 	responsiveClassesFor,
 	withKeys,
-	handleBackgroundOptionFor,
 	maybePromoteScalarValueIntoResponsive,
 	setRatioFor,
 } from 'blocksy-customizer-sync'
@@ -93,30 +92,32 @@ export const collectVariablesForCompareLayers = (v) => {
 
 export const collectVariablesForCompare = () => ({
 	compare_modal_shadow: {
-		selector: '#ct-compare-modal .ct-container',
+		selector: '#ct-compare-modal',
 		type: 'box-shadow',
 		variable: 'theme-box-shadow',
 		responsive: true,
 	},
 
 	compare_modal_radius: {
-		selector: '#ct-compare-modal .ct-container',
+		selector: '#ct-compare-modal',
 		type: 'spacing',
 		variable: 'theme-border-radius',
 		responsive: true,
 	},
 
-	...handleBackgroundOptionFor({
-		id: 'compare_modal_background',
-		selector: '#ct-compare-modal .ct-container',
-		responsive: true,
-	}),
-
-	...handleBackgroundOptionFor({
-		id: 'compare_modal_backdrop',
+	compare_modal_background: {
 		selector: '#ct-compare-modal',
+		variable: 'modal-background-color',
+		type: 'color',
 		responsive: true,
-	}),
+	},
+
+	compare_modal_backdrop: {
+		selector: '#ct-compare-modal',
+		variable: 'modal-backdrop-color',
+		type: 'color',
+		responsive: true,
+	},
 
 	// compare bar
 	...withKeys(
@@ -188,9 +189,10 @@ export const collectVariablesForCompare = () => ({
 		},
 	],
 
-	...handleBackgroundOptionFor({
-		id: 'product_compare_bar_background',
+	product_compare_bar_background: {
 		selector: '.ct-compare-bar',
+		variable: 'compare-bar-background-color',
+		type: 'color',
 		responsive: true,
-	}),
+	},
 })

@@ -87,6 +87,11 @@ class FiltersBlock {
 					$attributes['taxonomy'] = 'product_brand';
 				}
 
+				if ($attributes['type'] === 'brands') {
+					$attributes['type'] = 'categories';
+					$attributes['taxonomy'] = 'product_brand';
+				}
+
 				$filter = Filters::get_filter_instance('taxonomies_filter');
 
 				if ($attributes['type'] === 'attributes') {

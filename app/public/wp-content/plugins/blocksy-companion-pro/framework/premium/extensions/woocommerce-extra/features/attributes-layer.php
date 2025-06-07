@@ -153,18 +153,37 @@ class AttributesLayer {
 		$rows_html = [];
 
 		foreach ($product->get_attributes() as $taxonomy => $value) {
+			if (!$value['visible']) {
+				continue;
+			}
+			
 			$columns = [];
 
 			$tax_label = $value['name'];
 			$values = [];
 
 			if (taxonomy_exists($value['name'])) {
-				$tax_label = get_taxonomy($value['name'])->labels->singular_name;
+				$taxonomy = get_taxonomy($value['name']);
+				$is_public = $taxonomy->public;
+				$tax_label = $taxonomy->labels->singular_name;
 
 				foreach ($value['options'] as $term_id) {
 					$term = get_term_by('id', $term_id, $value['name']);
 
 					if ($term && !is_wp_error($term)) {
+						if ($is_public) {
+							$values[] = blocksy_html_tag(
+								'a',
+								[
+									'href' => get_term_link($term),
+									'class' => 'ct-product-attribute-link'
+								],
+								esc_html($term->name)
+							);
+
+							continue;
+						}
+
 						$values[] = esc_html($term->name);
 					}
 				}

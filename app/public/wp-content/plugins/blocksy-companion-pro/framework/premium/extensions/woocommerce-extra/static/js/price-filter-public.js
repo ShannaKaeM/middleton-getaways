@@ -172,9 +172,7 @@ registerDynamicChunk('blocksy_ext_woo_extra_price_filters', {
 window.addEventListener(
 	'popstate',
 	function (event) {
-		if (event.state) {
-			fetchDataFor(window.location.href)
-		}
+		fetchDataFor(window.location.href)
 	},
 	false
 )

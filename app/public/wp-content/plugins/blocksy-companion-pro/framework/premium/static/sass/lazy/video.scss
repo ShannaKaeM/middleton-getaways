@@ -55,7 +55,7 @@
 			}
 		}
 
-		&[data-state='paused'] {
+		&[data-state*='paused'] {
 
 			.ct-video-container {
 				opacity: 0;

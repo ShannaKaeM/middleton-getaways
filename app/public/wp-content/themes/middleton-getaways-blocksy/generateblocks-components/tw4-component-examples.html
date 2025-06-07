@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TW4 Component Variants Examples</title>
+    <link rel="stylesheet" href="tw4-components.css">
+</head>
+<body class="bg-gray-50">
+
+<!-- EXAMPLE 1: Card Variants -->
+<section class="mi-section section-feature" data-section="feature">
+    <div class="mi-container">
+        <h2 class="text-3xl font-bold mb-8">Card Variants</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card Style 1 -->
+            <div class="mi-card card-style-1" data-card-style="1">
+                <div class="card-header">
+                    <h3 class="text-xl font-semibold">Card Style 1</h3>
+                    <p class="text-gray-600">Clean & Minimal</p>
+                </div>
+                <div class="card-body">
+                    <p>This is the default card style with clean borders and subtle shadow.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="mi-btn btn-primary" data-btn="primary">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- Card Style 2 -->
+            <div class="mi-card card-style-2" data-card-style="2">
+                <div class="card-header">
+                    <h3 class="text-xl font-semibold">Card Style 2</h3>
+                    <p class="opacity-80">Branded & Bold</p>
+                </div>
+                <div class="card-body">
+                    <p>This card uses brand colors with stronger visual presence.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="mi-btn btn-outline text-white border-white" data-btn="outline">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- Card Style 3 -->
+            <div class="mi-card card-style-3 card-hover-lift" data-card-style="3">
+                <div class="card-header">
+                    <h3 class="text-xl font-semibold">Card Style 3</h3>
+                    <p class="text-gray-600">Gradient & Modern</p>
+                </div>
+                <div class="card-body">
+                    <p>Features a gradient background with hover lift effect.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="mi-btn btn-secondary" data-btn="secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card with inline overrides -->
+        <div class="mt-8">
+            <h3 class="text-xl font-semibold mb-4">Card with Inline Overrides</h3>
+            <div class="mi-card card-style-1 p-10 bg-primary-light shadow-2xl max-w-md" data-card-style="1">
+                <h4 class="text-lg font-semibold">Overridden Card</h4>
+                <p>This card uses style 1 as base but overrides padding, background, and shadow inline.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXAMPLE 2: Button Variants -->
+<section class="mi-section py-16 bg-white">
+    <div class="mi-container">
+        <h2 class="text-3xl font-bold mb-8">Button Variants</h2>
+        
+        <!-- Button styles -->
+        <div class="space-y-6">
+            <div>
+                <h3 class="text-lg font-semibold mb-3">Button Styles</h3>
+                <div class="btn-group">
+                    <a href="#" class="mi-btn btn-primary" data-btn="primary">Primary</a>
+                    <a href="#" class="mi-btn btn-secondary" data-btn="secondary">Secondary</a>
+                    <a href="#" class="mi-btn btn-outline" data-btn="outline">Outline</a>
+                    <a href="#" class="mi-btn btn-ghost" data-btn="ghost">Ghost</a>
+                </div>
+            </div>
+            
+            <!-- Button sizes -->
+            <div>
+                <h3 class="text-lg font-semibold mb-3">Button Sizes</h3>
+                <div class="btn-group items-center">
+                    <a href="#" class="mi-btn btn-primary size-sm" data-btn="primary" data-size="sm">Small</a>
+                    <a href="#" class="mi-btn btn-primary size-md" data-btn="primary" data-size="md">Medium</a>
+                    <a href="#" class="mi-btn btn-primary size-lg" data-btn="primary" data-size="lg">Large</a>
+                    <a href="#" class="mi-btn btn-primary size-xl" data-btn="primary" data-size="xl">Extra Large</a>
+                </div>
+            </div>
+            
+            <!-- Button with inline overrides -->
+            <div>
+                <h3 class="text-lg font-semibold mb-3">Buttons with Inline Overrides</h3>
+                <div class="btn-group">
+                    <a href="#" class="mi-btn btn-primary rounded-full" data-btn="primary">Pill Button</a>
+                    <a href="#" class="mi-btn btn-outline shadow-lg" data-btn="outline">Shadow Outline</a>
+                    <a href="#" class="mi-btn btn-ghost bg-gray-100 text-gray-700" data-btn="ghost">Custom Ghost</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXAMPLE 3: Hero Section Variant -->
+<section class="mi-section section-hero" data-section="hero">
+    <div class="mi-container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Content -->
+            <div>
+                <h1 class="text-5xl font-bold mb-6">Hero Section Variant</h1>
+                <p class="text-xl mb-8 text-gray-600">
+                    This hero section uses the section-hero variant with data-section="hero".
+                    It automatically gets the right padding, height, and background.
+                </p>
+                <div class="btn-group">
+                    <a href="#" class="mi-btn btn-primary size-lg" data-btn="primary" data-size="lg">Get Started</a>
+                    <a href="#" class="mi-btn btn-outline size-lg" data-btn="outline" data-size="lg">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- Feature cards -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="mi-card card-style-1 animate-fade-in" data-card-style="1">
+                    <h3 class="font-semibold">Feature 1</h3>
+                    <p class="text-sm text-gray-600">Quick description</p>
+                </div>
+                <div class="mi-card card-style-1 animate-fade-in" data-card-style="1" style="animation-delay: 0.1s">
+                    <h3 class="font-semibold">Feature 2</h3>
+                    <p class="text-sm text-gray-600">Quick description</p>
+                </div>
+                <div class="mi-card card-style-1 animate-fade-in" data-card-style="1" style="animation-delay: 0.2s">
+                    <h3 class="font-semibold">Feature 3</h3>
+                    <p class="text-sm text-gray-600">Quick description</p>
+                </div>
+                <div class="mi-card card-style-1 animate-fade-in" data-card-style="1" style="animation-delay: 0.3s">
+                    <h3 class="font-semibold">Feature 4</h3>
+                    <p class="text-sm text-gray-600">Quick description</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXAMPLE 4: WordPress Block Pattern -->
+<section class="mi-section py-16 bg-gray-100">
+    <div class="mi-container">
+        <h2 class="text-3xl font-bold mb-8">WordPress Block Pattern Example</h2>
+        
+        <div class="bg-white p-8 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold mb-4">How to Use in WordPress:</h3>
+            
+            <pre class="bg-gray-900 text-white p-4 rounded overflow-x-auto"><code>&lt;!-- wp:generateblocks/container {"className":"mi-card card-style-2","htmlAttributes":{"data-card-style":"2"}} --&gt;
+&lt;div class="wp-block-generateblocks-container mi-card card-style-2" data-card-style="2"&gt;
+    
+    &lt;!-- wp:heading {"level":3} --&gt;
+    &lt;h3&gt;Premium Property&lt;/h3&gt;
+    &lt;!-- /wp:heading --&gt;
+    
+    &lt;!-- wp:paragraph --&gt;
+    &lt;p&gt;Experience luxury in our premium vacation rentals.&lt;/p&gt;
+    &lt;!-- /wp:paragraph --&gt;
+    
+    &lt;!-- wp:generateblocks/button {"className":"mi-btn btn-primary","htmlAttributes":{"data-btn":"primary"}} --&gt;
+    &lt;a class="wp-block-generateblocks-button mi-btn btn-primary" data-btn="primary"&gt;Book Now&lt;/a&gt;
+    &lt;!-- /wp:generateblocks/button --&gt;
+    
+&lt;/div&gt;
+&lt;!-- /wp:generateblocks/container --&gt;</code></pre>
+        </div>
+    </div>
+</section>
+
+<!-- EXAMPLE 5: Responsive Variants -->
+<section class="mi-section py-16 bg-white">
+    <div class="mi-container">
+        <h2 class="text-3xl font-bold mb-8">Responsive Variants</h2>
+        
+        <div class="mi-card card-style-1 md:card-style-2 lg:card-style-3" 
+             data-card-style="1">
+            <h3 class="text-xl font-semibold mb-4">Responsive Card</h3>
+            <p class="mb-4">This card changes styles at different breakpoints:</p>
+            <ul class="list-disc list-inside space-y-1 text-gray-600">
+                <li>Mobile: Card Style 1 (minimal)</li>
+                <li>Tablet: Card Style 2 (branded)</li>
+                <li>Desktop: Card Style 3 (gradient)</li>
+            </ul>
+            <div class="mt-6">
+                <a href="#" class="mi-btn btn-outline size-sm md:size-md lg:size-lg" 
+                   data-btn="outline" data-size="sm">
+                    Responsive Button
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXAMPLE 6: CTA Section -->
+<section class="mi-section section-cta" data-section="cta">
+    <div class="mi-container text-center">
+        <h2 class="text-4xl font-bold mb-4">Ready to Get Started?</h2>
+        <p class="text-xl mb-8 opacity-90">
+            Experience the power of component variants with TW4
+        </p>
+        <div class="btn-group justify-center">
+            <a href="#" class="mi-btn btn-primary size-lg bg-white text-primary hover:bg-gray-100" 
+               data-btn="primary" data-size="lg">
+                Start Building
+            </a>
+            <a href="#" class="mi-btn btn-outline size-lg border-white text-white hover:bg-white hover:text-primary" 
+               data-btn="outline" data-size="lg">
+                View Documentation
+            </a>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

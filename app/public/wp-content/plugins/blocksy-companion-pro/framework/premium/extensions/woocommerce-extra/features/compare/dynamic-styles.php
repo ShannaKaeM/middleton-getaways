@@ -5,7 +5,7 @@ blocksy_output_box_shadow([
 	'css' => $css,
 	'tablet_css' => $tablet_css,
 	'mobile_css' => $mobile_css,
-	'selector' => '#ct-compare-modal .ct-container',
+	'selector' => '#ct-compare-modal',
 	'value' => blc_theme_functions()->blocksy_get_theme_mod('compare_modal_shadow', blocksy_box_shadow_value([
 		'enable' => true,
 		'h_offset' => 0,
@@ -24,7 +24,7 @@ blocksy_output_spacing([
 	'css' => $css,
 	'tablet_css' => $tablet_css,
 	'mobile_css' => $mobile_css,
-	'selector' => '#ct-compare-modal .ct-container',
+	'selector' => '#ct-compare-modal',
 	'property' => 'theme-border-radius',
 	'value' => blc_theme_functions()->blocksy_get_theme_mod( 'compare_modal_radius',
 		blocksy_spacing_value()
@@ -32,38 +32,40 @@ blocksy_output_spacing([
 	'empty_value' => 7
 ]);
 
-blocksy_output_background_css([
+
+
+blocksy_output_colors([
+	'value' => blocksy_get_theme_mod('compare_modal_background'),
+	'default' => [
+		'default' => [ 'color' => 'var(--theme-palette-color-8)' ],
+	],
 	'css' => $css,
 	'tablet_css' => $tablet_css,
 	'mobile_css' => $mobile_css,
-	'responsive' => true,
-	'selector' => '#ct-compare-modal .ct-container',
-	'value' => blc_theme_functions()->blocksy_get_theme_mod('compare_modal_background',
-		blocksy_background_default_value([
-			'backgroundColor' => [
-				'default' => [
-					'color' => 'var(--theme-palette-color-8)'
-				],
-			],
-		])
-	)
+	'variables' => [
+		'default' => [
+			'selector' => '#ct-compare-modal',
+			'variable' => 'modal-background-color'
+		],
+	],
+	'responsive' => true
 ]);
 
-blocksy_output_background_css([
+blocksy_output_colors([
+	'value' => blocksy_get_theme_mod('compare_modal_backdrop'),
+	'default' => [
+		'default' => [ 'color' => 'rgba(18, 21, 25, 0.8)' ],
+	],
 	'css' => $css,
 	'tablet_css' => $tablet_css,
 	'mobile_css' => $mobile_css,
-	'responsive' => true,
-	'selector' => '#ct-compare-modal',
-	'value' => blc_theme_functions()->blocksy_get_theme_mod('compare_modal_backdrop',
-		blocksy_background_default_value([
-			'backgroundColor' => [
-				'default' => [
-					'color' => 'rgba(18, 21, 25, 0.8)'
-				],
-			],
-		])
-	)
+	'variables' => [
+		'default' => [
+			'selector' => '#ct-compare-modal',
+			'variable' => 'modal-backdrop-color'
+		],
+	],
+	'responsive' => true
 ]);
 
 
@@ -235,20 +237,20 @@ if ($has_product_compare_bar === 'yes') {
 		'responsive' => true
 	]);
 
-	blocksy_output_background_css([
+	blocksy_output_colors([
+		'value' => blocksy_get_theme_mod('product_compare_bar_background'),
+		'default' => [
+			'default' => [ 'color' => Blocksy_Css_Injector::get_skip_rule_keyword('DEFAULT') ],
+		],
 		'css' => $css,
 		'tablet_css' => $tablet_css,
 		'mobile_css' => $mobile_css,
-		'responsive' => true,
-		'selector' => '.ct-compare-bar',
-		'value' => blc_theme_functions()->blocksy_get_theme_mod('product_compare_bar_background',
-			blocksy_background_default_value([
-				'backgroundColor' => [
-					'default' => [
-						'color' => 'var(--theme-palette-color-4)',
-					],
-				],
-			])
-		)
+		'variables' => [
+			'default' => [
+				'selector' => '.ct-compare-bar',
+				'variable' => 'compare-bar-background-color'
+			],
+		],
+		'responsive' => true
 	]);
 }

@@ -1,0 +1,222 @@
+/**
+ * GutenStyles Bridge - TW4 to WordPress/GenerateBlocks
+ * 
+ * Maps Tailwind CSS v4 variables to WordPress preset variables
+ * and GenerateBlocks custom properties for seamless integration
+ */
+
+/* ============================================
+   WordPress Block Editor Presets
+   Maps TW4 variables to WP preset CSS variables
+   ============================================ */
+
+:root {
+  /* Color Palette Mapping */
+  --wp--preset--color--primary: var(--color-primary);
+  --wp--preset--color--primary-light: var(--color-primary-light, var(--color-primary-300));
+  --wp--preset--color--primary-dark: var(--color-primary-dark, var(--color-primary-700));
+  --wp--preset--color--secondary: var(--color-secondary);
+  --wp--preset--color--secondary-light: var(--color-secondary-light, var(--color-secondary-300));
+  --wp--preset--color--secondary-dark: var(--color-secondary-dark, var(--color-secondary-700));
+  --wp--preset--color--accent: var(--color-accent);
+  --wp--preset--color--white: var(--color-white);
+  --wp--preset--color--black: var(--color-black);
+  --wp--preset--color--gray-50: var(--color-gray-50);
+  --wp--preset--color--gray-100: var(--color-gray-100);
+  --wp--preset--color--gray-200: var(--color-gray-200);
+  --wp--preset--color--gray-300: var(--color-gray-300);
+  --wp--preset--color--gray-400: var(--color-gray-400);
+  --wp--preset--color--gray-500: var(--color-gray-500);
+  --wp--preset--color--gray-600: var(--color-gray-600);
+  --wp--preset--color--gray-700: var(--color-gray-700);
+  --wp--preset--color--gray-800: var(--color-gray-800);
+  --wp--preset--color--gray-900: var(--color-gray-900);
+  
+  /* Spacing Scale Mapping */
+  --wp--preset--spacing--0: var(--spacing-0);
+  --wp--preset--spacing--1: var(--spacing-1);
+  --wp--preset--spacing--2: var(--spacing-2);
+  --wp--preset--spacing--3: var(--spacing-3);
+  --wp--preset--spacing--4: var(--spacing-4);
+  --wp--preset--spacing--5: var(--spacing-5);
+  --wp--preset--spacing--6: var(--spacing-6);
+  --wp--preset--spacing--8: var(--spacing-8);
+  --wp--preset--spacing--10: var(--spacing-10);
+  --wp--preset--spacing--12: var(--spacing-12);
+  --wp--preset--spacing--16: var(--spacing-16);
+  --wp--preset--spacing--20: var(--spacing-20);
+  --wp--preset--spacing--24: var(--spacing-24);
+  --wp--preset--spacing--32: var(--spacing-32);
+  
+  /* Typography Mapping */
+  --wp--preset--font-size--xs: var(--text-xs);
+  --wp--preset--font-size--sm: var(--text-sm);
+  --wp--preset--font-size--base: var(--text-base);
+  --wp--preset--font-size--lg: var(--text-lg);
+  --wp--preset--font-size--xl: var(--text-xl);
+  --wp--preset--font-size--2xl: var(--text-2xl);
+  --wp--preset--font-size--3xl: var(--text-3xl);
+  --wp--preset--font-size--4xl: var(--text-4xl);
+  --wp--preset--font-size--5xl: var(--text-5xl);
+  
+  /* Shadow Mapping */
+  --wp--preset--shadow--sm: var(--shadow-sm);
+  --wp--preset--shadow--base: var(--shadow);
+  --wp--preset--shadow--md: var(--shadow-md);
+  --wp--preset--shadow--lg: var(--shadow-lg);
+  --wp--preset--shadow--xl: var(--shadow-xl);
+  --wp--preset--shadow--2xl: var(--shadow-2xl);
+  --wp--preset--shadow--none: var(--shadow-none);
+}
+
+/* ============================================
+   GenerateBlocks Integration
+   Maps TW4 to GB custom properties
+   ============================================ */
+
+.gb-container,
+.gb-button,
+.gb-headline,
+.gb-image {
+  /* Container Variables */
+  --gb-container-padding: var(--spacing-6);
+  --gb-container-padding-mobile: var(--spacing-4);
+  --gb-container-margin: var(--spacing-0);
+  --gb-container-background: var(--color-white);
+  --gb-container-border-radius: var(--radius-lg);
+  --gb-container-shadow: var(--shadow-md);
+  
+  /* Button Variables */
+  --gb-button-padding-x: var(--spacing-6);
+  --gb-button-padding-y: var(--spacing-3);
+  --gb-button-background: var(--color-primary);
+  --gb-button-color: var(--color-white);
+  --gb-button-border-radius: var(--radius-md);
+  --gb-button-font-size: var(--text-base);
+  --gb-button-font-weight: 500;
+  
+  /* Typography Variables */
+  --gb-headline-color: var(--color-gray-900);
+  --gb-headline-font-size: var(--text-2xl);
+  --gb-headline-line-height: var(--leading-tight);
+  --gb-text-color: var(--color-gray-600);
+  --gb-text-font-size: var(--text-base);
+  --gb-text-line-height: var(--leading-relaxed);
+}
+
+/* ============================================
+   Utility Classes for GB
+   Use in "Additional CSS Classes" field
+   ============================================ */
+
+/* Colors */
+.tw-bg-primary { background-color: var(--color-primary) !important; }
+.tw-bg-secondary { background-color: var(--color-secondary) !important; }
+.tw-bg-accent { background-color: var(--color-accent) !important; }
+.tw-text-primary { color: var(--color-primary) !important; }
+.tw-text-secondary { color: var(--color-secondary) !important; }
+.tw-text-accent { color: var(--color-accent) !important; }
+
+/* Spacing */
+.tw-p-0 { padding: var(--spacing-0) !important; }
+.tw-p-4 { padding: var(--spacing-4) !important; }
+.tw-p-6 { padding: var(--spacing-6) !important; }
+.tw-p-8 { padding: var(--spacing-8) !important; }
+.tw-m-0 { margin: var(--spacing-0) !important; }
+.tw-m-4 { margin: var(--spacing-4) !important; }
+.tw-m-6 { margin: var(--spacing-6) !important; }
+.tw-m-8 { margin: var(--spacing-8) !important; }
+
+/* Typography */
+.tw-text-sm { font-size: var(--text-sm) !important; }
+.tw-text-base { font-size: var(--text-base) !important; }
+.tw-text-lg { font-size: var(--text-lg) !important; }
+.tw-text-xl { font-size: var(--text-xl) !important; }
+.tw-text-2xl { font-size: var(--text-2xl) !important; }
+.tw-text-3xl { font-size: var(--text-3xl) !important; }
+
+/* Shadows */
+.tw-shadow-none { box-shadow: var(--shadow-none) !important; }
+.tw-shadow-sm { box-shadow: var(--shadow-sm) !important; }
+.tw-shadow { box-shadow: var(--shadow) !important; }
+.tw-shadow-md { box-shadow: var(--shadow-md) !important; }
+.tw-shadow-lg { box-shadow: var(--shadow-lg) !important; }
+.tw-shadow-xl { box-shadow: var(--shadow-xl) !important; }
+
+/* Border Radius */
+.tw-rounded-none { border-radius: var(--radius-none) !important; }
+.tw-rounded-sm { border-radius: var(--radius-sm) !important; }
+.tw-rounded { border-radius: var(--radius-md) !important; }
+.tw-rounded-lg { border-radius: var(--radius-lg) !important; }
+.tw-rounded-xl { border-radius: var(--radius-xl) !important; }
+.tw-rounded-full { border-radius: var(--radius-full) !important; }
+
+/* ============================================
+   Component Patterns
+   Pre-built patterns using TW4 variables
+   ============================================ */
+
+/* Card Pattern */
+.tw-card {
+  background: var(--color-white);
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-gray-200);
+}
+
+/* Button Pattern */
+.tw-button {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-3) var(--spacing-6);
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.tw-button:hover {
+  background: var(--color-primary-dark, var(--color-primary-700));
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Section Pattern */
+.tw-section {
+  padding: var(--spacing-16) var(--spacing-6);
+}
+
+@media (min-width: 768px) {
+  .tw-section {
+    padding: var(--spacing-20) var(--spacing-8);
+  }
+}
+
+/* ============================================
+   Responsive Utilities
+   Mobile-first responsive helpers
+   ============================================ */
+
+@media (min-width: 640px) {
+  .sm\:tw-p-6 { padding: var(--spacing-6) !important; }
+  .sm\:tw-p-8 { padding: var(--spacing-8) !important; }
+  .sm\:tw-text-lg { font-size: var(--text-lg) !important; }
+  .sm\:tw-text-xl { font-size: var(--text-xl) !important; }
+}
+
+@media (min-width: 768px) {
+  .md\:tw-p-8 { padding: var(--spacing-8) !important; }
+  .md\:tw-p-10 { padding: var(--spacing-10) !important; }
+  .md\:tw-text-xl { font-size: var(--text-xl) !important; }
+  .md\:tw-text-2xl { font-size: var(--text-2xl) !important; }
+}
+
+@media (min-width: 1024px) {
+  .lg\:tw-p-10 { padding: var(--spacing-10) !important; }
+  .lg\:tw-p-12 { padding: var(--spacing-12) !important; }
+  .lg\:tw-text-2xl { font-size: var(--text-2xl) !important; }
+  .lg\:tw-text-3xl { font-size: var(--text-3xl) !important; }
+}

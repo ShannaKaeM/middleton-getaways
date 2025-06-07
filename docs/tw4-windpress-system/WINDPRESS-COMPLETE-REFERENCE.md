@@ -1,7 +1,7 @@
 # Windpress Complete Reference
 *Comprehensive guide to the Windpress WordPress plugin for TW4 integration*
 
-> 📚 **Related Documentation:** See [TW4-COMPLETE-UPDATED-REFERENCE.md](./TW4-COMPLETE-UPDATED-REFERENCE.md) for complete Tailwind CSS v4 documentation.
+> 📚 **Related Documentation:** See [TW4-COMPLETE-REFERENCE.md](./TW4-COMPLETE-REFERENCE.md) for complete Tailwind CSS v4 documentation.
 
 ## 🚀 What is Windpress?
 

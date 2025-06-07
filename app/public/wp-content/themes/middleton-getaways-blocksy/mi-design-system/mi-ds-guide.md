@@ -5,9 +5,8 @@
 
 ### Generic Documentation (Reusable)
 > **Location:** [docs/tw4-windpress-system/](../../../../../docs/tw4-windpress-system/)
-> - [TW4-COMPLETE-UPDATED-REFERENCE.md](../../../../../docs/tw4-windpress-system/TW4-COMPLETE-UPDATED-REFERENCE.md) - Complete TW4 reference
-> - [WINDPRESS-COMPLETE-REFERENCE.md](../../../../../docs/tw4-windpress-system/WINDPRESS-COMPLETE-REFERENCE.md) - Complete Windpress reference  
-> - [INTEGRATION-GUIDE.md](../../../../../docs/tw4-windpress-system/INTEGRATION-GUIDE.md) - Generic implementation guide
+> - [TW4-COMPLETE-REFERENCE.md](../../../../../docs/tw4-windpress-system/TW4-COMPLETE-REFERENCE.md) - Complete TW4 reference
+> - [WINDPRESS-COMPLETE-REFERENCE.md](../../../../../docs/tw4-windpress-system/WINDPRESS-COMPLETE-REFERENCE.md) - Complete Windpress reference
 
 ### Project Files (This Directory)
 > **Location:** `mi-design-system/`

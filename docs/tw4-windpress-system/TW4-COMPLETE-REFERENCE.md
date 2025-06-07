@@ -1,5 +1,7 @@
-# Tailwind CSS v4 Complete Updated Reference
+# Tailwind CSS v4 Complete Reference
 *Based on comprehensive review of official TW4 documentation*
+
+> 📚 **Related Documentation:** See [WINDPRESS-COMPLETE-REFERENCE.md](./WINDPRESS-COMPLETE-REFERENCE.md) for WordPress integration with Windpress plugin.
 
 ## 🚀 Key Differences: TW3 vs TW4
 

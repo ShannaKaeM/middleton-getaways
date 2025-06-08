@@ -47,3 +47,16 @@ function middleton_getaways_enqueue_color_book_assets() {
     }
 }
 add_action('wp_enqueue_scripts', 'middleton_getaways_enqueue_color_book_assets');
+
+/**
+ * Enqueue MI Design System assets
+ */
+function middleton_getaways_enqueue_design_system() {
+    wp_enqueue_style(
+        'mi-design-system-style', 
+        get_stylesheet_directory_uri() . '/assets/css/mi-design-system.css', 
+        array('middleton-getaways-style'), 
+        '1.0.0'
+    );
+}
+add_action('wp_enqueue_scripts', 'middleton_getaways_enqueue_design_system');

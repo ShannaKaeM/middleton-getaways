@@ -1,0 +1,51 @@
+<!-- wp:generateblocks/container {"className":"card @container/card","removeElementClasses":true} -->
+<div class="card @container/card">
+  <!-- wp:generateblocks/container {"className":"card-content","removeElementClasses":true} -->
+  <div class="card-content">
+    
+    <!-- wp:generateblocks/headline {"element":"p","className":"text-primary-600 text-sm uppercase tracking-wider","removeElementClasses":true} -->
+    <p class="text-primary-600 text-sm uppercase tracking-wider">Featured Property</p>
+    <!-- /wp:generateblocks/headline -->
+    
+    <!-- wp:generateblocks/headline {"element":"h3","className":"card-title","removeElementClasses":true} -->
+    <h3 class="card-title">Mountain Vista Retreat</h3>
+    <!-- /wp:generateblocks/headline -->
+    
+    <!-- wp:generateblocks/text {"className":"card-description","removeElementClasses":true} -->
+    <p class="card-description">Escape to this luxurious mountain cabin with panoramic views, modern amenities, and direct access to hiking trails. Perfect for a romantic getaway or family adventure.</p>
+    <!-- /wp:generateblocks/text -->
+    
+    <!-- wp:generateblocks/container {"className":"flex flex-wrap gap-2 my-4","removeElementClasses":true} -->
+    <div class="flex flex-wrap gap-2 my-4">
+      <!-- wp:generateblocks/text {"element":"span","className":"px-3 py-1 bg-base-100 text-base-700 rounded-full text-sm","removeElementClasses":true} -->
+      <span class="px-3 py-1 bg-base-100 text-base-700 rounded-full text-sm">3 Bedrooms</span>
+      <!-- /wp:generateblocks/text -->
+      <!-- wp:generateblocks/text {"element":"span","className":"px-3 py-1 bg-base-100 text-base-700 rounded-full text-sm","removeElementClasses":true} -->
+      <span class="px-3 py-1 bg-base-100 text-base-700 rounded-full text-sm">2 Baths</span>
+      <!-- /wp:generateblocks/text -->
+      <!-- wp:generateblocks/text {"element":"span","className":"px-3 py-1 bg-base-100 text-base-700 rounded-full text-sm","removeElementClasses":true} -->
+      <span class="px-3 py-1 bg-base-100 text-base-700 rounded-full text-sm">Hot Tub</span>
+      <!-- /wp:generateblocks/text -->
+    </div>
+    <!-- /wp:generateblocks/container -->
+    
+    <!-- wp:generateblocks/headline {"element":"div","className":"text-2xl font-bold text-primary-700 mb-4","removeElementClasses":true} -->
+    <div class="text-2xl font-bold text-primary-700 mb-4">$350<span class="text-base font-normal text-base-600">/night</span></div>
+    <!-- /wp:generateblocks/headline -->
+    
+    <!-- wp:generateblocks/container {"className":"card-footer","removeElementClasses":true} -->
+    <div class="card-footer">
+      <!-- wp:generateblocks/button {"text":"Book Now","className":"btn btn-primary","removeElementClasses":true} -->
+      <a class="btn btn-primary" href="#">Book Now</a>
+      <!-- /wp:generateblocks/button -->
+      
+      <!-- wp:generateblocks/button {"text":"View Details","className":"btn btn-secondary","removeElementClasses":true} -->
+      <a class="btn btn-secondary" href="#">View Details</a>
+      <!-- /wp:generateblocks/button -->
+    </div>
+    <!-- /wp:generateblocks/container -->
+    
+  </div>
+  <!-- /wp:generateblocks/container -->
+</div>
+<!-- /wp:generateblocks/container -->

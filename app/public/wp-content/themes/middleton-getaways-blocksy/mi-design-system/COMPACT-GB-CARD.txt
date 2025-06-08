@@ -1,0 +1,30 @@
+<!-- wp:generateblocks/container {"className":"card @container/card"} -->
+<div class="gb-container card @container/card">
+<!-- wp:generateblocks/container {"className":"card-content"} -->
+<div class="gb-container card-content">
+<!-- wp:generateblocks/headline {"element":"p","className":"text-primary-600 text-sm uppercase tracking-wider"} -->
+<p class="gb-headline text-primary-600 text-sm uppercase tracking-wider">Featured Property</p>
+<!-- /wp:generateblocks/headline -->
+<!-- wp:generateblocks/headline {"element":"h3","className":"card-title"} -->
+<h3 class="gb-headline card-title">Mountain Vista Retreat</h3>
+<!-- /wp:generateblocks/headline -->
+<!-- wp:generateblocks/text {"className":"card-description"} -->
+<p class="gb-text card-description">Escape to this luxurious mountain cabin with panoramic views, modern amenities, and direct access to hiking trails.</p>
+<!-- /wp:generateblocks/text -->
+<!-- wp:generateblocks/headline {"element":"div","className":"text-2xl font-bold text-primary-700 mb-4"} -->
+<div class="gb-headline text-2xl font-bold text-primary-700 mb-4">$350<span class="text-base font-normal text-base-600">/night</span></div>
+<!-- /wp:generateblocks/headline -->
+<!-- wp:generateblocks/container {"className":"card-footer"} -->
+<div class="gb-container card-footer">
+<!-- wp:generateblocks/button {"text":"Book Now","className":"btn btn-primary"} -->
+<a class="gb-button btn btn-primary" href="#">Book Now</a>
+<!-- /wp:generateblocks/button -->
+<!-- wp:generateblocks/button {"text":"View Details","className":"btn btn-secondary"} -->
+<a class="gb-button btn btn-secondary" href="#">View Details</a>
+<!-- /wp:generateblocks/button -->
+</div>
+<!-- /wp:generateblocks/container -->
+</div>
+<!-- /wp:generateblocks/container -->
+</div>
+<!-- /wp:generateblocks/container -->

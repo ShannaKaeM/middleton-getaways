@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Middleton Getaways - HTML Snippets</title>
+    <!-- Windpress will handle Tailwind CSS -->
+</head>
+<body class="bg-base-50 text-base-900">
+    
+    <!-- ===================================================================
+         CARD EXAMPLES - Copy these snippets into your WordPress content
+         =================================================================== -->
+    
+    <!-- Basic Card - Small -->
+    <div class="card card-sm @container/card">
+        <div class="card-header aspect-video">
+            <img 
+                src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop" 
+                alt="Cozy Mountain Cabin" 
+                class="w-full h-full object-cover"
+            />
+        </div>
+        <div class="card-content">
+            <h3 class="card-title @sm/card:text-xl">
+                Cozy Mountain Cabin
+            </h3>
+            <p class="card-description @sm/card:text-base">
+                Perfect for couples seeking a romantic retreat with stunning mountain views.
+            </p>
+        </div>
+        <div class="card-footer @sm/card:flex-row">
+            <button class="btn btn-primary btn-sm @sm/card:btn-md">
+                Book Now
+            </button>
+        </div>
+    </div>
+
+    <!-- Card with Pretitle - Medium -->
+    <div class="card card-md @container/card">
+        <div class="card-header aspect-video">
+            <img 
+                src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=500&h=300&fit=crop" 
+                alt="Luxury Lodge" 
+                class="w-full h-full object-cover"
+            />
+        </div>
+        <div class="card-content">
+            <span class="card-pretitle text-xs @sm/card:text-sm uppercase tracking-wider text-primary-600 font-medium">
+                Premium Experience
+            </span>
+            <h3 class="card-title @sm/card:text-xl">
+                Luxury Mountain Lodge
+            </h3>
+            <p class="card-description @sm/card:text-base">
+                Experience ultimate comfort in our premium lodge with spa services and gourmet dining.
+            </p>
+        </div>
+        <div class="card-footer @sm/card:flex-row">
+            <button class="btn btn-primary btn-sm @sm/card:btn-md">
+                View Details
+            </button>
+            <button class="btn btn-outline btn-sm @sm/card:btn-md">
+                Check Rates
+            </button>
+        </div>
+    </div>
+
+    <!-- Large Card -->
+    <div class="card card-lg @container/card">
+        <div class="card-header aspect-video">
+            <img 
+                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop" 
+                alt="Mountain Vista" 
+                class="w-full h-full object-cover"
+            />
+        </div>
+        <div class="card-content">
+            <span class="card-pretitle text-xs @sm/card:text-sm uppercase tracking-wider text-primary-600 font-medium">
+                Featured Destination
+            </span>
+            <h3 class="card-title @sm/card:text-2xl">
+                Alpine Adventure Package
+            </h3>
+            <p class="card-description @sm/card:text-lg">
+                A complete mountain experience including guided hikes, luxury accommodation, and all meals. Perfect for families and adventure seekers.
+            </p>
+        </div>
+        <div class="card-footer @sm/card:flex-row">
+            <button class="btn btn-primary btn-md @sm/card:btn-lg">
+                Book Adventure
+            </button>
+            <button class="btn btn-outline btn-md @sm/card:btn-lg">
+                Learn More
+            </button>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         RESPONSIVE CARD GRID - 3 Column Layout
+         =================================================================== -->
+    
+    <section class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-display font-bold text-primary-800 mb-4">
+                    Discover Your Perfect Getaway
+                </h2>
+                <p class="text-lg text-primary-600 max-w-2xl mx-auto">
+                    From cozy cabins to luxury retreats, find the perfect mountain escape for your next adventure.
+                </p>
+            </div>
+            
+            <!-- Responsive Card Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                
+                <!-- Card 1 -->
+                <div class="card card-sm md:card-md @container/card">
+                    <div class="card-header aspect-video">
+                        <img 
+                            src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop" 
+                            alt="Cozy Mountain Cabin" 
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title @sm/card:text-xl">
+                            Cozy Mountain Cabin
+                        </h3>
+                        <p class="card-description @sm/card:text-base">
+                            Perfect for couples seeking a romantic retreat with stunning mountain views.
+                        </p>
+                    </div>
+                    <div class="card-footer @sm/card:flex-row">
+                        <button class="btn btn-primary btn-sm @sm/card:btn-md">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card card-sm md:card-md @container/card">
+                    <div class="card-header aspect-video">
+                        <img 
+                            src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&h=300&fit=crop" 
+                            alt="Luxury Lodge" 
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div class="card-content">
+                        <span class="card-pretitle text-xs @sm/card:text-sm uppercase tracking-wider text-primary-600 font-medium">
+                            Premium Experience
+                        </span>
+                        <h3 class="card-title @sm/card:text-xl">
+                            Luxury Mountain Lodge
+                        </h3>
+                        <p class="card-description @sm/card:text-base">
+                            Experience ultimate comfort with spa services and gourmet dining.
+                        </p>
+                    </div>
+                    <div class="card-footer @sm/card:flex-row">
+                        <button class="btn btn-primary btn-sm @sm/card:btn-md">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card card-sm md:card-md @container/card">
+                    <div class="card-header aspect-video">
+                        <img 
+                            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop" 
+                            alt="Adventure Package" 
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div class="card-content">
+                        <span class="card-pretitle text-xs @sm/card:text-sm uppercase tracking-wider text-primary-600 font-medium">
+                            Adventure
+                        </span>
+                        <h3 class="card-title @sm/card:text-xl">
+                            Alpine Adventure Package
+                        </h3>
+                        <p class="card-description @sm/card:text-base">
+                            Complete mountain experience with guided hikes and luxury accommodation.
+                        </p>
+                    </div>
+                    <div class="card-footer @sm/card:flex-row">
+                        <button class="btn btn-primary btn-sm @sm/card:btn-md">
+                            Book Adventure
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================
+         BUTTON EXAMPLES
+         =================================================================== -->
+    
+    <section class="py-16 px-4 bg-base-100">
+        <div class="max-w-7xl mx-auto">
+            
+            <h2 class="text-2xl font-display font-bold text-primary-800 mb-8 text-center">
+                Button Examples
+            </h2>
+            
+            <!-- Button Sizes -->
+            <div class="flex flex-wrap gap-4 justify-center mb-8">
+                <button class="btn btn-primary btn-sm">Small Button</button>
+                <button class="btn btn-primary btn-md">Medium Button</button>
+                <button class="btn btn-primary btn-lg">Large Button</button>
+                <button class="btn btn-primary btn-xl">Extra Large Button</button>
+            </div>
+            
+            <!-- Button Styles -->
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button class="btn btn-primary btn-md">Primary</button>
+                <button class="btn btn-secondary btn-md">Secondary</button>
+                <button class="btn btn-outline btn-md">Outline</button>
+                <button class="btn btn-ghost btn-md">Ghost</button>
+            </div>
+            
+        </div>
+    </section>
+
+</body>
+</html>

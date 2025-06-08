@@ -1,0 +1,84 @@
+<!-- wp:generateblocks/container {"className":"@container"} -->
+<div class="gb-container @container">
+  <!-- wp:generateblocks/container {"className":"grid grid-cols-1 @sm:grid-cols-2 @lg:grid-cols-3 gap-6"} -->
+  <div class="gb-container grid grid-cols-1 @sm:grid-cols-2 @lg:grid-cols-3 gap-6">
+    
+    <!-- Card 1 -->
+    <!-- wp:generateblocks/container {"className":"card"} -->
+    <div class="gb-container card">
+      <!-- wp:generateblocks/container {"className":"card-content"} -->
+      <div class="gb-container card-content">
+        <!-- wp:paragraph {"className":"text-primary-600 text-sm uppercase tracking-wider"} -->
+        <p class="text-primary-600 text-sm uppercase tracking-wider">Mountain Escape</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:heading {"level":3,"className":"card-title"} -->
+        <h3 class="card-title">Alpine Chalet</h3>
+        <!-- /wp:heading -->
+        <!-- wp:paragraph {"className":"card-description"} -->
+        <p class="card-description">Cozy mountain retreat with stunning views and modern amenities.</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:paragraph {"className":"text-xl font-bold text-primary-700"} -->
+        <p class="text-xl font-bold text-primary-700">$250/night</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:generateblocks/button {"className":"btn btn-primary btn-sm","text":"View Details"} -->
+        <a class="gb-button btn btn-primary btn-sm" href="#">View Details</a>
+        <!-- /wp:generateblocks/button -->
+      </div>
+      <!-- /wp:generateblocks/container -->
+    </div>
+    <!-- /wp:generateblocks/container -->
+    
+    <!-- Card 2 -->
+    <!-- wp:generateblocks/container {"className":"card"} -->
+    <div class="gb-container card">
+      <!-- wp:generateblocks/container {"className":"card-content"} -->
+      <div class="gb-container card-content">
+        <!-- wp:paragraph {"className":"text-primary-600 text-sm uppercase tracking-wider"} -->
+        <p class="text-primary-600 text-sm uppercase tracking-wider">Lakefront Living</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:heading {"level":3,"className":"card-title"} -->
+        <h3 class="card-title">Sunset Cottage</h3>
+        <!-- /wp:heading -->
+        <!-- wp:paragraph {"className":"card-description"} -->
+        <p class="card-description">Charming lakeside cottage with private dock and beach access.</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:paragraph {"className":"text-xl font-bold text-primary-700"} -->
+        <p class="text-xl font-bold text-primary-700">$350/night</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:generateblocks/button {"className":"btn btn-primary btn-sm","text":"View Details"} -->
+        <a class="gb-button btn btn-primary btn-sm" href="#">View Details</a>
+        <!-- /wp:generateblocks/button -->
+      </div>
+      <!-- /wp:generateblocks/container -->
+    </div>
+    <!-- /wp:generateblocks/container -->
+    
+    <!-- Card 3 -->
+    <!-- wp:generateblocks/container {"className":"card"} -->
+    <div class="gb-container card">
+      <!-- wp:generateblocks/container {"className":"card-content"} -->
+      <div class="gb-container card-content">
+        <!-- wp:paragraph {"className":"text-primary-600 text-sm uppercase tracking-wider"} -->
+        <p class="text-primary-600 text-sm uppercase tracking-wider">City Retreat</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:heading {"level":3,"className":"card-title"} -->
+        <h3 class="card-title">Urban Loft</h3>
+        <!-- /wp:heading -->
+        <!-- wp:paragraph {"className":"card-description"} -->
+        <p class="card-description">Modern downtown loft with rooftop terrace and city views.</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:paragraph {"className":"text-xl font-bold text-primary-700"} -->
+        <p class="text-xl font-bold text-primary-700">$200/night</p>
+        <!-- /wp:paragraph -->
+        <!-- wp:generateblocks/button {"className":"btn btn-primary btn-sm","text":"View Details"} -->
+        <a class="gb-button btn btn-primary btn-sm" href="#">View Details</a>
+        <!-- /wp:generateblocks/button -->
+      </div>
+      <!-- /wp:generateblocks/container -->
+    </div>
+    <!-- /wp:generateblocks/container -->
+    
+  </div>
+  <!-- /wp:generateblocks/container -->
+</div>
+<!-- /wp:generateblocks/container -->

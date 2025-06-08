@@ -1,0 +1,68 @@
+<!-- GenerateBlocks Pattern: Property Card -->
+<!-- INSTRUCTIONS: Copy everything between the curly braces and paste into WordPress editor -->
+
+{
+  "name": "generateblocks/container",
+  "attributes": {
+    "uniqueId": "card-001",
+    "className": "card @container/card",
+    "isDynamic": true
+  },
+  "innerBlocks": [
+    {
+      "name": "generateblocks/container",
+      "attributes": {
+        "className": "card-content"
+      },
+      "innerBlocks": [
+        {
+          "name": "generateblocks/headline",
+          "attributes": {
+            "className": "text-primary-600 text-sm uppercase tracking-wider",
+            "element": "p",
+            "content": "Featured Property"
+          }
+        },
+        {
+          "name": "generateblocks/headline",
+          "attributes": {
+            "className": "card-title",
+            "element": "h3",
+            "content": "Mountain Vista Retreat"
+          }
+        },
+        {
+          "name": "core/paragraph",
+          "attributes": {
+            "className": "card-description",
+            "content": "Escape to this luxurious mountain cabin with panoramic views, modern amenities, and direct access to hiking trails."
+          }
+        },
+        {
+          "name": "generateblocks/container",
+          "attributes": {
+            "className": "card-footer"
+          },
+          "innerBlocks": [
+            {
+              "name": "generateblocks/button",
+              "attributes": {
+                "className": "btn btn-primary",
+                "text": "Book Now",
+                "url": "#"
+              }
+            },
+            {
+              "name": "generateblocks/button",
+              "attributes": {
+                "className": "btn btn-secondary",
+                "text": "View Details",
+                "url": "#"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

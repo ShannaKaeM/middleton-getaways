@@ -1,0 +1,130 @@
+/* Windpress CSS - Working Version Based on Test Results */
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme) theme(static);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  /* Remove ALL default Tailwind colors */
+  --color-*: initial;
+  
+  /* Color Scale */
+  --color-primary-50: #f7f8f3;
+  --color-primary-100: #eef1e6;
+  --color-primary-200: #dde3ce;
+  --color-primary-300: #c6d0ab;
+  --color-primary-400: #a9b87f;
+  --color-primary-500: #869648;
+  --color-primary-600: #6b7a37;
+  --color-primary-700: #545e2e;
+  --color-primary-800: #454c26;
+  --color-primary-900: #3a4022;
+  
+  --color-base-50: #fafafa;
+  --color-base-100: #f4f4f5;
+  --color-base-200: #e4e4e7;
+  --color-base-300: #d4d4d8;
+  --color-base-400: #a1a1aa;
+  --color-base-500: #71717a;
+  --color-base-600: #52525b;
+  --color-base-700: #3f3f46;
+  --color-base-800: #27272a;
+  --color-base-900: #18181b;
+  
+  /* Semantic Colors */
+  --color-surface: var(--color-base-100);
+  --color-canvas: var(--color-base-50);
+  --color-border: var(--color-base-200);
+  --color-text: var(--color-base-800);
+  --color-text-muted: var(--color-base-600);
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border Radius - Dynamic Scaling */
+  --radius-sm: clamp(0.125rem, 1cqi, 0.5rem);
+  --radius-md: clamp(0.25rem, 2cqi, 1rem);
+  --radius-lg: clamp(0.5rem, 3cqi, 1.5rem);
+  --radius-xl: clamp(0.75rem, 4cqi, 2rem);
+  --radius-full: 9999px;
+  
+  /* Universal dynamic radius (2% of container, between 0.25rem-1.5rem) */
+  --radius-dynamic: clamp(0.25rem, 2cqi, 1.5rem);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+/* Card System */
+@utility card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md);
+}
+
+@utility card-sm {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-sm);
+}
+
+@utility card-lg {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+}
+
+/* Button System */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.625rem 1rem;
+}
+
+@utility btn-primary {
+  background-color: var(--color-primary-600);
+  color: white;
+}
+
+@utility btn-secondary {
+  background-color: var(--color-base-200);
+  color: var(--color-base-800);
+}
+
+@utility btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-primary-600);
+  color: var(--color-primary-600);
+}
+
+/* Text Utilities */
+@utility text-primary-600 {
+  color: var(--color-primary-600);
+}
+
+@utility text-base-800 {
+  color: var(--color-base-800);
+}
+
+@utility text-base-600 {
+  color: var(--color-base-600);
+}

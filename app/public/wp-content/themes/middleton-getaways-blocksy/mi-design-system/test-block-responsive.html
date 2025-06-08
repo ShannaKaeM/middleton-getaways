@@ -1,0 +1,81 @@
+<!-- Responsive Test Block with Container Queries -->
+<!-- This demonstrates how container queries adapt the card based on its container -->
+
+<!-- Wrap in container to enable container queries -->
+<div class="@container/property">
+  <div class="card @sm/property:card-md @lg/property:card-lg">
+    <!-- Optional Image Header -->
+    <div class="card-header">
+      <!-- Replace with actual image URL -->
+      <div class="bg-gradient-to-br from-primary-400 to-primary-600 h-48 @sm/property:h-56 @lg/property:h-64"></div>
+    </div>
+    
+    <div class="card-content">
+      <!-- Pretitle with responsive sizing -->
+      <span class="text-primary-600 text-xs @sm/property:text-sm uppercase tracking-wider">
+        Luxury Retreat
+      </span>
+      
+      <!-- Title that grows with container -->
+      <h3 class="card-title @sm/property:text-xl @lg/property:text-2xl">
+        Lakeside Paradise Lodge
+      </h3>
+      
+      <!-- Description -->
+      <p class="card-description @lg/property:text-lg">
+        Wake up to stunning lake views in this modern lodge. Features include a private dock, 
+        gourmet kitchen, and spacious deck perfect for entertaining.
+      </p>
+      
+      <!-- Responsive grid for features -->
+      <div class="grid grid-cols-2 @sm/property:grid-cols-4 gap-2 my-4">
+        <div class="text-center p-2 bg-base-50 rounded">
+          <div class="text-primary-600 font-semibold">4</div>
+          <div class="text-xs text-base-600">Bedrooms</div>
+        </div>
+        <div class="text-center p-2 bg-base-50 rounded">
+          <div class="text-primary-600 font-semibold">3</div>
+          <div class="text-xs text-base-600">Bathrooms</div>
+        </div>
+        <div class="text-center p-2 bg-base-50 rounded">
+          <div class="text-primary-600 font-semibold">12</div>
+          <div class="text-xs text-base-600">Guests</div>
+        </div>
+        <div class="text-center p-2 bg-base-50 rounded">
+          <div class="text-primary-600 font-semibold">Lake</div>
+          <div class="text-xs text-base-600">Access</div>
+        </div>
+      </div>
+      
+      <!-- Price with responsive sizing -->
+      <div class="flex items-baseline gap-2 mb-4">
+        <span class="text-2xl @sm/property:text-3xl font-bold text-primary-700">$450</span>
+        <span class="text-base-600">/night</span>
+        <span class="text-sm text-base-500">• 3 night minimum</span>
+      </div>
+      
+      <!-- Responsive button layout -->
+      <div class="card-footer @sm/property:flex-row">
+        <button class="btn btn-primary @sm/property:btn-md @lg/property:btn-lg">
+          Check Availability
+        </button>
+        <button class="btn btn-outline @sm/property:btn-md">
+          <span class="hidden @sm/property:inline">View</span> Gallery
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 
+CONTAINER QUERY BENEFITS:
+- Card adapts to its container width, not viewport
+- Same component works in sidebar (300px) or main content (800px)
+- Text, spacing, and layout adjust automatically
+- No need for viewport-based breakpoints
+
+TO TEST RESPONSIVENESS:
+1. Place in different width containers
+2. Card will adapt from compact (sm) to spacious (lg) automatically
+3. Try in GenerateBlocks columns of different widths
+-->

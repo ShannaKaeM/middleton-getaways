@@ -1,0 +1,88 @@
+/* Dynamic Border Radius Examples */
+
+@theme {
+  /* Method 1: Clamp-based scaling */
+  --radius-dynamic: clamp(0.25rem, 2cqi, 1.5rem);
+  /* Scales between 0.25rem (min) and 1.5rem (max) based on container size */
+  
+  /* Method 2: Formula-based with CSS calc */
+  --radius-scale-factor: 0.02; /* 2% of container width */
+  --radius-formula: calc(100cqi * var(--radius-scale-factor));
+  
+  /* Method 3: Stepped scaling with min/max */
+  --radius-responsive: min(1.5rem, max(0.375rem, 3cqi));
+  
+  /* Method 4: Size variants with dynamic scaling */
+  --radius-sm: clamp(0.125rem, 1cqi, 0.5rem);
+  --radius-md: clamp(0.25rem, 2cqi, 1rem);
+  --radius-lg: clamp(0.5rem, 3cqi, 1.5rem);
+  --radius-xl: clamp(0.75rem, 4cqi, 2rem);
+  --radius-full: 9999px; /* Always fully rounded */
+}
+
+/* Utility Classes */
+@utility rounded-dynamic {
+  border-radius: var(--radius-dynamic);
+}
+
+@utility rounded-formula {
+  border-radius: var(--radius-formula);
+}
+
+@utility rounded-responsive {
+  border-radius: var(--radius-responsive);
+}
+
+/* Smart Card System with Dynamic Radius */
+@utility card {
+  @container/card;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  /* Radius scales with container size */
+  border-radius: clamp(0.375rem, 2cqi, 1.25rem);
+  box-shadow: var(--shadow-sm);
+  padding: clamp(0.75rem, 3cqi, 1.5rem);
+}
+
+/* Button with Dynamic Radius */
+@utility btn {
+  /* Radius is 5% of button width, capped at 0.5rem */
+  border-radius: min(0.5rem, 5cqw);
+  padding: 0.5em 1em;
+  transition: all 0.2s;
+}
+
+/* Advanced: Aspect-ratio aware radius */
+@utility rounded-smart {
+  /* Smaller radius for tall elements, larger for wide */
+  border-radius: clamp(
+    0.25rem,
+    calc(2cqi + 1cqb), /* inline + block size */
+    1.5rem
+  );
+}
+
+/* Usage Examples */
+.example-1 {
+  /* Simple dynamic radius */
+  @apply rounded-dynamic;
+}
+
+.example-2 {
+  /* Override with specific value */
+  @apply rounded-dynamic;
+  border-radius: 0.75rem; /* Override when needed */
+}
+
+.example-3 {
+  /* Responsive with container queries */
+  border-radius: var(--radius-sm);
+  
+  @container (min-width: 400px) {
+    border-radius: var(--radius-md);
+  }
+  
+  @container (min-width: 800px) {
+    border-radius: var(--radius-lg);
+  }
+}

@@ -1,0 +1,32 @@
+/* Minimal Windpress CSS v2 - Alternative approach */
+
+@import "tailwindcss";
+
+/* Custom theme variables */
+:root {
+  --color-primary-600: #6b7a37;
+  --color-primary-700: #545e2e;
+  --color-base-800: #27272a;
+  --color-surface: #ffffff;
+  --color-border: #e5e7eb;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+}
+
+/* Custom utilities */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: var(--spacing-md);
+}
+
+.btn-primary {
+  background-color: var(--color-primary-600);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  display: inline-block;
+  text-decoration: none;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windpress Diagnostic</title>
+</head>
+<body style="padding: 2rem;">
+    <h1>Windpress Diagnostic</h1>
+    
+    <h2>CSS Variable Check:</h2>
+    <div id="css-vars"></div>
+    
+    <h2>Available Classes:</h2>
+    <div id="classes"></div>
+    
+    <script>
+        // Check CSS variables
+        const styles = getComputedStyle(document.documentElement);
+        const cssVars = [];
+        for (let i = 0; i < styles.length; i++) {
+            const prop = styles[i];
+            if (prop.startsWith('--')) {
+                cssVars.push(`${prop}: ${styles.getPropertyValue(prop)}`);
+            }
+        }
+        document.getElementById('css-vars').innerHTML = '<pre>' + cssVars.join('\n') + '</pre>';
+        
+        // Check if Tailwind classes exist
+        const testClasses = ['p-4', 'bg-gray-100', 'text-gray-800', 'card', 'btn-primary'];
+        const results = testClasses.map(cls => {
+            const testEl = document.createElement('div');
+            testEl.className = cls;
+            document.body.appendChild(testEl);
+            const hasStyles = window.getComputedStyle(testEl).length > 0;
+            document.body.removeChild(testEl);
+            return `${cls}: ${hasStyles ? '✓' : '✗'}`;
+        });
+        document.getElementById('classes').innerHTML = '<pre>' + results.join('\n') + '</pre>';
+    </script>
+</body>
+</html>
